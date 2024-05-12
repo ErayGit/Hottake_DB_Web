@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --bk-dark: #202832;
+  --bk: #2e3440;
+  --bk-ligth: #e1e5ed;
+  --aczent: #02b9e0;
+
+  --bs-primary: var(--aczent);
+  --bs-white: var(--bk-ligth);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--bk-ligth);
+}
+
+.bk {
+  background-color: var(--bk);
+}
+
+.bk-dark {
+  background-color: var(--bk-dark);
+}
+
+.bk-ligth {
+  background-color: var(--bk-ligth);
+}
