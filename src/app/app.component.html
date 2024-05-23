@@ -8,7 +8,9 @@
       Board anlegen</button>
   </div>
   <div class="feed">
-    @for (item of items; track item){ <app-card></app-card>
+    <h1>Dein Feed</h1>
+    @for (item of items; track item){
+    <app-card [item]="item"></app-card>
     }
   </div>
   <div class="sozial p-4">

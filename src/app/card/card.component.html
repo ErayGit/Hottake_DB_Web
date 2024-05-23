@@ -2,7 +2,7 @@
     <div class="card bk border-light card-holder">
         <div class="card bk-ligth">
             <div class="card-body">
-                Text
+                {{item.Text}}
             </div>
         </div>
 
@@ -13,12 +13,12 @@
         </div>
 
         <div class="card p-1 bk-ligth">
-            <div class="color-holder"></div>
+            <div [style.background-color]="item.color" class="color-holder"></div>
         </div>
 
         <div class="card bk-ligth">
-            <div class="card-body">
-                Emoji
+            <div class="card-body emojie-card">
+                {{item.emojie}}
             </div>
         </div>
 
@@ -47,10 +47,10 @@
             </div>
 
             <div class="divider"></div>
-            <div>👨‍💻3</div>
-            <div>🤙3</div>
-            <div>👍8</div>
-            <div>👎2</div>
+            <div>👨‍💻{{item.komentar.firstEmojie}}</div>
+            <div>🤙{{item.komentar.secondEmojie }}</div>
+            <div>👍{{item.komentar.thirdEmojie }}</div>
+            <div>👎{{item.komentar.fourEmojie}}</div>
         </div>
     </div>
 </div>
