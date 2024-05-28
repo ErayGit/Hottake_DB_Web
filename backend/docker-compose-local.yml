@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    env_file: .env
+    image: mysql:8
+    environment:
+      TZ: CET
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - '3310:3306'
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    ports:
+      - '8095:80'
+    environment:
+      UPLOAD_LIMIT : 32M
+
+volumes:
+  db:
