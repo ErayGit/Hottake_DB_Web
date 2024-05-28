@@ -78,7 +78,6 @@ module.exports.initDb = function () {
   db.query("ALTER TABLE `comment` ADD CONSTRAINT `FK_75343asd3138e7ab777828d339194` FOREIGN KEY (`creatorId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 7 or already exists]')
-      console.log(err);
     }
   });
 };

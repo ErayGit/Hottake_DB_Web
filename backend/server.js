@@ -3,6 +3,7 @@ const initializeDbImp       = require("./router/on-empty-db");
 const socket       = require('socket.io');
 const path = require('path');
 const app = express();
+const router       = require("./router/user-router");
 
 app.use(express.static(path.join(__dirname, '../dist/hottake-db-web')));
 
@@ -25,5 +26,7 @@ ioSocket.on('connection', (socket) => {
 });
 
 initializeDbImp.initDb()
+
+app.use(router);
 
 
