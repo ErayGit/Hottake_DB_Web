@@ -28,4 +28,19 @@ module.exports = {
         // Falls Validierung erfolgreich war, weiter fortfahren
         next();
     },
+    validateLogin: (req, res, next) => {
+        // email mind. 5 Zeichen,
+        if(req.body.email.length === 0){
+            // Abbruch + bad-request: der Benutzer hat eine Fehlerhafte Anfrage gesendet + message mit genauer Fehlerbeschreibung
+            return res.status(400).send({message: "Server-Error: Es wurde keine gültige Email Adresse eingegeben."});
+        }
+        // password mind. 5 Zeichen
+        if(req.body.password.length < 5){
+            // Abbruch + bad-request: der Benutzer hat eine Fehlerhafte Anfrage gesendet + message mit genauer Fehlerbeschreibung
+            return res.status(400).send({message: "Server-Error: Das Passwort ist zu kurz, nutze bitte mind. 5 Zeichen."});
+        }
+
+        // Falls Validierung erfolgreich war, weiter fortfahren
+        next();
+    }
 }
