@@ -84,8 +84,8 @@ router.get('/user/:id', async (req, res) => {
         }
         if (results.length > 0) {
             
-            const { password, ...results } = results[0]; // ...userData ?
-            res.status(200).send(results[0]);   // vllt keine eckige
+            const { password, ...userData } = results[0]; // userData anstatt result sicherer
+            res.status(200).send(userData);   // vllt keine eckige
         } else {
             res.status(404).send({message: "User not found."});
         }
