@@ -14,6 +14,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/hottake-db-web')));
 
+
+
 let server = app.listen('8020', function (){
   console.log("[Server Initialized on Port 8020]")
 })

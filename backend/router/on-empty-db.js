@@ -21,7 +21,7 @@ module.exports.initDb = function () {
     }
   });
 
-  db.query("CREATE TABLE \`file\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`data\` longblob NOT NULL, INDEX \`IDX_25bd99c3ae1d8493283e7b2c13\` (\`createdAt\`), INDEX \`IDX_5110e8dcb1cd5a9c268810618f\` (\`updatedAt\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB", (err, results) => {
+  db.query("CREATE TABLE \`file\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`data\` longblob NOT NULL, \`mimetype\` varchar(255) NOT NULL, \`filename\` varchar(255) NOT NULL, INDEX \`IDX_25bd99c3ae1d8493283e7b2c13\` (\`createdAt\`), INDEX \`IDX_5110e8dcb1cd5a9c268810618f\` (\`updatedAt\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB", (err, results) => {
     if (err) {
       console.error('[File-Table already created]')
     } else {
