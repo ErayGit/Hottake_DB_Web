@@ -86,12 +86,12 @@
 .meta-wraper {
   display: flex;
   justify-content: space-between;
-  color: var(--bk-ligth);
+  color: var(--text);
   padding: 0 2.4em;
 
   > div {
     padding: 0.2em;
-    border: 1px solid var(--bk-ligth);
+    border: 1px solid var(--text);
     border-top: none;
     border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
     display: flex;
@@ -114,7 +114,7 @@
     }
 
     .divider {
-      border-right: 1px solid var(--bk-ligth);
+      border-right: 1px solid var(--text);
       height: 80%;
       margin: auto;
     }
