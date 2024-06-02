@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
 import { CARDComponent } from './card/card.component';
+import { ProfilBarComponent } from './profil-bar/profil-bar.component';
+import { FirendsBarComponent } from './firends-bar/firends-bar.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CARDComponent],
+  imports: [
+    RouterOutlet,
+    CARDComponent,
+    ProfilBarComponent,
+    FirendsBarComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

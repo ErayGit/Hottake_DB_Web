@@ -1,0 +1,6 @@
+.profil {
+  position: fixed;
+  width: 20vw;
+  height: 100vh;
+  border-right: 1px solid var(--text-800);
+}

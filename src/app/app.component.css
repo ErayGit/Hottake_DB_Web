@@ -2,25 +2,10 @@ main {
   display: grid;
   min-height: 100vh;
   grid-template-columns: 20vw auto 20vw;
+  background-color: var(--background);
 
-  .profil {
-    position: fixed;
-    width: 20vw;
-    height: 100vh;
-    background-color: var(--bk-dark);
-    border-right: 1px solid var(--bk-ligth);
-  }
   .feed {
     grid-column-start: 2;
     padding: 4em 8em;
-    background-color: var(--bk);
-  }
-  .sozial {
-    position: fixed;
-    width: 20vw;
-    height: 100vh;
-    right: 0;
-    background-color: var(--bk-dark);
-    border-left: 1px solid var(--bk-ligth);
   }
 }
