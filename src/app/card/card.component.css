@@ -23,7 +23,7 @@
         transparent 50%
       );
     background-size: 2em 2em;
-    background-color: #e1e5ed;
+    background-color: var(--text);
 
     div {
       display: flex;
@@ -120,7 +120,7 @@
     }
 
     button {
-      color: var(--bk-ligth);
+      color: var(--text);
     }
   }
 }
