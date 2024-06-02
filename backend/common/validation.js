@@ -19,12 +19,6 @@ module.exports = {
             // Abbruch + bad-request: der Benutzer hat eine Fehlerhafte Anfrage gesendet + message mit genauer Fehlerbeschreibung
             return res.status(400).send({message: "Server-Error: Das Passwort ist zu kurz, nutze bitte mind. 5 Zeichen."});
         }
-        // password und password-repeat müssen gleich sein
-        if(req.body.password !== req.body.passwordRepeat){
-            // Abbruch + bad-request: der Benutzer hat eine Fehlerhafte Anfrage gesendet + message mit genauer Fehlerbeschreibung
-            return res.status(400).send({message: "Server-Error: Passwort und Passwort-Wiederholung stimmen nicht überein"});
-        }
-
         // Falls Validierung erfolgreich war, weiter fortfahren
         next();
     },

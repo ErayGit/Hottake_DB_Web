@@ -3,6 +3,7 @@ const router           = express.Router();
 const db = require('./../db-config');
 const validation   = require('./../common/validation');
 const bcrypt = require('bcryptjs');
+const {find} = require("rxjs");
 
 router.post('/register', validation.validateRegister, async (req, res) => {
   //  Abfrage, um nach einer Email zu suchen
@@ -18,9 +19,8 @@ router.post('/register', validation.validateRegister, async (req, res) => {
       } else {
           let salt = await bcrypt.genSalt();
           let hashedPassword = await bcrypt.hash(req.body.password, salt);
-
           // Einfügen neuer Benutzerdaten
-          const insertQuery = 'INSERT INTO user (name, bio, stadt, email, password, firstName, lastName) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          const insertQuery = 'INSERT INTO user (id, name, bio, stadt, email, password, firstName, lastName) VALUES (UUID(),?, ?, ?, ?, ?, ?, ?)';
           const insertParams = [req.body.name, req.body.bio, req.body.stadt, req.body.email, hashedPassword, req.body.firstName, req.body.lastName];
 
           db.query(insertQuery, insertParams, (err, result) => {
@@ -28,8 +28,12 @@ router.post('/register', validation.validateRegister, async (req, res) => {
                   console.error('Insert error:', err);
                   return res.status(500).send({message: "Error inserting user data."});
               } else {
+                  const findQuery = 'SELECT * FROM user WHERE LOWER(email) = LOWER(?)';
+                  const params = [req.body.email];
+                  db.query(findQuery, params, async (err, findRes) => {
+                    return res.status(201).send({message: "Die Registrierung war erfolgreich.", ...findRes[0]});
+                  })
                   // Wenn neuer Nutzer erstellt, Registrierung abgeschlossen: Status 201 -> Created
-                  return res.status(201).send({message: "Die Registrierung war erfolgreich."});
               }
           });
       }
@@ -37,7 +41,7 @@ router.post('/register', validation.validateRegister, async (req, res) => {
 });
 
 router.post('/login', validation.validateLogin, async (req, res) => {
-    
+
     const query = 'SELECT * FROM user WHERE LOWER(email) = LOWER(?)';
     const params = [req.body.email];
 
@@ -49,7 +53,11 @@ router.post('/login', validation.validateLogin, async (req, res) => {
             // passwort überprüfung (gehashed)
             const match = await bcrypt.compare(req.body.password, results[0].password);
             if (match) {
-                return res.status(200).send({message: "Login successful."});
+              const findQuery = 'SELECT * FROM user WHERE LOWER(email) = LOWER(?)';
+              const params = [req.body.email];
+              db.query(findQuery, params, async (err, findRes) => {
+                return res.status(201).send({message: "Login war erfolgreich.", ...findRes[0]});
+              })
             } else {
                 return res.status(401).send({message: "Incorrect email or password."});
             }
@@ -61,7 +69,7 @@ router.post('/login', validation.validateLogin, async (req, res) => {
 
 
 //finde alle user
-router.get('/users', async (req, res) => {
+router.get('/user', async (req, res) => {
     db.query('SELECT * FROM user', (err, results) => {
         if(err) {
             console.error('Database error:', err);
@@ -73,7 +81,7 @@ router.get('/users', async (req, res) => {
 
 //finde einen bestimmten user
 router.get('/user/:id', async (req, res) => {
-    
+
     const query = 'SELECT * FROM user WHERE id = ?';
     const params = [req.params.id];
 
@@ -83,7 +91,7 @@ router.get('/user/:id', async (req, res) => {
             return res.status(500).send({message: "Server error."});
         }
         if (results.length > 0) {
-            
+
             const { password, ...userData } = results[0]; // userData anstatt result sicherer
             res.status(200).send(userData);   // vllt keine eckige
         } else {
@@ -95,7 +103,7 @@ router.get('/user/:id', async (req, res) => {
 // update user
 router.put('/user/:id', async (req, res) => {
     const { name, bio, stadt, email, firstName, lastName } = req.body;
-    
+
     const query = 'UPDATE user SET name = ?, bio = ?, stadt = ?, email = ?, firstName = ?, lastName = ? WHERE id = ?';
     const values = [name, bio, stadt, email, firstName, lastName, req.params.id];
 
@@ -114,13 +122,13 @@ router.put('/user/:id', async (req, res) => {
 
 // delete user
 router.delete('/user/:id', async (req, res) => {
-   
+
     const query = 'DELETE FROM user WHERE id = ?';
     const values = [req.params.id];
 
     db.query(query, values, (err, result) => {
         if (err) {
-            console.error('Database error:', err); 
+            console.error('Database error:', err);
             return res.status(500).send({message: "Server error."});
         }
         if (result.affectedRows > 0) {

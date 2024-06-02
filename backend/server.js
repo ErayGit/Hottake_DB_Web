@@ -2,9 +2,16 @@ const express = require('express');
 const initializeDbImp       = require("./router/on-empty-db");
 const socket       = require('socket.io');
 const path = require('path');
+const bodyParser   = require('body-parser');
 const app = express();
-const router       = require("./router/user-router");
+const userRouter       = require("./router/user-router");
+const postRouter       = require("./router/post-router");
+const commentRouter       = require("./router/comment-router");
+const followRouter = require("./router/follow-router");
+const fileRouter = require("./router/file-router");
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/hottake-db-web')));
 
 let server = app.listen('8020', function (){
@@ -27,7 +34,11 @@ ioSocket.on('connection', (socket) => {
 
 initializeDbImp.initDb()
 
-app.use(router);
+app.use(userRouter);
+app.use(postRouter);
+app.use(commentRouter);
+app.use(followRouter);
+app.use(fileRouter);
 
 
 
