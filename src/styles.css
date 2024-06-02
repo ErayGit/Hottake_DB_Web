@@ -51,6 +51,24 @@ body {
   color: var(--text);
 }
 
+button svg {
+  fill: var(--primary-950);
+  height: 25px;
+  margin-right: 7px;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-950);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-400);
+  color: var(--primary-950);
+  border-color: var(--primary-400);
+}
+
 .bk {
   background-color: var(--background);
 }
