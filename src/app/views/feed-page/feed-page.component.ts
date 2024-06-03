@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {CARDComponent} from "../../card/card.component";
 import {FirendsBarComponent} from "../../firends-bar/firends-bar.component";
+import {TUI_SANITIZER} from "@taiga-ui/core";
+import {NgDompurifySanitizer} from "@tinkoff/ng-dompurify";
 
 @Component({
   selector: 'app-feed-page',
@@ -10,7 +12,8 @@ import {FirendsBarComponent} from "../../firends-bar/firends-bar.component";
     FirendsBarComponent
   ],
   templateUrl: './feed-page.component.html',
-  styleUrl: './feed-page.component.css'
+  styleUrl: './feed-page.component.css',
+  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}]
 })
 export class FeedPageComponent {
   title = 'Hottake_DB_Web';
