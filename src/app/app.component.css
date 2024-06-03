@@ -1,12 +1,14 @@
 main {
   display: grid;
   min-height: 100vh;
-  grid-template-columns: 20vw auto;
+  grid-template-columns: 25vw auto;
+  grid-template-rows: 15vw auto;
   background-color: var(--background);
+  padding-top: 10vh;
 
   .feed {
     grid-column-start: 2;
-    padding: 4em 16em;
+    padding: 0 7vw;
   }
 
   /* .profil {
@@ -15,4 +17,25 @@ main {
     height: 100vh;
     border-right: 1px solid var(--text-800);
   } */
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  height: 10vh;
+  background-color: var(--background);
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3em;
+
+  div {
+    height: 40%;
+  }
+
+  svg {
+    fill: var(--text);
+    height: 100%;
+  }
 }

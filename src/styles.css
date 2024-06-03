@@ -12,7 +12,7 @@
   --text-500: #60829f;
   --text-600: #4d6880;
   --text-700: #394e60;
-  --text-800: #263440;
+  --text-800: #192027;
   --text-900: #131a20;
   --text-950: #0a0d10;
 
@@ -24,7 +24,7 @@
   --background-500: #387fc7;
   --background-600: #2d669f;
   --background-700: #224c77;
-  --background-800: #163350;
+  --background-800: #152029;
   --background-900: #0b1928;
   --background-950: #060d14;
 
@@ -39,6 +39,8 @@
   --primary-800: #015365;
   --primary-900: #012932;
   --primary-950: #001519;
+
+  --border-radius-2: 0.75rem;
 }
 
 * {
@@ -49,6 +51,7 @@
 
 body {
   color: var(--text);
+  background-color: var(--background);
 }
 
 button svg {
@@ -97,6 +100,12 @@ button svg {
   background-color: var(--primary-800) !important;
   color: var(--text-100) !important;
   border-color: var(--primary-800) !important;
+}
+
+.island {
+  background-color: var(--background-800);
+  border-radius: var(--border-radius-2);
+  padding: 0.75rem;
 }
 
 .bk {
