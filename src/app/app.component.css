@@ -1,11 +1,18 @@
 main {
   display: grid;
   min-height: 100vh;
-  grid-template-columns: 20vw auto 20vw;
+  grid-template-columns: 20vw auto;
   background-color: var(--background);
 
   .feed {
     grid-column-start: 2;
-    padding: 4em 8em;
+    padding: 4em 16em;
   }
+
+  /* .profil {
+    position: fixed;
+    width: 20vw;
+    height: 100vh;
+    border-right: 1px solid var(--text-800);
+  } */
 }
