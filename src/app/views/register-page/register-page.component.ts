@@ -46,8 +46,8 @@ export class RegisterPageComponent {
   readonly registerForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
-    confirmPassword: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(5)]),
     bio: new FormControl('', [Validators.required]),
     town: new FormControl('', [Validators.required]),
     firstname: new FormControl('', [Validators.required]),
