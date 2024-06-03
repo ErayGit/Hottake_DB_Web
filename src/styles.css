@@ -70,6 +70,12 @@ button svg {
   box-shadow: 0 5px 15px var(--primary-600);
 }
 
+.btn-primary:active {
+  background-color: var(--primary-400) !important;
+  color: var(--primary-950) !important;
+  border-color: var(--primary-400) !important;
+}
+
 .btn-secondary {
   background-color: var(--primary-800);
   color: var(--text-100);
@@ -85,6 +91,12 @@ button svg {
   color: var(--text-100);
   border-color: var(--primary-800);
   box-shadow: 0 5px 15px var(--primary-900);
+}
+
+.btn-secondary:active {
+  background-color: var(--primary-800) !important;
+  color: var(--text-100) !important;
+  border-color: var(--primary-800) !important;
 }
 
 .bk {
