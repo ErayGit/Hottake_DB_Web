@@ -3,17 +3,20 @@ import {CARDComponent} from "../../card/card.component";
 import {FirendsBarComponent} from "../../firends-bar/firends-bar.component";
 import {TUI_SANITIZER} from "@taiga-ui/core";
 import {NgDompurifySanitizer} from "@tinkoff/ng-dompurify";
+import {CommonModule} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-feed-page',
   standalone: true,
   imports: [
+    CommonModule,
     CARDComponent,
     FirendsBarComponent
   ],
   templateUrl: './feed-page.component.html',
   styleUrl: './feed-page.component.css',
-  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}]
+  providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}, HttpClientModule]
 })
 export class FeedPageComponent {
   title = 'Hottake_DB_Web';

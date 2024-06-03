@@ -9,10 +9,12 @@ const postRouter       = require("./router/post-router");
 const commentRouter       = require("./router/comment-router");
 const followRouter = require("./router/follow-router");
 const fileRouter = require("./router/file-router");
+const cors = require('cors');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/hottake-db-web')));
+app.use(cors());
 
 
 

@@ -1,0 +1,37 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: var(--background);
+  padding-top: 10vh;
+  gap: 1rem;
+}
+
+.island {
+  min-width: 20rem;
+  min-height: 20rem;
+}
+
+.island-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  min-width: 20rem;
+}
+
+.input {
+  padding-top: 1rem;
+  min-width: 16rem;
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+button {
+  flex: 1;
+}
+}

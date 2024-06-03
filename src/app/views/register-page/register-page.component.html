@@ -1,13 +1,114 @@
-<tui-island>
-  <h3 class="tui-island__title">Title</h3>
-  <p class="tui-island__paragraph">Text</p>
-  <p class="tui-island__paragraph tui-island__paragraph_button">
-    <button
-      tuiButton
-      type="button"
-      appearance="secondary"
-    >
-      Button
-    </button>
-  </p>
-</tui-island>
+<main>
+  <ng-container *ngIf="step.toString() === 'PERSONAL_STEP'; else loginInfoForm">
+      <div class="island">
+        <tui-island>
+          <div class="island-wrapper">
+            <h3 class="tui-island__title">Registrieren</h3>
+            <p class="tui-island__paragraph">Legen sie einen neuen Account an</p>
+            <div class="form-wrapper">
+              <tui-input-files
+                *ngIf="!fileControl.value"
+                [formControl]="fileControl"
+                accept="image/*"
+              >
+                <ng-template>
+                  <div class="content">
+                    <tui-marker-icon
+                      mode="link"
+                      src="tuiIconUploadCloudLarge"
+                    ></tui-marker-icon>
+                    <div>
+                      Profilbild
+                    </div>
+                  </div>
+                </ng-template>
+              </tui-input-files>
+              <tui-files>
+                <tui-file
+                  (removed)="removeFile()"
+                  *ngIf="fileControl.valueChanges | async as file"
+                  [file]="file"
+                  [leftContent]="content"
+                  [showDelete]="fileControl.enabled"
+                >
+                </tui-file>
+              </tui-files>
+
+              <ng-template #content>
+                <tui-svg [src]="tuiIconFile"></tui-svg>
+              </ng-template>
+              <form [formGroup]="registerForm">
+                <tui-input class="input" formControlName="firstname">
+                  Vorname
+                  <input tuiTextfield />
+                </tui-input>
+                <tui-input class="input" formControlName="lastname">
+                  Nachname
+                  <input tuiTextfield />
+                </tui-input>
+                <tui-input class="input" formControlName="bio">
+                  Biographie
+                  <input tuiTextfield />
+                </tui-input>
+                <tui-input class="input" formControlName="town">
+                  Wohnort
+                  <input tuiTextfield />
+                </tui-input>
+                <div class="button-wrapper">
+                  <button
+                    (click)="create()"
+                    [disabled]="!registerForm.valid"
+                    tuiButton
+                    type="submit"
+                  >
+                    Erstellen
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </tui-island>
+      </div>
+  </ng-container>
+</main>
+
+<ng-template #loginInfoForm>
+  <div class="island">
+    <tui-island>
+      <div class="island-wrapper">
+        <h3 class="tui-island__title">Registrieren</h3>
+        <p class="tui-island__paragraph">Legen sie einen neuen Account an</p>
+        <div class="form-wrapper">
+          <form [formGroup]="registerForm">
+            <tui-input class="input" formControlName="username">
+              Username
+              <input tuiTextfield />
+            </tui-input>
+            <tui-input class="input" formControlName="email">
+              E-Mail
+              <input tuiTextfield />
+            </tui-input>
+            <tui-input class="input" formControlName="password">
+              Passwort
+              <input tuiTextfield />
+            </tui-input>
+            <tui-input class="input" formControlName="confirmPassword">
+              Passwort wiederholen
+              <input tuiTextfield />
+            </tui-input>
+            <div class="button-wrapper">
+              <button
+                (click)="nextButton()"
+                [disabled]="registerForm.valid"
+                tuiButton
+                type="button"
+              >
+                Weiter
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </tui-island>
+  </div>
+</ng-template>

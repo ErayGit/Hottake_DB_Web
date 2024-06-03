@@ -3,8 +3,9 @@ import { TuiRootModule } from "@taiga-ui/core";
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
+import {AppRoutingModule, routes} from './app.routes';
+import {provideHttpClient} from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideAnimations(), provideRouter(routes), importProvidersFrom(TuiRootModule)]
+  providers: [provideHttpClient(), provideAnimations(), importProvidersFrom(TuiRootModule), provideRouter(routes)],
 };

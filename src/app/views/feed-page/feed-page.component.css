@@ -1,6 +1,5 @@
 main {
   display: grid;
-  min-height: 100vh;
   max-width: 75rem;
   /* margin-inline: auto; */
   grid-template-columns: 25vw auto;

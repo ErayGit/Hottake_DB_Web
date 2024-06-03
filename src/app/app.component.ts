@@ -5,13 +5,18 @@ import { CARDComponent } from './card/card.component';
 import { ProfilBarComponent } from './profil-bar/profil-bar.component';
 import { FirendsBarComponent } from './firends-bar/firends-bar.component';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {TuiIslandModule} from "@taiga-ui/kit";
+import {TuiInputFilesModule, TuiInputModule, TuiIslandModule} from "@taiga-ui/kit";
 import {RegisterPageComponent} from "./views/register-page/register-page.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    CommonModule,
+    HttpClientModule,
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
@@ -19,10 +24,14 @@ import {RegisterPageComponent} from "./views/register-page/register-page.compone
     ProfilBarComponent,
     FirendsBarComponent,
     RegisterPageComponent,
+    ReactiveFormsModule,
+    HttpClientModule,
       TuiRootModule,
       TuiDialogModule,
       TuiAlertModule,
       TuiIslandModule,
+      TuiInputModule,
+      TuiInputFilesModule
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

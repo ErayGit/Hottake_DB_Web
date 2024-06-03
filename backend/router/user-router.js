@@ -9,7 +9,7 @@ router.post("/register", validation.validateRegister, async (req, res) => {
   //  Abfrage, um nach einer Email zu suchen
   const emailQuery = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)";
   const emailParams = [req.body.email];
-
+  console.log(req.body);
   db.query(emailQuery, emailParams, async (err, result) => {
     if (err) {
       console.error("Database error:", err);

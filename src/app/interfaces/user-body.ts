@@ -8,6 +8,6 @@ export interface UserBody {
   email: string,
   password: string,
   firstName: string,
-  lastName: boolean,
+  lastName: string,
   fileId?: string
 }
