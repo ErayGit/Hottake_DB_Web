@@ -1,59 +1,59 @@
-<div class="mb-3">
-    <div class="card bk border-light card-holder">
-
-        <div class="card bk-ligth text-card">
-            <div class="card-body">
-                <h5>
-                    {{item.Text}}
-                </h5>
-            </div>
-        </div>
-
-        <div class="card bk-ligth">
-            <div class="card-body">
-                Song
-            </div>
-        </div>
-
-        <div class="card p-2 bk-ligth">
-            <div [style.background-color]="item.color" class="color-holder"></div>
-        </div>
-
-        <div class="card bk-ligth">
-            <div class="card-body emojie-card">
-                {{item.emojie}}
-            </div>
-        </div>
-
-        <div class="card bk-ligth">
-            <div class="card-body">
-                Bild
-            </div>
-        </div>
+<div class="mb-3 island">
+  <div class="card card-holder">
+    <div class="card bk-ligth text-card">
+      <div class="card-body">
+        <h5>
+          {{ item.Text }}
+        </h5>
+      </div>
     </div>
 
-    <div class="meta-wraper">
-        <div class="user">
-            <p>Username</p>
-        </div>
-        <div class="reaction">
-            <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Reaktion
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item">👨‍💻</a></li>
-                    <li><a class="dropdown-item">🤙</a></li>
-                    <li><a class="dropdown-item">👍</a></li>
-                    <li><a class="dropdown-item">👎</a></li>
-                </ul>
-            </div>
-
-            <div class="divider"></div>
-            <div>👨‍💻{{item.komentar.firstEmojie}}</div>
-            <div>🤙{{item.komentar.secondEmojie }}</div>
-            <div>👍{{item.komentar.thirdEmojie }}</div>
-            <div>👎{{item.komentar.fourEmojie}}</div>
-        </div>
+    <div class="card bk-ligth">
+      <div class="card-body">Song</div>
     </div>
+
+    <div class="card p-2 bk-ligth">
+      <div [style.background-color]="item.color" class="color-holder"></div>
+    </div>
+
+    <div class="card bk-ligth">
+      <div class="card-body emojie-card">
+        {{ item.emojie }}
+      </div>
+    </div>
+
+    <div class="card bk-ligth">
+      <div class="card-body">Bild</div>
+    </div>
+  </div>
+
+  <div class="meta-wraper">
+    <div class="user">
+      <p>Username</p>
+    </div>
+    <div class="reaction">
+      <div class="dropdown">
+        <button
+          class="btn dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Reaktion
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item">👨‍💻</a></li>
+          <li><a class="dropdown-item">🤙</a></li>
+          <li><a class="dropdown-item">👍</a></li>
+          <li><a class="dropdown-item">👎</a></li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div>👨‍💻{{ item.komentar.firstEmojie }}</div>
+      <div>🤙{{ item.komentar.secondEmojie }}</div>
+      <div>👍{{ item.komentar.thirdEmojie }}</div>
+      <div>👎{{ item.komentar.fourEmojie }}</div>
+    </div>
+  </div>
 </div>

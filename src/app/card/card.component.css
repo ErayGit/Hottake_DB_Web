@@ -5,6 +5,7 @@
   grid-column-gap: 0.3em;
   grid-row-gap: 0.3em;
   padding: 0.3em;
+  background-color: var(--background-800);
 
   .text-card {
     grid-area: 1 / 1 / 2 / 3;
