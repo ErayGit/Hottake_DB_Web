@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {CARDComponent} from "../../card/card.component";
-import {FirendsBarComponent} from "../../firends-bar/firends-bar.component";
+import {CARDComponent} from "./card/card.component";
+import {FirendsBarComponent} from "./firends-bar/firends-bar.component";
 import {TUI_SANITIZER} from "@taiga-ui/core";
 import {NgDompurifySanitizer} from "@tinkoff/ng-dompurify";
 import {CommonModule} from "@angular/common";
