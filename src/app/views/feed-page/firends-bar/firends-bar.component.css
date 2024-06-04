@@ -1,3 +1,6 @@
+@import url(../../../../../src/styles.css);
+
+
 .sozial {
   position: fixed;
   width: 25vw;
@@ -16,4 +19,39 @@
   div:nth-of-type(2) {
     flex-grow: 1;
   }
+}
+
+.card{
+  display: flex;
+  align-items: center;
+  background-color: var;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  margin-bottom: 7em;
+  color: var(--bs-card-color);
+  background-color: var(--background-50);
+  padding: 0.5em;
+}
+
+.card-body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.card-img-top {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+  padding-top: 0.3rem;
+}
+
+.btn-secondary {
+  width: 30%;
+  border-color: var(--primary-800);
+  color: var(--text-100);
 }
