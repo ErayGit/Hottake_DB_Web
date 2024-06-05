@@ -13,7 +13,7 @@ module.exports.initDb = function () {
     }
   });
 
-  db.query("CREATE TABLE \`post\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`text\` varchar(255) NOT NULL, \`musicUrl\` varchar(255) NOT NULL, \`color\` enum ('black', 'blue', 'green') NOT NULL DEFAULT 'black', \`emoji\` enum ('laughing', 'crying', 'prayer') NOT NULL DEFAULT 'laughing', \`fileId\` varchar(255) NULL, \`creatorId\` varchar(255) NULL, INDEX \`IDX_32013feb275f7a0f41c451cd0d\` (\`createdAt\`), INDEX \`IDX_f2facbawefgh89041b6ed1fadf\` (\`updatedAt\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB", (err, results) => {
+  db.query("CREATE TABLE \`post\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`text\` varchar(255) NOT NULL, \`musicUrl\` varchar(255) NOT NULL, \`color\` varchar(255) NOT NULL, \`emoji\` varchar(255) NOT NULL DEFAULT '👍', \`fileId\` varchar(255) NULL, \`creatorId\` varchar(255) NULL, INDEX \`IDX_32013feb275f7a0f41c451cd0d\` (\`createdAt\`), INDEX \`IDX_f2facbawefgh89041b6ed1fadf\` (\`updatedAt\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB", (err, results) => {
     if (err) {
       console.error('[Post-Table already created]')
     } else {
