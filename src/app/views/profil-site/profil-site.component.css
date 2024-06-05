@@ -15,7 +15,6 @@ main {
     color: var(--text-100);
 }
 
-/* Optional: Fügen Sie etwas Platz zwischen den Divs hinzu */
 .left {
     display: flex;
     flex-direction: column;
@@ -54,4 +53,8 @@ main {
 .bio {
     font-size: 2em;
     font-weight: bold;
+}
+
+button{
+    
 }

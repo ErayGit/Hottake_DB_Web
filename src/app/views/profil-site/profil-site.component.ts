@@ -1,18 +1,26 @@
 import { Component } from '@angular/core';
 import { FirendsBarComponent } from "../feed-page/firends-bar/firends-bar.component";
 import { CARDComponent } from "../feed-page/card/card.component";
+import {RouterLink, RouterLinkActive} from "@angular/router";
+import {TuiIconModule} from '@taiga-ui/experimental';
+import {tuiIconFile} from "@taiga-ui/icons";
 
 @Component({
     selector: 'app-profil-site',
     standalone: true,
     templateUrl: './profil-site.component.html',
     styleUrl: './profil-site.component.css',
-    imports: [FirendsBarComponent, CARDComponent]
+    imports: [
+      FirendsBarComponent,
+      CARDComponent,
+      TuiIconModule,
+      RouterLink,
+      RouterLinkActive,]
 })
 export class ProfilSiteComponent {
     items = fetchData();
 
-
+    protected readonly tuiIconFile = tuiIconFile;
 }
 
 

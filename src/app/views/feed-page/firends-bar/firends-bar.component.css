@@ -13,47 +13,48 @@
   padding: 0rem 0rem 1rem 2rem;
 
   div:nth-of-type(1) {
-    flex-grow: 4;
+    flex-grow: 17;
   }
 
   div:nth-of-type(2) {
-    flex-grow: 1;
+    flex-grow: 0.5;
   }
 }
 
-.card{
+.profil-card{
   display: flex;
   align-items: center;
-  background-color: var;
   width: 100%;
-  height: auto;
+  height: 100%;
   box-sizing: border-box;
-  margin-bottom: 7em;
   color: var(--bs-card-color);
-  background-color: var(--background-50);
   padding: 0.5em;
+  margin-left: 15%;
 }
 
 .card-body{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  padding-left: 2em;
-  padding-right: 2em;
+  color: var(--text-100);
+  gap: 1rem;
+  margin-left: 5%;
 }
 
 .card-img-top {
-  width: 50%;
+  width: 25%;
   height: auto;
   object-fit: cover;
   padding-top: 0.3rem;
   border-radius: 50%; 
-  object-fit: cover;
 }
 
 .btn-secondary {
   width: 30%;
   border-color: var(--primary-800);
   color: var(--text-100);
+}
+
+.card button{
+  width: 40%;
+  padding: 0.2em;
 }
