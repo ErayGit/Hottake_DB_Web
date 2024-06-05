@@ -4,7 +4,7 @@ import {User} from "../models/User";
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {LoginBody} from "../interfaces/login-body";
-import {catchError, map, Observable, of, tap} from "rxjs";
+import {catchError, map, Observable, of} from "rxjs";
 import {UserBody} from "../interfaces/user-body";
 
 @Injectable({

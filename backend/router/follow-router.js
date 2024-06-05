@@ -35,6 +35,26 @@ router.get('/follow', async (req, res) => {
     });
 });
 
+router.get('/follower/:id', async (req, res) => {
+  db.query('SELECT * FROM follow WHERE followedId = ?', [req.params.id], (err, results) => {
+    if(err) {
+      console.error('Database error:', err);
+      return res.status(500).send({message: "Server error."});
+    }
+    res.status(200).send(results);
+  });
+});
+
+router.get('/followed/:id', async (req, res) => {
+  db.query('SELECT * FROM follow WHERE followerId = ?', [req.params.id], (err, results) => {
+    if(err) {
+      console.error('Database error:', err);
+      return res.status(500).send({message: "Server error."});
+    }
+    res.status(200).send(results);
+  });
+});
+
 //finde einen bestimmten user
 router.get('/follow/:id', async (req, res) => {
 

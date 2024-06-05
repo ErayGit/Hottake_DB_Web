@@ -33,6 +33,100 @@ router.get('/post', async (req, res) => {
     });
 });
 
+router.get('/post/:id/feed', async (req, res) => {
+  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id LEFT JOIN comment ON post.id = comment.postId WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ANY(SELECT followedId FROM follow WHERE followerId = ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?) poster)';
+  const params = [req.params.id, 100, 0];
+  if(req.query.limit) {
+    try {
+      if(isNaN(req.query.limit)) {
+        params[1] = parseInt(req.query.limit);
+      }
+    } catch(err) {
+      console.log("wrong value for limit")
+    }
+  }
+  if(req.query.skip) {
+    try {
+      if(isNaN(req.query.skip)) {
+        params[2] = parseInt(req.query.skip);
+      }
+    } catch(err) {
+      console.log("wrong value for skip")
+    }
+  }
+  db.query(findQuery, params, (err, results) => {
+    if(err) {
+      console.error('Database error:', err);
+      return res.status(500).send({message: "Server error."});
+    }
+    const postsMap = {};
+
+    results.forEach(item => {
+      const { post, user, comment } = item;
+
+      if (!postsMap[post.id]) {
+        postsMap[post.id] = {
+          ...post,
+          user,
+          comments: []
+        };
+      }
+
+      if (comment && comment.id != null) {
+        postsMap[post.id].comments.push(comment);
+      }
+    });
+    res.status(200).send([postsMap]);
+  });
+})
+
+router.get('/post/:id/user', async (req, res) => {
+  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id LEFT JOIN comment ON post.id = comment.postId WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ?) poster) ORDER BY post.createdAt DESC LIMIT ? OFFSET ?';
+  const params = [req.params.id, 100, 0];
+  if(req.query.limit) {
+    try {
+      if(isNaN(req.query.limit)) {
+        params[1] = parseInt(req.query.limit);
+      }
+    } catch(err) {
+      console.log("wrong value for limit")
+    }
+  }
+  if(req.query.skip) {
+    try {
+      if(isNaN(req.query.skip)) {
+        params[2] = parseInt(req.query.skip);
+      }
+    } catch(err) {
+      console.log("wrong value for skip")
+    }
+  }
+  db.query(findQuery, params, (err, results) => {
+    if(err) {
+      console.error('Database error:', err);
+      return res.status(500).send({message: "Server error."});
+    }
+    const postsMap = {};
+
+    results.forEach(item => {
+      const { post, user, comment } = item;
+
+      if (!postsMap[post.id]) {
+        postsMap[post.id] = {
+          ...post,
+          user,
+          comments: []
+        };
+      }
+
+      if (comment && comment.id != null) {
+        postsMap[post.id].comments.push(comment);
+      }
+    });
+    res.status(200).send([postsMap]);
+  });
+})
+
 //finde einen bestimmten user
 router.get('/post/:id', async (req, res) => {
 
