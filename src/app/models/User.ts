@@ -13,6 +13,7 @@ export class User extends BaseModel<User> {
   firstName!: string;
   lastName!: boolean;
   fileId?: string;
+  access_token?: string;
 
   constructor(params: Partial<User>) {
     super(params);

@@ -32,9 +32,7 @@ export class AuthService {
   isLoggedIn(): boolean {
     return (
       localStorage.getItem("access_token") !== null &&
-      localStorage.getItem("access_token") !== undefined &&
-      localStorage.getItem("refresh_token") !== null &&
-      localStorage.getItem("refresh_token") !== undefined
+      localStorage.getItem("access_token") !== undefined
     );
   }
 
@@ -44,19 +42,18 @@ export class AuthService {
    * otherwise: the loggedIn flag will be set to false and an Observable of false is returned
    * @param loginBody the login data containing the email and password
    */
-  login(loginBody: LoginBody): Observable<boolean> {
+  login(loginBody: LoginBody): Observable<Boolean> {
     return this.http
-      .post<any>(this.baseUrl + "/login", loginBody, {
+      .post<User>(this.baseUrl + "/login", loginBody, {
         observe: "response",
       })
       .pipe(
         map((response) => {
-          if (response.status === HttpStatusCode.Created) {
+          if (response.status === HttpStatusCode.Ok || response.status === HttpStatusCode.Created || response.status === HttpStatusCode.Accepted) {
             this.setTokens(
-              response.body?.access_token,
-              response.body?.refresh_token,
+              response.body?.access_token!,
             );
-            this.setLoggedInUser(response.body?.user);
+            this.setLoggedInUser(response.body!);
             return true;
           }
           return false;
@@ -70,6 +67,8 @@ export class AuthService {
   register(registerBody: UserBody): Observable<User | null> {
     return this.http.post<User>(this.baseUrl + 'register', registerBody).pipe(
       map((res) => {
+        this.setLoggedInUser(res);
+        this.setTokens(res.access_token!,)
         return res;
       }),
       catchError(() => {
@@ -85,21 +84,15 @@ export class AuthService {
     this.loggedInUser = null;
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
     this.router.navigateByUrl('http://localhost:4200/login');
-  }
-
-  getRefreshToken(): string | null {
-    return localStorage.getItem("refresh_token");
   }
 
   getAccessToken(): string | null {
     return localStorage.getItem("access_token");
   }
 
-  setTokens(access_token: string, refresh_token: string) {
+  setTokens(access_token: string) {
     localStorage.setItem("access_token", access_token);
-    localStorage.setItem("refresh_token", refresh_token);
   }
 
   setLoggedInUser(user: User) {

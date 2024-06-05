@@ -3,12 +3,13 @@ import {TuiInputFilesModule, TuiInputModule, TuiIslandModule, TuiMarkerIconModul
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule, NgIf} from "@angular/common";
 import {tuiIconFile} from "@taiga-ui/icons";
-import {TuiSvgModule} from "@taiga-ui/core";
+import {TuiButtonModule, TuiSvgModule} from "@taiga-ui/core";
 import {AuthService} from "../../api/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {FileService} from "../../api/file.service";
 import {File} from "../../models/File";
 import {PushService, pushTypes} from "../../services/push.service";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 enum Step {
   LOGIN_INFO_STEP = 'LOGIN_INFO_STEP',
@@ -24,9 +25,12 @@ enum Step {
     ReactiveFormsModule,
     TuiInputModule,
     TuiInputFilesModule,
+    TuiButtonModule,
     NgIf,
     TuiMarkerIconModule,
     TuiSvgModule,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
@@ -57,7 +61,11 @@ export class RegisterPageComponent {
   step = Step.LOGIN_INFO_STEP;
 
   nextButton(){
-     this.step = Step.PERSONAL_STEP
+    if(this.step === Step.LOGIN_INFO_STEP) {
+      this.step = Step.PERSONAL_STEP;
+    } else {
+      this.step = Step.LOGIN_INFO_STEP;
+    }
   }
 
   create() {

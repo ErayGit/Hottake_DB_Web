@@ -3,7 +3,17 @@
       <div class="island">
         <tui-island>
           <div class="island-wrapper">
-            <h3 class="tui-island__title">Registrieren</h3>
+            <div class="box-for-button">
+              <button class="button-back"
+                      appearance="flat"
+                      tuiIconButton
+                      icon="tuiIconChevronLeft"
+                      (click)="nextButton()"
+              >
+                Button
+              </button>
+              <h3 class="tui-island__title">Registrieren</h3>
+            </div>
             <p class="tui-island__paragraph">Legen sie einen neuen Account an</p>
             <div class="form-wrapper">
               <tui-input-files
@@ -76,7 +86,17 @@
   <div class="island">
     <tui-island>
       <div class="island-wrapper">
+        <div class="box-for-button">
+          <button class="button-back"
+                  routerLink="" routerLinkActive="active" ariaCurrentWhenActive="page"
+                  appearance="flat"
+            tuiIconButton
+            icon="tuiIconChevronLeft"
+          >
+            Button
+          </button>
         <h3 class="tui-island__title">Registrieren</h3>
+        </div>
         <p class="tui-island__paragraph">Legen sie einen neuen Account an</p>
         <div class="form-wrapper">
           <form [formGroup]="registerForm">

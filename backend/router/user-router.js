@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("./../db-config");
 const validation = require("./../common/validation");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 const { find } = require("rxjs");
 
 router.post("/register", validation.validateRegister, async (req, res) => {
@@ -45,10 +46,20 @@ router.post("/register", validation.validateRegister, async (req, res) => {
           const findQuery = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)";
           const params = [req.body.email];
           db.query(findQuery, params, async (err, findRes) => {
+
+            const token = jwt.sign({
+                user: findRes[0],
+              },
+              'SECRETKEY', {
+                expiresIn: '1d'
+              }
+            );
+
             return res
               .status(201)
               .send({
                 message: "Die Registrierung war erfolgreich.",
+                access_token: token,
                 ...findRes[0],
               });
           });
@@ -77,9 +88,21 @@ router.post("/login", validation.validateLogin, async (req, res) => {
         const findQuery = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)";
         const params = [req.body.email];
         db.query(findQuery, params, async (err, findRes) => {
+
+          const token = jwt.sign({
+              user: findRes[0],
+            },
+            'SECRETKEY', {
+              expiresIn: '1d'
+            }
+          );
+
           return res
             .status(201)
-            .send({ message: "Login war erfolgreich.", ...findRes[0] });
+            .send({
+              message: "Login war erfolgreich.",
+              access_token: token,
+              ...findRes[0] });
         });
       } else {
         return res

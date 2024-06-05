@@ -1,5 +1,5 @@
 import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
-import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@taiga-ui/core";
+import {TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER, TuiButtonModule} from "@taiga-ui/core";
 import { Component } from '@angular/core';
 import { CARDComponent } from './views/feed-page/card/card.component';
 import { ProfilBarComponent } from './views/feed-page/profil-bar/profil-bar.component';
@@ -27,6 +27,7 @@ import {CommonModule} from "@angular/common";
     ReactiveFormsModule,
     HttpClientModule,
       TuiRootModule,
+      TuiButtonModule,
       TuiDialogModule,
       TuiAlertModule,
       TuiIslandModule,
