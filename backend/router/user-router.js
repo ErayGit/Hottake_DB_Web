@@ -23,7 +23,7 @@ router.post("/register", validation.validateRegister, async (req, res) => {
       let hashedPassword = await bcrypt.hash(req.body.password, salt);
       // Einfügen neuer Benutzerdaten
       const insertQuery =
-        "INSERT INTO user (id, name, bio, stadt, email, password, firstName, lastName) VALUES (UUID(),?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO user (id, name, bio, stadt, email, password, firstName, lastName, fileId) VALUES (UUID(),?, ?, ?, ?, ?, ?, ?, ?)";
       const insertParams = [
         req.body.name,
         req.body.bio,
@@ -32,6 +32,7 @@ router.post("/register", validation.validateRegister, async (req, res) => {
         hashedPassword,
         req.body.firstName,
         req.body.lastName,
+        req.body.fileId ?? null,
       ];
 
       db.query(insertQuery, insertParams, (err, result) => {

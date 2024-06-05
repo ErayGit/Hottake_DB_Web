@@ -108,6 +108,7 @@ export class RegisterPageComponent {
       if(!value){
         this.pushService.sendPush(pushTypes.ERROR);
       }
+      console.log(value);
       this.pushService.sendPush(pushTypes.SUCCESS);
     })
   }
