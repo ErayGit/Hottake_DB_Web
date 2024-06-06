@@ -6,15 +6,23 @@ main {
 
 header {
   position: fixed;
-  max-width: 75rem;
-  height: 10vh;
-  background-color: var(--background);
-  z-index: 10;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 70rem;
+  height: 10vh;
+  background-color: var(--background);
+  z-index: 10;
   padding: 0 3em;
   gap: 1em;
+
+  a {
+    text-decoration: none;
+  }
 
   div {
     height: 40%;

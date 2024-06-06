@@ -49,15 +49,29 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text);
+}
+
 body {
   color: var(--text);
   background-color: var(--background);
+  height: 100%;
 }
 
 button svg {
   fill: var(--primary-950);
   height: 25px;
   margin-right: 7px;
+}
+
+a {
+  color: var(--text);
 }
 
 .btn-primary {
@@ -105,7 +119,7 @@ button svg {
 .island {
   background-color: var(--background-800);
   border-radius: var(--border-radius-2);
-  padding: 0.75rem;
+  padding: 1rem;
 }
 
 .bk {

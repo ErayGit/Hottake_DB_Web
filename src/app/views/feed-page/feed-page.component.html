@@ -1,86 +1,56 @@
-<main>
+<main class="grid-container">
   <app-firends-bar></app-firends-bar>
-<div class="feed">
-  <div class="island">
-    <h3>Wie sieht heute dein Board aus?</h3>
-    <form action="">
-      <div class="row">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Dein Satz des Tages"
-          aria-label="First name"
-        />
-      </div>
-      <div class="row">
-        <div class="col">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Emoji des Tages</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+  <div class="feed">
+    <div class="island">
+      <h3>Wie sieht heute dein Board aus?</h3>
+
+      <form [formGroup]="addPostForm">
+        <div>
+          <tui-input formControlName="testValue">
+            Dein Satz des Tages
+            <input tuiTextfield />
+          </tui-input>
         </div>
-        <div class="col">
-          <input
-            type="color"
-            class="form-control form-control-color"
-            placeholder="First name"
-            aria-label="First name"
-          />
+        <div>
+          <tui-input formControlName="testValue">
+            Dein Satz des Tages
+            <input tuiTextfield />
+          </tui-input>
         </div>
-        <div class="col">
-          <input
-            type="file"
-            class="form-control"
-            placeholder="Bild des Tages"
-            aria-label="Last name"
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="First name"
-            aria-label="First name"
-          />
-        </div>
-        <div class="col">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="First name"
-            aria-label="First name"
-          />
-        </div>
-      </div>
-      <button type="button" class="btn btn-primary">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+        <div></div>
+
+        <button
+          (click)="addPost()"
+          tuiButton
+          type="button"
+          class="btn btn-primary"
         >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M18.61 2.64548C20.1948 2.19021 21.6568 3.65224 21.2016 5.23705L17.1785 19.2417C16.5079 21.5761 13.3904 22.0197 12.1096 19.9629L10.3338 17.1113C9.84262 16.3226 9.96155 15.2974 10.6207 14.6383L14.4111 10.8479C14.8022 10.4567 14.8033 9.82357 14.4134 9.43373C14.0236 9.04389 13.3905 9.04497 12.9993 9.43614L9.20901 13.2265C8.54987 13.8856 7.52471 14.0046 6.73596 13.5134L3.88412 11.7375C1.82737 10.4567 2.27092 7.33918 4.60532 6.66858L18.61 2.64548Z"
-            ></path>
-          </g>
-        </svg>
-      </button>
-    </form>
-  </div>
-  @for (item of items; track item){
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M18.61 2.64548C20.1948 2.19021 21.6568 3.65224 21.2016 5.23705L17.1785 19.2417C16.5079 21.5761 13.3904 22.0197 12.1096 19.9629L10.3338 17.1113C9.84262 16.3226 9.96155 15.2974 10.6207 14.6383L14.4111 10.8479C14.8022 10.4567 14.8033 9.82357 14.4134 9.43373C14.0236 9.04389 13.3905 9.04497 12.9993 9.43614L9.20901 13.2265C8.54987 13.8856 7.52471 14.0046 6.73596 13.5134L3.88412 11.7375C1.82737 10.4567 2.27092 7.33918 4.60532 6.66858L18.61 2.64548Z"
+              ></path>
+            </g>
+          </svg>
+        </button>
+      </form>
+    </div>
+    @for (item of items; track item){
     <app-card [item]="item"></app-card>
-  }
-</div>
+    }
+    <app-card></app-card>
+    <app-card></app-card>
+  </div>
 </main>
