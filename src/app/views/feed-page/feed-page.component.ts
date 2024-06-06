@@ -7,11 +7,18 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FileService } from '../../api/file.service';
 import { AuthService } from '../../api/auth.service';
-import { PushService } from '../../services/push.service';
 import { PostService } from '../../api/post.service';
 import { Post } from '../../models/Post';
 import { TuiInputModule } from '@taiga-ui/kit';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { File } from '../../models/File';
+import { PushService, pushTypes } from '../../services/push.service';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { TuiInputFilesModule } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-feed-page',
@@ -22,6 +29,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     FirendsBarComponent,
     ReactiveFormsModule,
     TuiInputModule,
+    TuiInputFilesModule,
   ],
   templateUrl: './feed-page.component.html',
   styleUrl: './feed-page.component.css',
@@ -45,24 +53,65 @@ export class FeedPageComponent implements OnInit {
   title = 'Hottake_DB_Web';
   items: Post[] = [];
 
-  addPostForm = new FormGroup({
-    testValue: new FormControl(''),
+  readonly addPostForm = new FormGroup({
+    text: new FormControl('', [Validators.required]),
+    emoje: new FormControl('', [Validators.required]),
+    color: new FormControl('', [Validators.required]),
+    artist: new FormControl('', [Validators.required]),
+    songTitle: new FormControl('', [Validators.required]),
   });
 
-  readonly palette = defaultEditorColors;
+  fileControl = new FormControl();
 
-  addPost() {}
+  addPost() {
+    let fileId: string;
+    const formData = new FormData();
+    formData.append(
+      'file',
+      this.fileControl.value,
+      this.fileControl.value.name
+    );
+    this.fileService.addImage(formData).subscribe((response) => {
+      console.log('dontknow');
+      if (response.ok) {
+        console.log(response.body, 'ok');
+        fileId = (response.body! as File).id;
+        this.postService
+          .addPost({
+            text: this.addPostForm.value.text!,
+            musicUrl: this.addPostForm.value.artist!,
+            color: this.addPostForm.value.color!,
+            emojie: this.addPostForm.value.emoje!,
+            fileId: fileId,
+            creatorId: this.authService.getLoggedInUser()?.id!,
+          })
+          .subscribe((value) => {
+            if (!value) {
+              this.fileService.deleteImage(fileId!);
+              this.pushService.sendPush(pushTypes.ERROR);
+            }
+            this.pushService.sendPush(pushTypes.SUCCESS);
+          });
+      }
+    });
+  }
 
   fetchData() {
     let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
     //TODO use loggedIn UserId
-    //if (this.authService.isLoggedIn()) {
-    //    userId = this.authService.getLoggedInUser().id
-    // }
+    if (this.authService.isLoggedIn()) {
+      const loggedInUser = this.authService.getLoggedInUser();
+      if (loggedInUser) {
+        userId = loggedInUser.id;
+      }
+    }
     //TODO Switch with from followed
-    return this.postService.findAllFromUser(userId).subscribe((posts) => {
-      this.items = posts;
-    });
+    // return this.postService.findAllFromUser(userId).subscribe((posts) => {
+    //   if (posts.length === 1 && Object.keys(posts[0]).length === 0) {
+    //     return;
+    //   }
+    //   this.items = posts;
+    // });
     /*
     return [
       {
@@ -188,5 +237,9 @@ export class FeedPageComponent implements OnInit {
     ];
 
      */
+  }
+
+  removeFile() {
+    this.fileControl.setValue(null);
   }
 }

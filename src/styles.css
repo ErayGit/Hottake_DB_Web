@@ -133,3 +133,15 @@ a {
 .bk-ligth {
   background-color: var(--text-100);
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--background-800);
+}

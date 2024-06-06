@@ -13,9 +13,28 @@
     grid-column-start: 2;
     overflow-y: scroll;
     height: 100%;
+    padding-right: 1em;
 
     div:nth-of-type(1) {
       margin-bottom: 1em;
+    }
+  }
+}
+
+.createBoard {
+  div {
+    margin-bottom: 1em;
+    display: flex;
+    gap: 0.5rem;
+
+    input[type="color"] {
+      width: 50%;
+      border-radius: var(--tui-radius-m);
+      height: 4em;
+    }
+
+    .input {
+      width: 100%;
     }
   }
 }
