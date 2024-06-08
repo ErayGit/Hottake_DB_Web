@@ -9,6 +9,9 @@ export const routes: Routes = [
 
   {path: 'profil', loadComponent: () => import('./views/profil-site/profil-site.component')
    .then(m => m.ProfilSiteComponent)},
+
+   {path: 'login', loadComponent: () => import('./views/login-site/login-site.component')
+    .then(m => m.LoginSiteComponent)},
 ];
 
 

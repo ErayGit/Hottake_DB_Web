@@ -2,6 +2,7 @@
  * login body containing username and password.
  */
 export interface LoginBody {
-  username: string;
+  email: string;
   password: string;
+  fileId?: string
 }
