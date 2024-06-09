@@ -3,7 +3,7 @@
     <div class="card bk-ligth text-card">
       <div class="card-body">
         <h5>
-          {{ item.Text }}
+          {{ item.text }}
         </h5>
       </div>
     </div>
@@ -23,13 +23,22 @@
     </div>
 
     <div class="card bk-ligth">
-      <div class="card-body">Bild</div>
+      <div class="card-body">
+        <img
+          [ngSrc]="
+          postImage != null ? postImage : 'assets/svg/placeholder.svg'
+        "
+          alt="post"
+          height="250"
+          width="120"
+        />
+      </div>
     </div>
   </div>
 
   <div class="meta-wraper">
     <div class="user">
-      <p>Username</p>
+      {{ item.user.name }}
     </div>
     <div class="reaction">
       <div class="dropdown">

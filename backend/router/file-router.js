@@ -43,7 +43,8 @@ router.get('/file/:id/download', async (req, res) => {
       return res.status(500).send({message: "Server error."});
     }
     if (results.length > 0) {
-      res.status(200).set({'Content-Type': results[0].mimetype, 'Content-Disposition': `attachment; filename=${results[0].filename}`,}).end(results[0].data);   // vllt keine eckige
+      console.log(results[0]);
+      res.status(200).set({'Content-Type': results[0].file.mimetype, 'Content-Disposition': `attachment; filename=${results[0].file.filename}`,}).end(results[0].file.data);   // vllt keine eckige
     } else {
       res.status(404).send({message: "file not found."});
     }

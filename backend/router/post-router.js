@@ -5,8 +5,8 @@ const db = require('./../db-config');
 
 router.post('/post',  async (req, res) => {
   const uuid = uuidGenerator.v4();
-  const insertQuery = 'INSERT INTO post (id, text, musicUrl, color, emoji, creatorId) VALUES (? ,?, ?, ?, ?, ?)';
-  const insertParams = [uuid, req.body.text, req.body.musicUrl, req.body.color, req.body.emoji, req.body.creatorId];
+  const insertQuery = 'INSERT INTO post (id, text, musicUrl, color, emoji, creatorId, fileId) VALUES (? ,?, ?, ?, ?, ?, ?)';
+  const insertParams = [uuid, req.body.text, req.body.musicUrl, req.body.color, req.body.emoji, req.body.creatorId, req.body.fileId];
 
           db.query(insertQuery, insertParams, (err, result) => {
               if (err) {
@@ -107,23 +107,26 @@ router.get('/post/:id/user', async (req, res) => {
       return res.status(500).send({message: "Server error."});
     }
     const postsMap = {};
-
+    const returnArray = [];
+    let index = 0;
     results.forEach(item => {
       const { post, user, comment } = item;
 
       if (!postsMap[post.id]) {
-        postsMap[post.id] = {
+        postsMap[post.id] = {};
+        returnArray.push({
           ...post,
           user,
           comments: []
-        };
+        })
       }
 
       if (comment && comment.id != null) {
-        postsMap[post.id].comments.push(comment);
+        returnArray[index].comments.push(comment);
       }
+      index = index+1;
     });
-    res.status(200).send([postsMap]);
+    res.status(200).send(returnArray);
   });
 })
 

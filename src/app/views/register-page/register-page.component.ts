@@ -80,7 +80,7 @@ export class RegisterPageComponent {
       this.fileService.addImage(formData).subscribe((response) => {console.log("dontknow")
         if(response.ok){
           console.log(response.body, "ok");
-          fileId = (response.body! as File).id
+          fileId = (response.body?.file! as File).id
           this.authService.register({
             name: this.registerForm.value.username!,
             email: this.registerForm.value.email!,

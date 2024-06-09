@@ -19,6 +19,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TuiInputFilesModule } from '@taiga-ui/kit';
+import {TuiCardComponent} from "./tui-card/tui-card/tui-card.component";
 
 @Component({
   selector: 'app-feed-page',
@@ -30,6 +31,7 @@ import { TuiInputFilesModule } from '@taiga-ui/kit';
     ReactiveFormsModule,
     TuiInputModule,
     TuiInputFilesModule,
+    TuiCardComponent,
   ],
   templateUrl: './feed-page.component.html',
   styleUrl: './feed-page.component.css',
@@ -72,17 +74,16 @@ export class FeedPageComponent implements OnInit {
       this.fileControl.value.name
     );
     this.fileService.addImage(formData).subscribe((response) => {
-      console.log('dontknow');
       if (response.ok) {
-        console.log(response.body, 'ok');
-        fileId = (response.body! as File).id;
+        fileId = response.body?.file!.id!;
+        console.log(fileId, 'ok');
         this.postService
           .addPost({
             text: this.addPostForm.value.text!,
             musicUrl: this.addPostForm.value.artist!,
-            color: this.addPostForm.value.color!,
-            emojie: this.addPostForm.value.emoje!,
-            fileId: fileId,
+            color: this.addPostForm.value.color! ?? '#563d7c',
+            emoji: this.addPostForm.value.emoje!,
+            fileId: fileId!,
             creatorId: this.authService.getLoggedInUser()?.id!,
           })
           .subscribe((value) => {
@@ -100,16 +101,12 @@ export class FeedPageComponent implements OnInit {
     let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
     if (this.authService.isLoggedIn()) {
       const loggedInUser = this.authService.getLoggedInUser();
-      console.log(loggedInUser);
       if (loggedInUser) {
         userId = loggedInUser.id;
       }
     }
     //TODO Switch with from followed
      return this.postService.findAllFromUser(userId).subscribe((posts) => {
-       if (posts.length === 1 && Object.keys(posts[0]).length === 0) {
-         return;
-       }
        this.items = posts;
      });
     /*

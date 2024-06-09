@@ -6,7 +6,6 @@ import { BaseModel } from "./BaseModel";
  */
 export class File extends BaseModel<File> {
 
-
   constructor(params: Partial<File>) {
     super(params);
     Object.assign(this, params);

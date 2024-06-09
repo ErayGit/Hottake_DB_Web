@@ -13,7 +13,7 @@ export class FileService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  addImage(formData: FormData): Observable<HttpResponse<File>> {
+  addImage(formData: FormData): Observable<HttpResponse<{file: File}>> {
     return this.http.post<any>(this.baseUrl + 'file', formData, {
       observe: 'response',
     });
@@ -23,7 +23,13 @@ export class FileService {
     return this.http.delete(this.baseUrl + `file/${fileId}`);
   }
 
-  getImage(fileId: string): Observable<File> {
-    return this.http.get<File>(this.baseUrl + `file/${fileId}`);
+  getImageBlob(fileId: string): Observable<any> {
+    return this.http.get<any>(this.baseUrl + `file/${fileId}`);
+  }
+
+  getImageFile(fileId: string): Observable<any> {
+    return this.http.get<any>(this.baseUrl + `file/${fileId}/download`, {
+      responseType: "blob" as "json",
+    });
   }
 }
