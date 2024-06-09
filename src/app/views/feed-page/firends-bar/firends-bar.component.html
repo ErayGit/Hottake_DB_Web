@@ -32,6 +32,20 @@
       Freunde hinzufügen
     </button>
     <h4 class="mt-5">Meine Feunde</h4>
+    <div class="friendcards">
+      @if (followedUsers?.length! === 0) {
+        <div class="nofriendcards">
+          <h3 class="nofriends">Noch keine Freunde vorhanden</h3>
+        </div>
+      }
+      @else if (followedUsers.length > 0) {
+        @for (user of followedUsers; track user){
+          <div class="arefriendcards">
+            <app-friend-card [user]="user"></app-friend-card>
+          </div>
+        }
+      }
+    </div>
   </div>
   <div class="profil island">
     <div class="profil-card">

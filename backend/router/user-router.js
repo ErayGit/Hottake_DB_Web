@@ -5,6 +5,7 @@ const validation = require("./../common/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const { find } = require("rxjs");
+const uuidGenerator = require("uuid");
 
 router.post("/register", validation.validateRegister, async (req, res) => {
   //  Abfrage, um nach einer Email zu suchen
@@ -45,6 +46,23 @@ router.post("/register", validation.validateRegister, async (req, res) => {
           const findQuery = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)";
           const params = [req.body.email];
           db.query(findQuery, params, async (err, findRes) => {
+
+            const followuuid = uuidGenerator.v4();
+            const insertQuery = 'INSERT INTO follow (id,status, followerId, followedId) VALUES (? ,?, ?, ?)';
+            const insertParams = [followuuid, 'pending', findRes[0].user.id, findRes[0].user.id];
+
+            db.query(insertQuery, insertParams, (err, result) => {
+              if (err) {
+                console.error('Insert error:', err);
+                return res.status(500).send({message: "Error inserting follow data."});
+              } else {
+                const findQuery = 'SELECT * FROM follow WHERE id = ?';
+                const params = [followuuid];
+                db.query(findQuery, params, async (err, lol) => {
+                 console.log("created Follow");
+                })
+              }
+            });
 
             const token = jwt.sign({
                 user: findRes[0],
@@ -116,6 +134,31 @@ router.post("/login", validation.validateLogin, async (req, res) => {
 //finde alle user
 router.get("/user", async (req, res) => {
   db.query("SELECT * FROM user", (err, results) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).send({ message: "Server error." });
+    }
+    res.status(200).send(results);
+  });
+});
+
+//finde alle user dem ein user folgt
+router.get("/user/:id/followed", async (req, res) => {
+  const query = "SELECT * FROM user WHERE id = ANY(SELECT followedId FROM follow WHERE followerId = ?)"
+  const params = [req.params.id]
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).send({ message: "Server error." });
+    }
+    res.status(200).send(results);
+  });
+});
+
+router.get("/user/:id/notfollowed", async (req, res) => {
+  const query = "SELECT * FROM user WHERE id != ANY(SELECT followedId FROM follow WHERE followerId = ?)"
+  const params = [req.params.id]
+  db.query(query, params, (err, results) => {
     if (err) {
       console.error("Database error:", err);
       return res.status(500).send({ message: "Server error." });

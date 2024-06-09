@@ -36,3 +36,29 @@
   padding-top: 0.3rem;
   border-radius: 50%;
 }
+
+.friendcards {
+  display: flex;
+  color: var(--text);
+  background-color: var(--background-950);
+  height: 80%;
+  border-radius: 0.6rem;
+}
+
+.nofriendcards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nofriends {
+  width: 75%;
+}
+
+.arefriendcards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
