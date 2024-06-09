@@ -39,7 +39,6 @@ enum Step {
 
 export class LoginSiteComponent {
   constructor(
-    private fileService: FileService,
     private authService: AuthService,
     private pushService: PushService
   ) {
@@ -51,65 +50,22 @@ export class LoginSiteComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(5)]),
   });
-  fileControl = new FormControl();
-  step = Step.LOGIN_INFO_STEP;
 
-  nextButton(){
-    if(this.step === Step.LOGIN_INFO_STEP) {
-      this.step = Step.PERSONAL_STEP;
-    } else {
-      this.step = Step.LOGIN_INFO_STEP;
-    }
-  }
 
   create() {
-    let fileId: string | null;
-    if(this.fileControl.value || this.fileControl.value?.length === 0){
-      const formData = new FormData();
-      formData.append(
-        "file",
-        this.fileControl.value,
-        this.fileControl.value.name,
-      );
-      this.fileService.addImage(formData).subscribe((response) => {console.log("dontknow")
-        if(response.ok){
-          console.log(response.body, "ok");
-          fileId = (response.body! as File).id
           this.authService.login({
             email: this.loginForm.value.email!,
             password: this.loginForm.value.password!,
-            fileId: fileId
           }).subscribe(
             (value) => {
               if(!value){
-                this.fileService.deleteImage(fileId!);
                 this.pushService.sendPush(pushTypes.ERROR);
+                return;
               }
               this.pushService.sendPush(pushTypes.SUCCESS);
             }
           )
-        }
-      })
       return;
     }
-    this.authService.login({
-      email: this.loginForm.value.email!,
-      password: this.loginForm.value.password!,
-      fileId: ''
-    }).subscribe((value) => {
-      if(!value){
-        this.pushService.sendPush(pushTypes.ERROR);
-      }
-      console.log(value);
-      this.pushService.sendPush(pushTypes.SUCCESS);
-    })
-  }
 
-
-
-  removeFile() {
-    this.fileControl.setValue(null);
-  }
-
-  protected readonly tuiIconFile = tuiIconFile;
 }

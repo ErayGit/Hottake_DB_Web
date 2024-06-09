@@ -10,7 +10,6 @@ router.post("/register", validation.validateRegister, async (req, res) => {
   //  Abfrage, um nach einer Email zu suchen
   const emailQuery = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)";
   const emailParams = [req.body.email];
-  console.log(req.body);
   db.query(emailQuery, emailParams, async (err, result) => {
     if (err) {
       console.error("Database error:", err);
@@ -73,7 +72,6 @@ router.post("/register", validation.validateRegister, async (req, res) => {
 router.post("/login", validation.validateLogin, async (req, res) => {
   const query = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)";
   const params = [req.body.email];
-
   db.query(query, params, async (err, results) => {
     if (err) {
       console.error("Database error:", err); // Fehler code
@@ -82,7 +80,7 @@ router.post("/login", validation.validateLogin, async (req, res) => {
       // passwort überprüfung (gehashed)
       const match = await bcrypt.compare(
         req.body.password,
-        results[0].password
+        results[0].user.password
       );
       if (match) {
         const findQuery = "SELECT * FROM user WHERE LOWER(email) = LOWER(?)";

@@ -106,12 +106,12 @@ export class FeedPageComponent implements OnInit {
       }
     }
     //TODO Switch with from followed
-    // return this.postService.findAllFromUser(userId).subscribe((posts) => {
-    //   if (posts.length === 1 && Object.keys(posts[0]).length === 0) {
-    //     return;
-    //   }
-    //   this.items = posts;
-    // });
+     return this.postService.findAllFromUser(userId).subscribe((posts) => {
+       if (posts.length === 1 && Object.keys(posts[0]).length === 0) {
+         return;
+       }
+       this.items = posts;
+     });
     /*
     return [
       {

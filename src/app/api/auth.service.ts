@@ -44,7 +44,7 @@ export class AuthService {
    */
   login(loginBody: LoginBody): Observable<Boolean> {
     return this.http
-      .post<User>(this.baseUrl + "/login", loginBody, {
+      .post<User>(this.baseUrl + "login", loginBody, {
         observe: "response",
       })
       .pipe(
