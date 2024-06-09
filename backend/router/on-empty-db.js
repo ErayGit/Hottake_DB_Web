@@ -80,5 +80,15 @@ module.exports.initDb = function () {
       console.error('[Could not create foreign constraint 7 or already exists]')
     }
   });
+  db.query("ALTER TABLE `post` ADD COLUMN `musicArtist` varchar(255) NOT NULL", (err, results) => {
+    if (err) {
+      console.error('[Could not create Column musicArtist, already exists]')
+    }
+  });
+  db.query("ALTER TABLE `post` ADD COLUMN `musicTitle` varchar(255) NOT NULL", (err, results) => {
+    if (err) {
+      console.error('[Could not create Column musicTitle, already exists]')
+    }
+  });
 };
 

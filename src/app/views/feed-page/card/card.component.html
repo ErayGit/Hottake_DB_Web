@@ -8,8 +8,23 @@
       </div>
     </div>
 
-    <div class="card bk-ligth">
-      <div class="card-body">Song</div>
+    <div class="card bk-spotify-widget">
+      <div class="card-body bk-spotify-widget">
+        <img
+          [ngSrc]="'assets/svg/Spotify-Icon-Logo.wine.svg'"
+          alt="post"
+          height="100"
+          width="100"
+        />
+        <div class="musicBox">
+          <h5 class="spotify-text">
+            {{ item.musicArtist }}
+          </h5>
+          <h5 class="spotify-text">
+            {{ item.musicTitle }}
+          </h5 >
+        </div>
+      </div>
     </div>
 
     <div class="card p-2 bk-ligth">
@@ -41,24 +56,27 @@
       {{ item.user.name }}
     </div>
     <div class="reaction">
-      <div class="dropdown">
-        <button
-          class="btn dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
+        <button class="button-back"
+                appearance="flat"
+                tuiButton
+                (click)="clickEmojiButton(Emoji.PRAYER)"
         >
-          Reaktion
+          🙏 {{ prayerCount }}
         </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item">👨‍💻</a></li>
-          <li><a class="dropdown-item">🤙</a></li>
-          <li><a class="dropdown-item">👍</a></li>
-          <li><a class="dropdown-item">👎</a></li>
-        </ul>
-      </div>
-
-      <div class="divider"></div>
+        <button class="button-back"
+                appearance="flat"
+                tuiButton
+                (click)="clickEmojiButton(Emoji.LAUGHING)"
+        >
+          😂 {{ laughingCount }}
+        </button>
+        <button class="button-back"
+                appearance="flat"
+                tuiButton
+                (click)="clickEmojiButton(Emoji.CRYING)"
+        >
+          😭 {{ cryingCount }}
+        </button>
     </div>
   </div>
 </div>

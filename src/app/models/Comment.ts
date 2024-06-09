@@ -4,23 +4,17 @@ import { BaseModel } from "./BaseModel";
  * Model Class for creating User instances
  * extends the BaseModel
  */
-enum Emoji{
+export enum Emoji{
   LAUGHING = 'laughing',
   CRYING = 'crying',
   PRAYER = 'prayer',
 }
 
-export class Post extends BaseModel<Post> {
+export class Comment extends BaseModel<Comment> {
   text!: string;
-  musicUrl!: string;
-  musicArtist!: string;
-  musicTitle!: string;
-  color!: string;
-  emoji!: string;
-  creatorId!: string;
-  fileId?: string;
+  emoji!: Emoji;
 
-  constructor(params: Partial<Post>) {
+  constructor(params: Partial<Comment>) {
     super(params);
     Object.assign(this, params);
   }

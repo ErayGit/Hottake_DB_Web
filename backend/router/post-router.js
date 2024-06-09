@@ -5,8 +5,8 @@ const db = require('./../db-config');
 
 router.post('/post',  async (req, res) => {
   const uuid = uuidGenerator.v4();
-  const insertQuery = 'INSERT INTO post (id, text, musicUrl, color, emoji, creatorId, fileId) VALUES (? ,?, ?, ?, ?, ?, ?)';
-  const insertParams = [uuid, req.body.text, req.body.musicUrl, req.body.color, req.body.emoji, req.body.creatorId, req.body.fileId];
+  const insertQuery = 'INSERT INTO post (id, text, musicUrl, color, emoji, creatorId, fileId, musicArtist, musicTitle) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?)';
+  const insertParams = [uuid, req.body.text, req.body.musicUrl, req.body.color, req.body.emoji, req.body.creatorId, req.body.fileId, req.body.musicArtist, req.body.musicTitle];
 
           db.query(insertQuery, insertParams, (err, result) => {
               if (err) {
@@ -16,7 +16,7 @@ router.post('/post',  async (req, res) => {
                 const findQuery = 'SELECT * FROM post WHERE id = ?';
                 const params = [uuid];
                 db.query(findQuery, params, async (err, findRes) => {
-                  return res.status(201).send({message: "Create Comment war erfolgreich.", ...findRes[0]});
+                  return res.status(201).send({message: "Create Post war erfolgreich.", ...findRes[0]});
                 })
               }
           });
@@ -60,7 +60,6 @@ router.get('/post/:id/feed', async (req, res) => {
       return res.status(500).send({message: "Server error."});
     }
     const postsMap = {};
-
     results.forEach(item => {
       const { post, user, comment } = item;
 
@@ -76,7 +75,13 @@ router.get('/post/:id/feed', async (req, res) => {
         postsMap[post.id].comments.push(comment);
       }
     });
-    res.status(200).send([postsMap]);
+
+    const returnArray = [];
+
+    Object.keys(postsMap).forEach((key) => {
+      returnArray.push(postsMap[key]);
+    })
+    res.status(200).send(returnArray);
   });
 })
 
@@ -107,25 +112,27 @@ router.get('/post/:id/user', async (req, res) => {
       return res.status(500).send({message: "Server error."});
     }
     const postsMap = {};
-    const returnArray = [];
-    let index = 0;
     results.forEach(item => {
       const { post, user, comment } = item;
 
       if (!postsMap[post.id]) {
-        postsMap[post.id] = {};
-        returnArray.push({
+        postsMap[post.id] = {
           ...post,
           user,
           comments: []
-        })
+        };
       }
 
       if (comment && comment.id != null) {
-        returnArray[index].comments.push(comment);
+        postsMap[post.id].comments.push(comment);
       }
-      index = index+1;
     });
+
+    const returnArray = [];
+
+    Object.keys(postsMap).forEach((key) => {
+      returnArray.push(postsMap[key]);
+    })
     res.status(200).send(returnArray);
   });
 })

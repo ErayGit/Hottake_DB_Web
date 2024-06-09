@@ -10,6 +10,8 @@ import {RegisterPageComponent} from "./views/register-page/register-page.compone
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import {ImageCropperComponent} from "ngx-image-cropper";
 
 @Component({
   selector: 'app-root',
@@ -32,7 +34,9 @@ import {CommonModule} from "@angular/common";
       TuiAlertModule,
       TuiIslandModule,
       TuiInputModule,
-      TuiInputFilesModule
+      TuiInputFilesModule,
+      PickerModule,
+      ImageCropperComponent,
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

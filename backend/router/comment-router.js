@@ -54,6 +54,24 @@ router.get('/comment/:id', async (req, res) => {
     });
 });
 
+router.get('/comment/:id/post', async (req, res) => {
+
+  const query = 'SELECT * FROM comment WHERE postId = ?';
+  const params = [req.params.id];
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Database error:', err); // Fehler Protokoll
+      return res.status(500).send({message: "Server error."});
+    }
+    if (results.length > 0) {
+      res.status(200).send(results);   // vllt keine eckige
+    } else {
+      res.status(404).send({message: "comment not found."});
+    }
+  });
+});
+
 // delete user
 router.delete('/comment/:id', async (req, res) => {
 

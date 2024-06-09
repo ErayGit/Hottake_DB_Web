@@ -3,7 +3,8 @@
  */
 export interface PostBody {
   text: string;
-  musicUrl: string;
+  musicArtist: string;
+  musicTitle: string;
   color: string;
   emoji: string;
   fileId: string;

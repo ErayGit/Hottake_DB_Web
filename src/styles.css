@@ -134,6 +134,14 @@ a {
   background-color: var(--text-100);
 }
 
+.bk-spotify-widget {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  border-radius: 0.75rem;
+  background: #0a0d10;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

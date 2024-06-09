@@ -101,6 +101,7 @@
     flex-wrap: wrap;
   }
   .user {
+    min-width: 5rem;
     p {
       margin: 0;
     }
@@ -134,4 +135,23 @@
 
 h5 {
   color: #0b1928;
+}
+
+.musicBox {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.spotify-text {
+  color: var(--text);
+}
+
+.dropdown-menu-norm {
+  background-color: var(--background-900);
+}
+
+.dropdown-item-norm {
+  color: white;
 }
