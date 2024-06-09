@@ -43,7 +43,7 @@ export class FeedPageComponent implements OnInit {
     private fileService: FileService,
     private postService: PostService,
     private authService: AuthService,
-    private pushService: PushService
+    private pushService: PushService,
   ) {}
 
   ngOnInit(): void {
@@ -98,9 +98,9 @@ export class FeedPageComponent implements OnInit {
 
   fetchData() {
     let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
-    //TODO use loggedIn UserId
     if (this.authService.isLoggedIn()) {
       const loggedInUser = this.authService.getLoggedInUser();
+      console.log(loggedInUser);
       if (loggedInUser) {
         userId = loggedInUser.id;
       }

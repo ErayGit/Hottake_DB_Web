@@ -106,6 +106,6 @@ export class AuthService {
     }
     const userJSON = localStorage.getItem("user");
     const parsedUser = JSON.parse(userJSON || "{}");
-    return new User(parsedUser);
+    return new User(parsedUser.user);
   }
 }
