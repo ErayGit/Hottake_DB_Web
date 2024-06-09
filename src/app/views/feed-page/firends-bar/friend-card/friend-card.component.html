@@ -1,0 +1,25 @@
+<div class="friendcards-inside">
+  <div class="name-and-img">
+  <img
+    [ngSrc]="
+          userImage != null ? userImage : 'assets/svg/placeholder.svg'
+        "
+    alt="post"
+    height="40"
+    width="40"
+  />
+  <h5 class="name">
+    {{ user.user.name }}
+  </h5>
+  </div>
+  <div class="button-wrapper">
+    <button
+      size="s"
+      (click)="follow()"
+      tuiButton
+      type="submit"
+    >
+      Entfolgen
+    </button>
+  </div>
+</div>

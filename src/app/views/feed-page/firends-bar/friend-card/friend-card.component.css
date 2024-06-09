@@ -1,0 +1,31 @@
+.name-and-img {
+  display: flex;
+  padding: 20px;
+  height: 4rem;
+  width: 15rem;
+  flex-direction: row;
+  align-items: center;
+  min-height: 4rem;
+}
+
+.friendcards-inside {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.name {
+  padding-top: 3px;
+  padding-left: 0.5rem;
+}
+
+h5 {
+  height: 1.5rem;
+  padding-left: 0.5rem;
+  display: flex;
+}
+
+img {
+  border-radius: 50%;
+}
