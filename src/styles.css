@@ -120,6 +120,7 @@ a {
   background-color: var(--background-800);
   border-radius: var(--border-radius-2);
   padding: 1rem;
+  max-height: 700px;
 }
 
 .bk {

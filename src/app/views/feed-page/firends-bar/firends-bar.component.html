@@ -41,7 +41,10 @@
       @else if (followedUsers.length > 0) {
         @for (user of followedUsers; track user){
           <div class="arefriendcards">
-            <app-friend-card [user]="user"></app-friend-card>
+            <app-friend-card
+              (getFollowedUsers)="getFollowedUsers()"
+              [user]="user">
+            </app-friend-card>
           </div>
         }
       }
