@@ -31,8 +31,31 @@
       </svg>
       Freunde hinzufügen
     </button>
-    <h4 class="mt-5">Meine Feunde</h4>
+    <div class="spacer">
+    </div>
     <div class="friendcards">
+      <div class="devided-button-island">
+        <div class="button-one">
+          <button
+            appearance="flat"
+            (click)="getFollowedUsers()"
+            tuiButton
+            type="button"
+          >
+            Vorschläge
+          </button>
+        </div>
+        <div class="button-two">
+          <button
+            (click)="getFollowedUsers()"
+            appearance="flat"
+            tuiButton
+            type="button"
+          >
+            Freunde
+          </button>
+        </div>
+      </div>
       @if (followedUsers?.length! === 0) {
         <div class="nofriendcards">
           <h3 class="nofriends">Noch keine Freunde vorhanden</h3>

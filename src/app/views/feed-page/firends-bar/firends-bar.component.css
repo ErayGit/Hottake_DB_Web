@@ -37,6 +37,31 @@
   border-radius: 50%;
 }
 
+.spacer {
+  height: 3.5rem;
+}
+
+.devided-button-island {
+  display: flex;
+  flex-direction: row;
+}
+
+.button-one {
+  display: flex;
+  padding-top: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.button-two {
+  display: flex;
+  padding-top: 0.6rem;
+  justify-content: center;
+  align-items: center;
+  width: 50%
+}
+
 .friendcards {
   display: flex;
   color: var(--text);

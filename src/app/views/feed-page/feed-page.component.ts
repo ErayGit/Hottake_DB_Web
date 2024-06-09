@@ -110,7 +110,7 @@ export class FeedPageComponent implements OnInit {
       }
     }
     //TODO Switch with from followed
-     return this.postService.findAllFromUser(userId).subscribe((posts) => {
+     return this.postService.findAllFromFollowed(userId).subscribe((posts) => {
        this.items = posts;
      });
   }

@@ -7,11 +7,12 @@ import { User } from '../../../models/User';
 import {TuiButtonModule} from "@taiga-ui/core";
 import {NgOptimizedImage} from "@angular/common";
 import {FriendCardComponent} from "./friend-card/friend-card.component";
+import {TuiIslandModule} from "@taiga-ui/kit";
 
 @Component({
   selector: 'app-firends-bar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, TuiButtonModule, NgOptimizedImage, FriendCardComponent],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, TuiButtonModule, NgOptimizedImage, FriendCardComponent, TuiIslandModule],
   templateUrl: './firends-bar.component.html',
   styleUrl: './firends-bar.component.css',
 })
