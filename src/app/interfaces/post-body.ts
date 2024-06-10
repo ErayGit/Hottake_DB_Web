@@ -5,6 +5,7 @@ export interface PostBody {
   text: string;
   musicArtist: string;
   musicTitle: string;
+  musicUrl: string;
   color: string;
   emoji: string;
   fileId: string;

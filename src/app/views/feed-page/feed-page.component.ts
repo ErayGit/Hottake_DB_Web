@@ -20,6 +20,7 @@ import {
 import { TuiInputFilesModule } from '@taiga-ui/kit';
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {ImageCropperComponent} from "ngx-image-cropper";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-feed-page',
@@ -47,9 +48,13 @@ export class FeedPageComponent implements OnInit {
     private postService: PostService,
     private authService: AuthService,
     private pushService: PushService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    if(!this.authService.isLoggedIn()){
+      this.router.navigate(['login']);
+    }
     this.fetchData();
   }
 
@@ -82,6 +87,7 @@ export class FeedPageComponent implements OnInit {
             text: this.addPostForm.value.text!,
             musicArtist: this.addPostForm.value.artist!,
             musicTitle: this.addPostForm.value.songTitle!,
+            musicUrl: "random",
             color: this.addPostForm.value.color! ? this.addPostForm.value.color! : '#563d7c',
             emoji: this.addPostForm.value.emoje!,
             fileId: fileId!,
