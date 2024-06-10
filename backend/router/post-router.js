@@ -34,7 +34,7 @@ router.get('/post', async (req, res) => {
 });
 
 router.get('/post/:id/feed', async (req, res) => {
-  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id LEFT JOIN comment ON post.id = comment.postId WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ANY(SELECT followedId FROM follow WHERE followerId = ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?) poster)';
+  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id LEFT JOIN comment ON post.id = comment.postId WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ANY(SELECT followedId FROM follow WHERE followerId = ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?) poster) ORDER BY post.createdAt DESC';
   const params = [req.params.id, 100, 0];
   if(req.query.limit) {
     try {
