@@ -1,31 +1,14 @@
 <div class="sozial">
   <div class="friends island">
-    <button
-      type="button"
-      class="btn btn-secondary"
-      data-bs-toggle="modal"
-      data-bs-target="#createCard"
-    >
-      <svg
-        viewBox="0 0 16 16"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="#000000"
-        class="bi bi-people-fill"
-      >
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#createCard">
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000" class="bi bi-people-fill">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g
-          id="SVGRepo_tracerCarrier"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
         <g id="SVGRepo_iconCarrier">
-          <path
-            d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-          ></path>
-          <path
-            fill-rule="evenodd"
-            d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"
-          ></path>
+          <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+          <path fill-rule="evenodd"
+            d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z">
+          </path>
           <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path>
         </g>
       </svg>
@@ -36,40 +19,28 @@
     <div class="friendcards">
       <div class="devided-button-island">
         <div class="button-one">
-          <button
-            appearance="flat"
-            (click)="getFollowedUsers()"
-            tuiButton
-            type="button"
-          >
+          <button appearance="flat" (click)="getFollowedUsers()" tuiButton type="button">
             Vorschläge
           </button>
         </div>
         <div class="button-two">
-          <button
-            (click)="getFollowedUsers()"
-            appearance="flat"
-            tuiButton
-            type="button"
-          >
+          <button (click)="getFollowedUsers()" appearance="flat" tuiButton type="button">
             Freunde
           </button>
         </div>
       </div>
       @if (followedUsers?.length! === 0) {
-        <div class="nofriendcards">
-          <h3 class="nofriends">Noch keine Freunde vorhanden</h3>
-        </div>
+      <div class="nofriendcards">
+        <h3 class="nofriends">Noch keine Freunde vorhanden</h3>
+      </div>
       }
       @else if (followedUsers.length > 0) {
-        @for (user of followedUsers; track user){
-          <div class="arefriendcards">
-            <app-friend-card
-              (getFollowedUsers)="getFollowedUsers()"
-              [user]="user">
-            </app-friend-card>
-          </div>
-        }
+      @for (user of followedUsers; track user){
+      <div class="arefriendcards">
+        <app-friend-card (getFollowedUsers)="getFollowedUsers()" [user]="user">
+        </app-friend-card>
+      </div>
+      }
       }
     </div>
   </div>
@@ -77,8 +48,8 @@
     <div class="profil-card">
       <img src="../../../../assets/oma.jpg" class="card-img-top" alt="..." />
       <div class="card-body">
-        <h5 class="card-title">Vorname Nachname</h5>
-        <a href="/profil">&#64;UschiMagHorst24</a>
+        <h5 class="card-title">{{name}}</h5>
+        <a href="/{{userName}}">&#64;{{userName}}</a>
       </div>
     </div>
   </div>
