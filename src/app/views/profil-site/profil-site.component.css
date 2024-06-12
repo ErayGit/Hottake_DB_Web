@@ -1,12 +1,13 @@
 @import url(../../../styles.css);
-
-
 main {
     display: flex;
-    justify-content: center;
+    justify-content:center;
     align-items: center;
+    width: 100vw;
     height: 100vh;
     background-color: var(--background);
+    padding-top: 10vh;
+    gap: 1rem;
 }
 
 .left, .right {
@@ -18,8 +19,8 @@ main {
 .left {
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
-    width: 25%;
+    justify-content: start;
+    width: 20%;
     height: auto;
     padding: 2em;
     gap: 1em;
@@ -27,9 +28,15 @@ main {
 }
 
 .right {
-    margin-left: 10px;
+    grid-column-start: 2;
     padding: 2em;
     width: 40%;
+    overflow-y: scroll;
+    height: 100%;
+
+    div:nth-of-type(1) {
+        margin-bottom: 1em;
+      }
 }
 
 .profilbild{
@@ -42,6 +49,7 @@ main {
 .flex-container{
     display: flex;
     align-items: center;
+    flex-direction: column;
     gap: 1em;
 }
 
@@ -56,5 +64,9 @@ main {
 }
 
 button{
-    
+    display: flex;
+    justify-content: center;
+    padding: 0.5em;
+    display: flex;
+    width: 10%
 }

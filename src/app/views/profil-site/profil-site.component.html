@@ -1,23 +1,34 @@
 <main>
-    <button class="button-back"
-        routerLink="" routerLinkActive="active" ariaCurrentWhenActive="page"
-        appearance="flat"
-        tuiIconButton
-        icon="tuiIconChevronLeft"
-    >
-    Button
+
+    <button
+    type="button" 
+    class="btn btn-secondary" 
+    data-bs-toggle="modal" 
+    data-bs-target="#createCard"
+    routerLink="/"
+    routerLinkActive="active">
+    Zurück zur Startseite
     </button>
 
     <div class="left">
         <div class="flex-container">
             <img src="../../../../assets/oma.jpg" class="profilbild" alt="...">
-            <p class="nutzername">UschiMagHorst24</p>
+            <h5 class="card-title">{{name}}</h5>
+            <a >&#64;{{userName}}</a>
         </div>
         <p class="bio">About me:</p>
-        <p class="card-text">Text für die Bio später. Text für die Bio später. Text für die Bio später. Text für die Bio später. Text für die Bio später. </p>
+        <p class="card-text">{{bio}}</p>
     </div>
+
     <div class="right">
+        @if (items.length === 0) {
+            <div class="island">
+                <h3>Keine Posts vorhanden</h3>
+            </div>
+        }
+        @else if (items.length > 0) { @for (item of items; track item){ <app-card [item]="item"></app-card>
+            }
+            }
 
     </div>
-
 </main>

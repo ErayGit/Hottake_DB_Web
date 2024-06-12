@@ -4,6 +4,15 @@ import { CARDComponent } from "../feed-page/card/card.component";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {TuiIconModule} from '@taiga-ui/experimental';
 import {tuiIconFile} from "@taiga-ui/icons";
+import { User } from '../../models/User';
+import { AuthService } from '../../api/auth.service';
+import { UserService } from '../../api/user.service';
+import { FileService } from '../../api/file.service';
+import { PostService } from '../../api/post.service';
+import { Post } from '../../models/Post';
+import { File } from '../../models/File';
+
+
 
 @Component({
     selector: 'app-profil-site',
@@ -17,136 +26,44 @@ import {tuiIconFile} from "@taiga-ui/icons";
       RouterLink,
       RouterLinkActive,]
 })
-export class ProfilSiteComponent {
-    items = fetchData();
+export class ProfilSiteComponent{
+  constructor(
+    private fileService: FileService,
+    private authService: AuthService,
+    private userService: UserService,
+    private postService: PostService
+  ) {}
+  userName: string = '';
+  name: string = '';
+  bio: string = '';
+  followedUsers: { user: User }[] = [];
+  items: Post[] = [];
+  fileId: File[] = []
 
-    protected readonly tuiIconFile = tuiIconFile;
-}
 
+  getFollowedUsers() {
+    this.userService
+      .findAllNotFollowed(this.authService.getLoggedInUser()?.id!)
+      .subscribe((res) => {
+        this.followedUsers = res;
+      });
+  }  
 
-
-function fetchData() {
-    return [
-      {
-        id: 1,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#38cf60',
-        emojie: '👍',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 4,
-          thirdEmojie: 8,
-          fourEmojie: 5,
-        },
-      },
-      {
-        id: 2,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#2bbdb8',
-        emojie: '👌',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 2,
-          thirdEmojie: 4,
-          fourEmojie: 1,
-        },
-      },
-      {
-        id: 3,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#38cf60',
-        emojie: '✌',
-        komentar: {
-          firstEmojie: 5,
-          secondEmojie: 3,
-          thirdEmojie: 2,
-          fourEmojie: 2,
-        },
-      },
-      {
-        id: 4,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#38cf60',
-        emojie: '👨‍🦰',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 3,
-          thirdEmojie: 8,
-          fourEmojie: 2,
-        },
-      },
-      {
-        id: 5,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#4b3f75',
-        emojie: '✋',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 13,
-          thirdEmojie: 8,
-          fourEmojie: 12,
-        },
-      },
-      {
-        id: 6,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#bdb52b',
-        emojie: '👮‍♂️',
-        komentar: {
-          firstEmojie: 13,
-          secondEmojie: 3,
-          thirdEmojie: 38,
-          fourEmojie: 2,
-        },
-      },
-      {
-        id: 7,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#38cf60',
-        emojie: '👍',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 3,
-          thirdEmojie: 8,
-          fourEmojie: 2,
-        },
-      },
-      {
-        id: 8,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#38cf60',
-        emojie: '👍',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 3,
-          thirdEmojie: 8,
-          fourEmojie: 2,
-        },
-      },
-      {
-        id: 9,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#38cf60',
-        emojie: '👍',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 3,
-          thirdEmojie: 8,
-          fourEmojie: 2,
-        },
-      },
-      {
-        id: 10,
-        Text: 'Lorum Ipsum mit 5 Worten etc.',
-        color: '#38cf60',
-        emojie: '👍',
-        komentar: {
-          firstEmojie: 3,
-          secondEmojie: 3,
-          thirdEmojie: 8,
-          fourEmojie: 2,
-        },
-      },
-    ];
+  ngOnInit(): void {
+    this.getFollowedUsers();
+    if (this.authService.isLoggedIn()) {
+      let user = this.authService.getLoggedInUser();
+      this.userName = user?.name ?? '';
+      this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
+      this.bio = this.authService.getLoggedInUser()?.bio ?? '';
+      this.postService.findAllFromUser(this.authService.getLoggedInUser()?.id ?? '').subscribe(posts => {
+        this.items = posts;
+      }, error => {
+        console.error('Error:', error);
+        this.items = [];
+      });
   }
-  
+}
+protected readonly tuiIconFile = tuiIconFile;
+
+}
