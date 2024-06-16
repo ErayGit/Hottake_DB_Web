@@ -1,10 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
-import { User } from '../../../../models/User';
-import { FileService } from '../../../../api/file.service';
-import { AuthService } from '../../../../api/auth.service';
-import { UserService } from '../../../../api/user.service';
-import { TuiButtonModule } from '@taiga-ui/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {NgOptimizedImage} from '@angular/common';
+import {User} from '../../../../models/User';
+import {FileService} from '../../../../api/file.service';
+import {AuthService} from '../../../../api/auth.service';
+import {UserService} from '../../../../api/user.service';
+import {TuiButtonModule} from '@taiga-ui/core';
+import {ShowFriendsType} from "../firends-bar.component";
+import {FollowService} from "../../../../api/follow.service";
+import {FollowStatus} from "../../../../interfaces/follow-body";
+import {PushService, pushTypes} from "../../../../services/push.service";
 
 @Component({
   selector: 'app-friend-card',
@@ -16,15 +20,40 @@ import { TuiButtonModule } from '@taiga-ui/core';
 export class FriendCardComponent implements OnInit {
   constructor(
     private fileService: FileService,
+    private followService: FollowService,
     private authService: AuthService,
+    private pushService: PushService,
     private userService: UserService
   ) {}
   @Input() user: any;
+  @Input() type: any;
   userImage: any;
-  @Output() getFollowedUsers = new EventEmitter<any>();
+  @Output() getUsers = new EventEmitter<any>();
 
   follow() {
-    this.getFollowedUsers.emit();
+    this.followService.addFollow({
+      status: FollowStatus.PENDING,
+      followerId: this.authService.getLoggedInUser()?.id!,
+      followedId: this.user.user.id
+    }).subscribe(
+      (res) => {
+        if(res.body != null) {
+          this.pushService.sendPush(pushTypes.SUCCESS);
+          this.getUsers.emit();
+        }
+      }
+    )
+  }
+
+  unfollow() {
+    this.followService.deleteFollow(this.authService.getLoggedInUser()?.id!, this.user.user.id).subscribe(
+      (res) => {
+        if(res) {
+          this.pushService.sendPush(pushTypes.SUCCESS);
+          this.getUsers.emit();
+        }
+      }
+    )
   }
 
   getImageForFriendCard() {
@@ -42,4 +71,6 @@ export class FriendCardComponent implements OnInit {
   ngOnInit(): void {
     this.getImageForFriendCard();
   }
+
+  protected readonly ShowFriendsType = ShowFriendsType;
 }

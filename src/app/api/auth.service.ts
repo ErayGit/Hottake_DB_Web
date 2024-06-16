@@ -84,7 +84,7 @@ export class AuthService {
     this.loggedInUser = null;
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
-    this.router.navigateByUrl('http://localhost:4200/login');
+    this.router.navigate(['/login']);
   }
 
   getAccessToken(): string | null {

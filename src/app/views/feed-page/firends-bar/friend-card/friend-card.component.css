@@ -1,4 +1,5 @@
 .name-and-img {
+  margin-top: 1rem;
   display: flex;
   padding: 20px;
   height: 4rem;

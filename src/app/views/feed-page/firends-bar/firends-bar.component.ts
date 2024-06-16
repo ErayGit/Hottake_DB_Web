@@ -8,6 +8,7 @@ import { TuiButtonModule } from '@taiga-ui/core';
 import { NgOptimizedImage } from '@angular/common';
 import { FriendCardComponent } from './friend-card/friend-card.component';
 import { TuiIslandModule } from '@taiga-ui/kit';
+import {Emoji} from "../../../models/Comment";
 
 
 @Component({
@@ -35,9 +36,35 @@ export class FirendsBarComponent implements OnInit {
   showFriends = ShowFriendsType.VORSCHLAG;
   userName: string = '';
   name: string = '';
+  userProfileImage: any;
   users: { user: User }[] = [];
-  fileId: string = '';
-  postImage: any;
+
+  logout() {
+    this.authService.logout();
+  }
+
+  getProfilePic() {
+    this.fileService
+      .getImageFile((this.authService.getLoggedInUser() as User).fileId!)
+      .subscribe((res) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.userProfileImage = reader.result as string;
+        };
+        reader.readAsDataURL(res);
+      });
+  }
+
+  getUsers() {
+    switch(this.showFriends) {
+      case ShowFriendsType.VORSCHLAG:
+        this.getNotFollowedUsers()
+        break;
+      case ShowFriendsType.FREUNDE:
+        this.getFollowedUsers()
+        break;
+    }
+  }
 
   getFollowedUsers() {
     this.userService
@@ -56,25 +83,13 @@ export class FirendsBarComponent implements OnInit {
     this.showFriends = ShowFriendsType.VORSCHLAG
   }
 
-  getImageForCard() {
-    this.fileService.getImageFile(this.authService.getLoggedInUser()?.fileId ?? '').subscribe((res) => {
-      const reader = new FileReader();
-            reader.onloadend = () => {
-        this.postImage = reader.result as string;
-      };
-      reader.readAsDataURL(res);
-    });
-  }
-
-  protected readonly length = length;
-
   ngOnInit(): void {
-    this.getFollowedUsers();
+    this.getUsers();
+    this.getProfilePic();
     if (this.authService.isLoggedIn()) {
       let user = this.authService.getLoggedInUser();
       this.userName = user?.name ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
-      this.getImageForCard();
     }
   }
 

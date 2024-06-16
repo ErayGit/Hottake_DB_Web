@@ -78,9 +78,8 @@ export class RegisterPageComponent {
         this.fileControl.value,
         this.fileControl.value.name,
       );
-      this.fileService.addImage(formData).subscribe((response) => {console.log("dontknow")
+      this.fileService.addImage(formData).subscribe((response) => {
         if(response.ok){
-          console.log(response.body, "ok");
           fileId = (response.body?.file! as File).id
           this.authService.register({
             name: this.registerForm.value.username!,

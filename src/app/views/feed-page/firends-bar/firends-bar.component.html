@@ -49,7 +49,7 @@
       @else if (users.length > 0) {
       @for (user of users; track user){
       <div class="arefriendcards">
-        <app-friend-card (getFollowedUsers)="getFollowedUsers()" [user]="user">
+        <app-friend-card (getUsers)="getUsers()" [user]="user" [type]="showFriends">
         </app-friend-card>
       </div>
       }
@@ -60,17 +60,27 @@
     <div class="profil-card">
       <img
         class="cover"
-          [ngSrc]="
-          postImage != null ? postImage : '../../../assets/svg/placeholder.svg'
+        [ngSrc]="
+          userProfileImage != null ? userProfileImage : 'assets/svg/placeholder.svg'
         "
-          alt="post"
-          height="40"
-          width="40"
-        />
+        alt="post"
+        width="50"
+        height="50"
+      />
       <div class="card-body">
         <h5 class="card-title">{{name}}</h5>
         <a href="/profil">&#64;{{userName}}</a>
       </div>
+    </div>
+    <div class="logout">
+      <button
+        tuiIconButton
+        appearance="flat"
+        tuiButton
+        icon="tuiIconLogOut"
+        (click)="logout()"
+      >
+      </button>
     </div>
   </div>
 </div>

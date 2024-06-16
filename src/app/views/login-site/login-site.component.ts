@@ -11,10 +11,6 @@ import {File} from "../../models/File";
 import {PushService, pushTypes} from "../../services/push.service";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 
-enum Step {
-  LOGIN_INFO_STEP = 'LOGIN_INFO_STEP',
-  PERSONAL_STEP = 'PERSONAL_STEP',
-}
 @Component({
   selector: 'app-login-site',
   standalone: true,
@@ -64,6 +60,7 @@ export class LoginSiteComponent {
                 return;
               }
               this.pushService.sendPush(pushTypes.SUCCESS);
+              this.router.navigate(['']);
             }
           )
       return;

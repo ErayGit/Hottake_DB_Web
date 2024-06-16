@@ -3,7 +3,7 @@ import {NgModule} from "@angular/core";
 
 export const routes: Routes = [
   {path: "", loadComponent: () => import('./views/feed-page/feed-page.component')
-      .then(m => m.FeedPageComponent)},
+      .then(m => m.FeedPageComponent),},
   {path: 'register', loadComponent: () => import('./views/register-page/register-page.component')
       .then(m => m.RegisterPageComponent)},
 

@@ -74,7 +74,7 @@ router.get('/follow/:id', async (req, res) => {
     });
 });
 
-// delete user
+// delete follow
 router.delete('/follow/:id', async (req, res) => {
 
     const query = 'DELETE FROM follow WHERE id = ?';
@@ -91,6 +91,24 @@ router.delete('/follow/:id', async (req, res) => {
             res.status(404).send({message: "follow not found."});
         }
     });
+});
+
+router.delete('/follow/:followerId/:followedId', async (req, res) => {
+
+  const query = 'DELETE FROM follow WHERE followerId = ? AND followedId = ?';
+  const values = [req.params.followerId, req.params.followedId];
+
+  db.query(query, values, (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).send({message: "Server error."});
+    }
+    if (result.affectedRows > 0) {
+      res.status(200).send({message: "follow deleted successfully."});
+    } else {
+      res.status(404).send({message: "follow not found."});
+    }
+  });
 });
 
 

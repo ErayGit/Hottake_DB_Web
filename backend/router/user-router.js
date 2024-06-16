@@ -144,8 +144,8 @@ router.get("/user", async (req, res) => {
 
 //finde alle user dem ein user folgt
 router.get("/user/:id/followed", async (req, res) => {
-  const query = "SELECT * FROM user WHERE id = ANY(SELECT followedId FROM follow WHERE followerId = ?)"
-  const params = [req.params.id]
+  const query = "SELECT * FROM user WHERE id = ANY(SELECT followedId FROM follow WHERE followerId = ? AND followedId != ?)"
+  const params = [req.params.id, req.params.id]
   db.query(query, params, (err, results) => {
     if (err) {
       console.error("Database error:", err);
@@ -156,7 +156,7 @@ router.get("/user/:id/followed", async (req, res) => {
 });
 
 router.get("/user/:id/notfollowed", async (req, res) => {
-  const query = "SELECT * FROM user WHERE id != ANY(SELECT followedId FROM follow WHERE followerId = ?)"
+  const query = "SELECT * FROM user WHERE id NOT IN(SELECT followedId FROM follow WHERE followerId = ?)"
   const params = [req.params.id]
   db.query(query, params, (err, results) => {
     if (err) {
