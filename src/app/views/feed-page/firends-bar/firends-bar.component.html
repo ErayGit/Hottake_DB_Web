@@ -19,23 +19,35 @@
     <div class="friendcards">
       <div class="devided-button-island">
         <div class="button-one">
-          <button appearance="flat" (click)="getFollowedUsers()" tuiButton type="button">
-            Vorschläge
-          </button>
+          @if (showFriends === ShowFriendsType.VORSCHLAG) {
+            <button (click)="getNotFollowedUsers()" appearance="outline" tuiButton type="button">
+              Vorschläge
+            </button>
+          } @else {
+            <button (click)="getNotFollowedUsers()" appearance="flat" tuiButton type="button">
+              Vorschläge
+            </button>
+          }
         </div>
         <div class="button-two">
-          <button (click)="getFollowedUsers()" appearance="flat" tuiButton type="button">
+          @if (showFriends === ShowFriendsType.FREUNDE) {
+          <button (click)="getFollowedUsers()" appearance="outline" tuiButton type="button">
             Freunde
           </button>
+          } @else {
+            <button (click)="getFollowedUsers()" appearance="flat" tuiButton type="button">
+              Freunde
+            </button>
+          }
         </div>
       </div>
-      @if (followedUsers?.length! === 0) {
+      @if (users?.length! === 0) {
       <div class="nofriendcards">
         <h3 class="nofriends">Noch keine Freunde vorhanden</h3>
       </div>
       }
-      @else if (followedUsers.length > 0) {
-      @for (user of followedUsers; track user){
+      @else if (users.length > 0) {
+      @for (user of users; track user){
       <div class="arefriendcards">
         <app-friend-card (getFollowedUsers)="getFollowedUsers()" [user]="user">
         </app-friend-card>

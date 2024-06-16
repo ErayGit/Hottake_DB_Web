@@ -24,36 +24,34 @@ import { TuiIslandModule } from '@taiga-ui/kit';
   templateUrl: './firends-bar.component.html',
   styleUrl: './firends-bar.component.css',
 })
+
 export class FirendsBarComponent implements OnInit {
   constructor(
     private fileService: FileService,
     private authService: AuthService,
     private userService: UserService
   ) {}
+  showFriends = ShowFriendsType.VORSCHLAG;
   userName: string = '';
   name: string = '';
-  followedUsers: { user: User }[] = [];
-
+  users: { user: User }[] = [];
   getFollowedUsers() {
     this.userService
-      .findAllNotFollowed(this.authService.getLoggedInUser()?.id!)
+      .findAllFollowed(this.authService.getLoggedInUser()?.id!)
       .subscribe((res) => {
-        this.followedUsers = res;
+        this.users = res;
       });
+    this.showFriends = ShowFriendsType.FREUNDE
   }
 
-  //TODO: Implement get Image
-  // ngOnInit(): void {
-  //   if (this.authService.getLoggedInUser() !== null) {
-  //     this.authService.getLoggedInUser().subscribe((user) => {
-  //       this.name = user.name;
-  //       this.userName = user.userName;
-  //       this.fileService.getImage(user.imageId).subscribe((image) => {
-  //         this.image = image;
-  //       });
-  //     });
-  //   }
-  // }
+  getNotFollowedUsers() {
+    this.userService.findAllNotFollowed(this.authService.getLoggedInUser()?.id!)
+      .subscribe((res) => {
+        this.users = res;
+      });
+    this.showFriends = ShowFriendsType.VORSCHLAG
+  }
+
   protected readonly length = length;
 
   ngOnInit(): void {
@@ -64,4 +62,11 @@ export class FirendsBarComponent implements OnInit {
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
     }
   }
+
+  protected readonly ShowFriendsType = ShowFriendsType;
+}
+
+export enum ShowFriendsType {
+  VORSCHLAG = 'VORSCHLAG',
+  FREUNDE = 'FREUNDE',
 }

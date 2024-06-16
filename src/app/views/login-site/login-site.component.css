@@ -6,12 +6,12 @@ main {
     padding-top: 10vh;
     gap: 1rem;
   }
-  
+
   .island {
     min-width: 20rem;
     min-height: 20rem;
   }
-  
+
   .island-wrapper {
     display: flex;
     flex-direction: column;
@@ -19,34 +19,34 @@ main {
     align-items: center;
     min-width: 20rem;
   }
-  
+
   .tui-island__title {
     padding-right: 2rem;
   }
-  
+
   .button-back {
     max-width: 2rem;
     max-height: 2rem;
   }
-  
+
   .box-for-button {
     display: flex;
     flex-direction: row;
     justify-content: center;
   }
-  
+
   .input {
     padding-top: 1rem;
     min-width: 16rem;
   }
-  
+
   .button-wrapper {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-top: 1rem;
     padding-top: 0.2rem;
-  
+
   button {
     flex: 1;
     padding: 0.4rem 0.4rem;
@@ -56,4 +56,12 @@ main {
     border-color: black;
   }
   }
-  
+
+p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: cornflowerblue;
+}

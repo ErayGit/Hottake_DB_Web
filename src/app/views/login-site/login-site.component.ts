@@ -9,7 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FileService} from "../../api/file.service";
 import {File} from "../../models/File";
 import {PushService, pushTypes} from "../../services/push.service";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 
 enum Step {
   LOGIN_INFO_STEP = 'LOGIN_INFO_STEP',
@@ -40,7 +40,8 @@ enum Step {
 export class LoginSiteComponent {
   constructor(
     private authService: AuthService,
-    private pushService: PushService
+    private pushService: PushService,
+    private router: Router,
   ) {
 
   }
@@ -68,4 +69,8 @@ export class LoginSiteComponent {
       return;
     }
 
+
+    routeToRegister() {
+      this.router.navigate(['register']);
+    }
 }

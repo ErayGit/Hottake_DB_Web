@@ -43,6 +43,7 @@
 
 .devided-button-island {
   display: flex;
+  max-height: 50px;
   flex-direction: row;
 }
 

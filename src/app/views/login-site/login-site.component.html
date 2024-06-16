@@ -14,7 +14,7 @@
               </button>
               <h3 class="tui-island__title">Log In</h3>
             </div>
-            <p class="tui-island__paragraph">Loggen Sie sich ein!</p>
+            <h5 class="tui-island__paragraph">Loggen Sie sich ein!</h5>
             <div class="form-wrapper">
               <form [formGroup]="loginForm">
                 <tui-input class="input" formControlName="email">
@@ -35,6 +35,9 @@
                     Anmelden
                   </button>
                 </div>
+                <p (click)="routeToRegister()">
+                  <u>Noch keinen Account?</u>
+                </p>
               </form>
             </div>
           </div>

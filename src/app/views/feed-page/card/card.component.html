@@ -1,7 +1,7 @@
 <div class="mb-3 island">
   <div class="card card-holder">
     <div class="card bk-ligth text-card">
-      <div class="card-body">
+      <div class="text">
         <h5>
           {{ item.text }}
         </h5>
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="card p-2 bk-ligth">
+    <div class="card bk-ligth">
       <div [style.background-color]="item.color" class="color-holder"></div>
     </div>
 
@@ -40,12 +40,11 @@
     <div class="card bk-ligth">
       <div class="card-body">
         <img
+          class="cover"
           [ngSrc]="
           postImage != null ? postImage : 'assets/svg/placeholder.svg'
         "
           alt="post"
-          height="250"
-          width="120"
         />
       </div>
     </div>
