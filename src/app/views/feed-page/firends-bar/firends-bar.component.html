@@ -58,7 +58,15 @@
   </div>
   <div class="profil island">
     <div class="profil-card">
-      <img src="../../../../assets/oma.jpg" class="card-img-top" alt="..." />
+      <img
+        class="cover"
+          [ngSrc]="
+          postImage != null ? postImage : '../../../assets/svg/placeholder.svg'
+        "
+          alt="post"
+          height="40"
+          width="40"
+        />
       <div class="card-body">
         <h5 class="card-title">{{name}}</h5>
         <a href="/profil">&#64;{{userName}}</a>

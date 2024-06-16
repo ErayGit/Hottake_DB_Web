@@ -21,6 +21,12 @@
   align-items: center;
 }
 
+.profil{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .card-body {
   display: flex;
   flex-direction: column;
@@ -90,4 +96,11 @@
   justify-content: center;
   align-items: start;
   max-height: 12.5%;
+}
+
+.cover {
+  object-fit: cover;
+  width: 100px;
+  height: auto;
+  border-radius: 20%;
 }

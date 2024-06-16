@@ -1,4 +1,5 @@
 @import url(../../../styles.css);
+
 main {
     display: flex;
     justify-content:center;
@@ -10,8 +11,9 @@ main {
     gap: 1rem;
 }
 
+
+
 .left, .right {
-    background-color: var(--background-900);
     border-radius: 10px;
     color: var(--text-100);
 }
@@ -19,15 +21,16 @@ main {
 .left {
     display: flex;
     flex-direction: column;
-    justify-content: start;
     width: 20%;
     height: auto;
     padding: 2em;
     gap: 1em;
-
 }
 
 .right {
+    background-color: var(--background-900);
+    border-radius: 1em;
+    color: var(--text-100);
     grid-column-start: 2;
     padding: 2em;
     width: 40%;
@@ -50,8 +53,12 @@ main {
     display: flex;
     align-items: center;
     flex-direction: column;
+    border-radius: 1em;
+    background-color: var(--background-900);
+    padding: 2em;
     gap: 1em;
 }
+
 
 .nutzername{
     font-size: 1.5em;
@@ -63,10 +70,35 @@ main {
     font-weight: bold;
 }
 
+.bio-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 1em;
+    width: 100%;
+}
+
 button{
     display: flex;
     justify-content: center;
     padding: 0.5em;
-    display: flex;
-    width: 10%
+    width: 50%;
+    height: auto;
 }
+
+.knopf{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.cover {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    border-radius: 20%;
+}
+
+
+

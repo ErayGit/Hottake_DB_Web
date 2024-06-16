@@ -18,6 +18,7 @@ import {PushService, pushTypes} from "../../../services/push.service";
   templateUrl: './card.component.html',
   styleUrl: './card.component.css',
 })
+
 export class CARDComponent implements OnInit{
   constructor(
     private fileService: FileService,
@@ -27,12 +28,12 @@ export class CARDComponent implements OnInit{
               ) {
 
   }
-  @Input() item: any;
+  @Input() 
+  item: any;
   prayerCount: number = 0;
   laughingCount: number = 0;
   cryingCount: number = 0;
   postImage: any;
-
 
   getImageForCard() {
     this.fileService.getImageFile((this.item as Post).fileId!).subscribe((res) => {

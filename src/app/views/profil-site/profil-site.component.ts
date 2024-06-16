@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { FirendsBarComponent } from "../feed-page/firends-bar/firends-bar.component";
 import { CARDComponent } from "../feed-page/card/card.component";
 import {RouterLink, RouterLinkActive} from "@angular/router";
@@ -7,6 +7,7 @@ import {tuiIconFile} from "@taiga-ui/icons";
 import { User } from '../../models/User';
 import { AuthService } from '../../api/auth.service';
 import { UserService } from '../../api/user.service';
+import {NgOptimizedImage} from "@angular/common";
 import { FileService } from '../../api/file.service';
 import { PostService } from '../../api/post.service';
 import { Post } from '../../models/Post';
@@ -23,6 +24,7 @@ import { File } from '../../models/File';
       FirendsBarComponent,
       CARDComponent,
       TuiIconModule,
+      NgOptimizedImage,
       RouterLink,
       RouterLinkActive,]
 })
@@ -33,13 +35,14 @@ export class ProfilSiteComponent{
     private userService: UserService,
     private postService: PostService
   ) {}
+
   userName: string = '';
   name: string = '';
   bio: string = '';
   followedUsers: { user: User }[] = [];
   items: Post[] = [];
-  fileId: File[] = []
-
+  fileId: string = '';
+  postImage: any;
 
   getFollowedUsers() {
     this.userService
@@ -49,6 +52,17 @@ export class ProfilSiteComponent{
       });
   }  
 
+  getImageForCard() {
+    this.fileService.getImageFile(this.authService.getLoggedInUser()?.fileId ?? '').subscribe((res) => {
+      const reader = new FileReader();
+            reader.onloadend = () => {
+        this.postImage = reader.result as string;
+      };
+      reader.readAsDataURL(res);
+    });
+  }
+
+
   ngOnInit(): void {
     this.getFollowedUsers();
     if (this.authService.isLoggedIn()) {
@@ -56,14 +70,14 @@ export class ProfilSiteComponent{
       this.userName = user?.name ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
       this.bio = this.authService.getLoggedInUser()?.bio ?? '';
-      this.postService.findAllFromUser(this.authService.getLoggedInUser()?.id ?? '').subscribe(posts => {
+      this.postService.findAllFromUser(this.authService.getLoggedInUser()?.id ?? '').subscribe((posts) => {
         this.items = posts;
       }, error => {
         console.error('Error:', error);
         this.items = [];
       });
+      this.getImageForCard();
   }
 }
 protected readonly tuiIconFile = tuiIconFile;
-
 }

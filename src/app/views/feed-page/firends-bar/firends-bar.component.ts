@@ -9,6 +9,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { FriendCardComponent } from './friend-card/friend-card.component';
 import { TuiIslandModule } from '@taiga-ui/kit';
 
+
 @Component({
   selector: 'app-firends-bar',
   standalone: true,
@@ -35,6 +36,9 @@ export class FirendsBarComponent implements OnInit {
   userName: string = '';
   name: string = '';
   users: { user: User }[] = [];
+  fileId: string = '';
+  postImage: any;
+
   getFollowedUsers() {
     this.userService
       .findAllFollowed(this.authService.getLoggedInUser()?.id!)
@@ -52,6 +56,16 @@ export class FirendsBarComponent implements OnInit {
     this.showFriends = ShowFriendsType.VORSCHLAG
   }
 
+  getImageForCard() {
+    this.fileService.getImageFile(this.authService.getLoggedInUser()?.fileId ?? '').subscribe((res) => {
+      const reader = new FileReader();
+            reader.onloadend = () => {
+        this.postImage = reader.result as string;
+      };
+      reader.readAsDataURL(res);
+    });
+  }
+
   protected readonly length = length;
 
   ngOnInit(): void {
@@ -60,6 +74,7 @@ export class FirendsBarComponent implements OnInit {
       let user = this.authService.getLoggedInUser();
       this.userName = user?.name ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
+      this.getImageForCard();
     }
   }
 
