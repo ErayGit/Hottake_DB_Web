@@ -48,12 +48,12 @@ export class AuthService {
         observe: "response",
       })
       .pipe(
-        map((response) => {
+        map((response: any) => {
           if (response.status === HttpStatusCode.Ok || response.status === HttpStatusCode.Created || response.status === HttpStatusCode.Accepted) {
             this.setTokens(
               response.body?.access_token!,
             );
-            this.setLoggedInUser(response.body!);
+            this.setLoggedInUser(response.body.user!);
             return true;
           }
           return false;
@@ -66,8 +66,8 @@ export class AuthService {
 
   register(registerBody: UserBody): Observable<User | null> {
     return this.http.post<User>(this.baseUrl + 'register', registerBody).pipe(
-      map((res) => {
-        this.setLoggedInUser(res);
+      map((res: any) => {
+        this.setLoggedInUser(res.user);
         this.setTokens(res.access_token!,)
         return res;
       }),
@@ -102,10 +102,11 @@ export class AuthService {
 
   getLoggedInUser(): User | null {
     if (this.loggedInUser) {
+      console.log(this.loggedInUser);
       return this.loggedInUser;
     }
     const userJSON = localStorage.getItem("user");
     const parsedUser = JSON.parse(userJSON || "{}");
-    return new User(parsedUser.user);
+    return new User(parsedUser);
   }
 }

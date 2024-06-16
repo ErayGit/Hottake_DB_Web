@@ -87,7 +87,7 @@ export class FirendsBarComponent implements OnInit {
     this.getUsers();
     this.getProfilePic();
     if (this.authService.isLoggedIn()) {
-      let user = this.authService.getLoggedInUser();
+      let user: any = this.authService.getLoggedInUser();
       this.userName = user?.name ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
     }

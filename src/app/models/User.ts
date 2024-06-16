@@ -16,6 +16,8 @@ export class User extends BaseModel<User> {
   access_token?: string;
 
   constructor(params: Partial<User>) {
+    console.log("here");
+    console.log(params);
     super(params);
     Object.assign(this, params);
   }
