@@ -44,7 +44,7 @@
 }
 
 .spacer {
-  height: 3.5rem;
+  height: 1.2rem;
 }
 
 .cover {
@@ -78,10 +78,14 @@
   display: flex;
   color: var(--text);
   background-color: var(--background-950);
-  height: 80%;
+  height: 88%;
   overflow-y: scroll;
   border-radius: 0.6rem;
   flex-direction: column;
+}
+
+.seach-field {
+  width: 98%;
 }
 
 .nofriendcards {

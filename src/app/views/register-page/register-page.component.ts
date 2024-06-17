@@ -10,6 +10,7 @@ import {FileService} from "../../api/file.service";
 import {File} from "../../models/File";
 import {PushService, pushTypes} from "../../services/push.service";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {TuiValueChangesModule} from "@taiga-ui/cdk";
 
 enum Step {
   LOGIN_INFO_STEP = 'LOGIN_INFO_STEP',
@@ -31,6 +32,7 @@ enum Step {
     TuiSvgModule,
     RouterLink,
     RouterLinkActive,
+    TuiValueChangesModule,
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',

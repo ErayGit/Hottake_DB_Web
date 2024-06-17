@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import { environment } from '../../environment';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -17,11 +17,19 @@ export class UserService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  findAllFollowed(userId: string) {
-    return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/followed`);
+  findAllFollowed(userId: string, searchString?: string) {
+    let params: HttpParams = new HttpParams();
+    if(searchString) {
+      params = params.set('search', searchString);
+    }
+    return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/followed`, {params: params});
   }
 
-  findAllNotFollowed(userId: string){
-    return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/notfollowed`);
+  findAllNotFollowed(userId: string, searchString?: string){
+    let params: HttpParams = new HttpParams();
+    if(searchString) {
+      params = params.set('search', searchString);
+    }
+    return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/notfollowed`, {params: params});
   }
 }

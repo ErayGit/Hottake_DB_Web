@@ -4,11 +4,14 @@ import { FileService } from '../../../api/file.service';
 import { AuthService } from '../../../api/auth.service';
 import { UserService } from '../../../api/user.service';
 import { User } from '../../../models/User';
-import { TuiButtonModule } from '@taiga-ui/core';
+import {TuiButtonModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
 import { NgOptimizedImage } from '@angular/common';
 import { FriendCardComponent } from './friend-card/friend-card.component';
-import { TuiIslandModule } from '@taiga-ui/kit';
+import {TuiInputDateRangeModule, TuiInputModule, TuiIslandModule} from '@taiga-ui/kit';
 import {Emoji} from "../../../models/Comment";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {TuiValueChangesModule} from "@taiga-ui/cdk";
+import {HttpParams} from "@angular/common/http";
 
 
 @Component({
@@ -22,6 +25,11 @@ import {Emoji} from "../../../models/Comment";
     NgOptimizedImage,
     FriendCardComponent,
     TuiIslandModule,
+    ReactiveFormsModule,
+    TuiInputDateRangeModule,
+    TuiInputModule,
+    TuiValueChangesModule,
+    TuiTextfieldControllerModule,
   ],
   templateUrl: './firends-bar.component.html',
   styleUrl: './firends-bar.component.css',
@@ -38,8 +46,13 @@ export class FirendsBarComponent implements OnInit {
   name: string = '';
   userProfileImage: any;
   users: { user: User }[] = [];
-
+  protected searchFormControl: FormControl = new FormControl("");
   @Output() fetchData = new EventEmitter<any>();
+
+
+  onSearchChange(searchInput: any) {
+    this.getUsers(searchInput);
+  }
 
   logout() {
     this.authService.logout();
@@ -61,28 +74,32 @@ export class FirendsBarComponent implements OnInit {
       });
   }
 
-  getUsers() {
+  getUsers(searchString?: string) {
     switch(this.showFriends) {
       case ShowFriendsType.VORSCHLAG:
-        this.getNotFollowedUsers()
+        this.getNotFollowedUsers(searchString)
         break;
       case ShowFriendsType.FREUNDE:
-        this.getFollowedUsers()
+        this.getFollowedUsers(searchString)
         break;
     }
   }
 
-  getFollowedUsers() {
+  getFollowedUsers(searchString?: string) {
     this.userService
-      .findAllFollowed(this.authService.getLoggedInUser()?.id!)
+      .findAllFollowed(this.authService.getLoggedInUser()?.id!, searchString)
       .subscribe((res) => {
         this.users = res;
       });
     this.showFriends = ShowFriendsType.FREUNDE
   }
 
-  getNotFollowedUsers() {
-    this.userService.findAllNotFollowed(this.authService.getLoggedInUser()?.id!)
+  getNotFollowedUsers(searchString?: string) {
+    if(searchString) {
+      let params: HttpParams = new HttpParams();
+      params = params.set('search', searchString);
+    }
+    this.userService.findAllNotFollowed(this.authService.getLoggedInUser()?.id!, searchString)
       .subscribe((res) => {
         this.users = res;
       });
