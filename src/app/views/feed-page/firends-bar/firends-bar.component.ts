@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FileService } from '../../../api/file.service';
 import { AuthService } from '../../../api/auth.service';
@@ -39,8 +39,14 @@ export class FirendsBarComponent implements OnInit {
   userProfileImage: any;
   users: { user: User }[] = [];
 
+  @Output() fetchData = new EventEmitter<any>();
+
   logout() {
     this.authService.logout();
+  }
+
+  fetchPosts() {
+    this.fetchData.emit();
   }
 
   getProfilePic() {

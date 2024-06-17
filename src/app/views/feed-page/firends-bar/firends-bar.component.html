@@ -49,7 +49,7 @@
       @else if (users.length > 0) {
       @for (user of users; track user){
       <div class="arefriendcards">
-        <app-friend-card (getUsers)="getUsers()" [user]="user" [type]="showFriends">
+        <app-friend-card (getUsers)="getUsers()" (fetchPosts)="fetchPosts()" [user]="user" [type]="showFriends">
         </app-friend-card>
       </div>
       }

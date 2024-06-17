@@ -29,6 +29,7 @@ export class FriendCardComponent implements OnInit {
   @Input() type: any;
   userImage: any;
   @Output() getUsers = new EventEmitter<any>();
+  @Output() fetchPosts = new EventEmitter<any>();
 
   follow() {
     this.followService.addFollow({
@@ -40,6 +41,7 @@ export class FriendCardComponent implements OnInit {
         if(res.body != null) {
           this.pushService.sendPush(pushTypes.SUCCESS);
           this.getUsers.emit();
+          this.fetchPosts.emit();
         }
       }
     )
@@ -51,6 +53,7 @@ export class FriendCardComponent implements OnInit {
         if(res) {
           this.pushService.sendPush(pushTypes.SUCCESS);
           this.getUsers.emit();
+          this.fetchPosts.emit();
         }
       }
     )
