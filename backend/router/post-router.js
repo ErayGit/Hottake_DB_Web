@@ -2,6 +2,7 @@ const uuidGenerator = require('uuid');
 const express          = require('express');
 const router           = express.Router();
 const db = require('./../db-config');
+const websocket        = require('./websocket.js');
 
 router.post('/post',  async (req, res) => {
   const uuid = uuidGenerator.v4();
@@ -16,6 +17,7 @@ router.post('/post',  async (req, res) => {
                 const findQuery = 'SELECT * FROM post WHERE id = ?';
                 const params = [uuid];
                 db.query(findQuery, params, async (err, findRes) => {
+                  websocket.notifyFollowers(req.body.creatorId, findRes[0])
                   return res.status(201).send({message: "Create Post war erfolgreich.", ...findRes[0]});
                 })
               }

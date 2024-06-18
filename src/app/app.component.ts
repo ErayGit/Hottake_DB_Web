@@ -2,13 +2,12 @@ import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
 import {TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER, TuiButtonModule} from "@taiga-ui/core";
 import { Component } from '@angular/core';
 import { CARDComponent } from './views/feed-page/card/card.component';
-import { ProfilBarComponent } from './views/feed-page/profil-bar/profil-bar.component';
 import { FirendsBarComponent } from './views/feed-page/firends-bar/firends-bar.component';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {TuiInputFilesModule, TuiInputModule, TuiIslandModule} from "@taiga-ui/kit";
 import {RegisterPageComponent} from "./views/register-page/register-page.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {ImageCropperComponent} from "ngx-image-cropper";
@@ -23,7 +22,6 @@ import {ImageCropperComponent} from "ngx-image-cropper";
     RouterLink,
     RouterLinkActive,
     CARDComponent,
-    ProfilBarComponent,
     FirendsBarComponent,
     RegisterPageComponent,
     ReactiveFormsModule,

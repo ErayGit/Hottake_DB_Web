@@ -1,6 +1,6 @@
 const express = require('express');
 const initializeDbImp       = require("./router/on-empty-db");
-const socket       = require('socket.io');
+const { Server}       = require('socket.io');
 const path = require('path');
 const bodyParser   = require('body-parser');
 const app = express();
@@ -11,10 +11,17 @@ const followRouter = require("./router/follow-router");
 const fileRouter = require("./router/file-router");
 const cors = require('cors');
 
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:4200', // Allow requests from this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/hottake-db-web')));
-app.use(cors());
+app.use(cors(corsOptions));
 
 
 
@@ -22,7 +29,11 @@ let server = app.listen('8020', function (){
   console.log("[Server Initialized on Port 8020]")
 })
 
-let ioSocket = socket(server);
+const ioSocket = new Server(server, {
+  cors: {
+    origin: "http://localhost:4200", // Allow requests from this origin for WebSocket
+    methods: ["GET", "POST"]
+  }});
 console.log("[Socket Initialized]")
 
 ioSocket.on('connection', (socket) => {
