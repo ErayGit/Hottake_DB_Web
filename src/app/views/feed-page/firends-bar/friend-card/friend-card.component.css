@@ -9,6 +9,7 @@
 }
 
 .friendcards-inside {
+  cursor: pointer;
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
@@ -18,6 +19,7 @@
 }
 
 .name {
+  cursor: pointer;
   padding-top: 3px;
   padding-left: 0.5rem;
 }

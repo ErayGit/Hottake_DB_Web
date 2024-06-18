@@ -124,6 +124,7 @@
     flex-wrap: wrap;
   }
   .user {
+    cursor: pointer;
     min-width: 5rem;
     padding: 10px;
     p {

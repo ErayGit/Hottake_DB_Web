@@ -3,7 +3,6 @@
     [routerLink]="['/profil', user.user.id]"
     class="name-and-img">
   <img
-    [routerLink]="['/profil', user.user.id]"
     [ngSrc]="
           userImage != null ? userImage : 'assets/svg/placeholder.svg'
         "
@@ -12,7 +11,6 @@
     width="40"
   />
   <h5
-    [routerLink]="['/profil', user.user.id]"
     class="name">
     {{ user.user.name }}
   </h5>
