@@ -198,6 +198,28 @@ router.get("/user/:id", async (req, res) => {
 
 // update user
 router.put("/user/:id", async (req, res) => {
+  const {bio} = req.body;
+
+  const query =
+    "UPDATE user SET bio = ? WHERE id = ?";
+  const values = [bio, req.params.id];
+
+  db.query(query, values, (err, result) => {
+    if (err) {
+      console.error("Database error:", err); // Fehler Protokoll
+      return res.status(500).send({ message: "Server error." });
+    }
+    if (result.affectedRows > 0) {
+      res.status(200).send({ message: "User updated successfully." });
+    } else {
+      res.status(404).send({ message: "User not found." });
+    }
+  });
+});
+
+
+// update user
+router.put("/user/:id", async (req, res) => {
   const { name, bio, stadt, email, firstName, lastName } = req.body;
 
   const query =
@@ -216,6 +238,7 @@ router.put("/user/:id", async (req, res) => {
     }
   });
 });
+
 
 // delete user
 router.delete("/user/:id", async (req, res) => {

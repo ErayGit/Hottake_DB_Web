@@ -32,4 +32,10 @@ export class UserService {
     }
     return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/notfollowed`, {params: params});
   }
+
+  // user.service.ts
+
+  updateUser(userId: string, updatedData: Partial<User>) {
+    return this.http.put(this.baseUrl + `user/${userId}`, updatedData);
+  }
 }

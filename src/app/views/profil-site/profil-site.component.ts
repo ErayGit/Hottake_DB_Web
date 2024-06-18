@@ -12,7 +12,7 @@ import { FileService } from '../../api/file.service';
 import { PostService } from '../../api/post.service';
 import { Post } from '../../models/Post';
 import { File } from '../../models/File';
-
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -25,6 +25,7 @@ import { File } from '../../models/File';
       CARDComponent,
       TuiIconModule,
       NgOptimizedImage,
+      FormsModule,
       RouterLink,
       RouterLinkActive,]
 })
@@ -62,10 +63,25 @@ export class ProfilSiteComponent{
     });
   }
 
+  updateUser() {
+    const updatedData = {
+      // Die Daten, die Sie aktualisieren möchten
+    };
+    this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', updatedData).subscribe(() => {
+      // Was Sie tun möchten, nachdem die Daten erfolgreich aktualisiert wurden
+    });
+  }
+
+  updateBio() {
+    this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', { bio: this.bio }).subscribe(() => {
+      // Was Sie tun möchten, nachdem die Biografie erfolgreich aktualisiert wurde
+    });
+  }
 
   ngOnInit(): void {
     this.getFollowedUsers();
     if (this.authService.isLoggedIn()) {
+      this.updateBio();
       let user = this.authService.getLoggedInUser();
       this.userName = user?.name ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
@@ -77,6 +93,7 @@ export class ProfilSiteComponent{
         this.items = [];
       });
       this.getImageForCard();
+
   }
 }
 protected readonly tuiIconFile = tuiIconFile;

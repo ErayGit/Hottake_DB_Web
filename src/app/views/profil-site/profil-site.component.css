@@ -24,6 +24,7 @@ main {
     width: 20%;
     height: auto;
     padding: 2em;
+    margin-bottom: 10em;
     gap: 1em;
 }
 
@@ -82,7 +83,7 @@ button{
     display: flex;
     justify-content: center;
     padding: 0.5em;
-    width: 50%;
+    width: 40%;
     height: auto;
 }
 
@@ -90,6 +91,7 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 3em;
 }
 
 
