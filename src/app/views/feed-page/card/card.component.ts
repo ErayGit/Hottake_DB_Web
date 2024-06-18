@@ -36,12 +36,23 @@ export class CARDComponent implements OnInit{
   laughingCount: number = 0;
   cryingCount: number = 0;
   postImage: any;
+  userImage: any;
 
   getImageForCard() {
     this.fileService.getImageFile((this.item as Post).fileId!).subscribe((res) => {
       const reader = new FileReader();
             reader.onloadend = () => {
         this.postImage = reader.result as string;
+      };
+      reader.readAsDataURL(res);
+    });
+  }
+
+  getImageForUser() {
+    this.fileService.getImageFile((this.item as Post).user!.fileId!).subscribe((res) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.userImage = reader.result as string;
       };
       reader.readAsDataURL(res);
     });
@@ -115,6 +126,7 @@ export class CARDComponent implements OnInit{
 
   ngOnInit(): void {
     this.getImageForCard();
+    this.getImageForUser();
     this.countComments(this.item.comments);
   }
 

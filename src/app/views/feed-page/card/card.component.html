@@ -56,6 +56,15 @@
     <div
       [routerLink]="['/profil', item.user.id]"
       class="user">
+      <img
+        height="40"
+        width="40"
+        class="cover-userimage"
+        [ngSrc]="
+          postImage != null ? postImage : 'assets/svg/placeholder.svg'
+        "
+        alt="post"
+      />
       {{ item.user.name }}
     </div>
     <div class="reaction">
