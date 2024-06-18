@@ -51,8 +51,11 @@
     </div>
   </div>
 
-  <div class="meta-wraper">
-    <div class="user">
+  <div
+    class="meta-wraper">
+    <div
+      [routerLink]="['/profil', item.user.id]"
+      class="user">
       {{ item.user.name }}
     </div>
     <div class="reaction">

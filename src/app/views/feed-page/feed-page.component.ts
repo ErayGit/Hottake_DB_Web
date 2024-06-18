@@ -115,7 +115,6 @@ export class FeedPageComponent implements OnInit {
         userId = loggedInUser.id;
       }
     }
-    console.log("here");
      return this.postService.findAllFromFollowed(userId).subscribe((posts) => {
        this.items = posts;
      });

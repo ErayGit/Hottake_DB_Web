@@ -1,6 +1,9 @@
 <div class="friendcards-inside">
-  <div class="name-and-img">
+  <div
+    [routerLink]="['/profil', user.user.id]"
+    class="name-and-img">
   <img
+    [routerLink]="['/profil', user.user.id]"
     [ngSrc]="
           userImage != null ? userImage : 'assets/svg/placeholder.svg'
         "
@@ -8,7 +11,9 @@
     height="40"
     width="40"
   />
-  <h5 class="name">
+  <h5
+    [routerLink]="['/profil', user.user.id]"
+    class="name">
     {{ user.user.name }}
   </h5>
   </div>

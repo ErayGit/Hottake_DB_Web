@@ -63,7 +63,10 @@
       />
       <div class="card-body">
         <h5 class="card-title">{{name}}</h5>
-        <a href="/profil">&#64;{{userName}}</a>
+        <a
+          [routerLink]="['/profil', userId]">
+          &#64;{{userName}}
+          </a>
       </div>
     </div>
     <div class="logout">

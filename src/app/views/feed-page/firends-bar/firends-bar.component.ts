@@ -44,6 +44,7 @@ export class FirendsBarComponent implements OnInit {
   showFriends = ShowFriendsType.VORSCHLAG;
   userName: string = '';
   name: string = '';
+  userId: string = '';
   userProfileImage: any;
   users: { user: User }[] = [];
   protected searchFormControl: FormControl = new FormControl("");
@@ -110,9 +111,10 @@ export class FirendsBarComponent implements OnInit {
     this.getUsers();
     this.getProfilePic();
     if (this.authService.isLoggedIn()) {
-      let user: any = this.authService.getLoggedInUser();
+      let user: User | null = this.authService.getLoggedInUser();
       this.userName = user?.name ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
+      this.userId = user?.id ?? '';
     }
   }
 

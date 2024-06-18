@@ -32,4 +32,8 @@ export class UserService {
     }
     return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/notfollowed`, {params: params});
   }
+
+  findOne(userId: string) {
+    return this.http.get<{user: User}>(this.baseUrl + `user/${userId}`,)
+  }
 }

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { FirendsBarComponent } from "../feed-page/firends-bar/firends-bar.component";
 import { CARDComponent } from "../feed-page/card/card.component";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterLinkActive} from "@angular/router";
 import {TuiIconModule} from '@taiga-ui/experimental';
 import {tuiIconFile} from "@taiga-ui/icons";
 import { User } from '../../models/User';
@@ -11,7 +11,6 @@ import {NgOptimizedImage} from "@angular/common";
 import { FileService } from '../../api/file.service';
 import { PostService } from '../../api/post.service';
 import { Post } from '../../models/Post';
-import { File } from '../../models/File';
 
 
 
@@ -28,14 +27,16 @@ import { File } from '../../models/File';
       RouterLink,
       RouterLinkActive,]
 })
-export class ProfilSiteComponent{
+export class ProfilSiteComponent implements OnInit {
   constructor(
+    private route: ActivatedRoute,
     private fileService: FileService,
     private authService: AuthService,
     private userService: UserService,
     private postService: PostService
   ) {}
 
+  userId: string = '';
   userName: string = '';
   name: string = '';
   bio: string = '';
@@ -44,16 +45,16 @@ export class ProfilSiteComponent{
   fileId: string = '';
   postImage: any;
 
-  getFollowedUsers() {
+  getFollowedUsers(userId: string) {
     this.userService
-      .findAllNotFollowed(this.authService.getLoggedInUser()?.id!)
+      .findAllNotFollowed(userId)
       .subscribe((res) => {
         this.followedUsers = res;
       });
-  }  
+  }
 
-  getImageForCard() {
-    this.fileService.getImageFile(this.authService.getLoggedInUser()?.fileId ?? '').subscribe((res) => {
+  getImageForCard(userId: string) {
+    this.fileService.getImageFile(userId).subscribe((res) => {
       const reader = new FileReader();
             reader.onloadend = () => {
         this.postImage = reader.result as string;
@@ -64,20 +65,26 @@ export class ProfilSiteComponent{
 
 
   ngOnInit(): void {
-    this.getFollowedUsers();
-    if (this.authService.isLoggedIn()) {
-      let user = this.authService.getLoggedInUser();
-      this.userName = user?.name ?? '';
-      this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
-      this.bio = this.authService.getLoggedInUser()?.bio ?? '';
-      this.postService.findAllFromUser(this.authService.getLoggedInUser()?.id ?? '').subscribe((posts) => {
-        this.items = posts;
-      }, error => {
-        console.error('Error:', error);
-        this.items = [];
+    this.route.params.subscribe(params => {
+      this.userId = params['id'];
+      if (!this.userId) {
+        this.userId = this.authService.getLoggedInUser()?.id!
+      }
+      this.userService.findOne(this.userId).subscribe((userObject) => {
+        const user: User = userObject.user
+        this.getFollowedUsers(user.id);
+        this.userName = user?.name ?? '';
+        this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
+        this.bio = user?.bio;
+        this.postService.findAllFromUser(user.id).subscribe((posts) => {
+          this.items = posts;
+        }, error => {
+          console.error('Error:', error);
+          this.items = [];
+        });
+        this.getImageForCard(user.fileId!);
       });
-      this.getImageForCard();
-  }
+    });
 }
 protected readonly tuiIconFile = tuiIconFile;
 }

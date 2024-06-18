@@ -7,13 +7,15 @@ import {TuiButtonModule} from "@taiga-ui/core";
 import {CommentService} from "../../../api/comment.service";
 import {AuthService} from "../../../api/auth.service";
 import {PushService, pushTypes} from "../../../services/push.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-card',
   standalone: true,
   imports: [
     NgOptimizedImage,
-    TuiButtonModule
+    TuiButtonModule,
+    RouterLink
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css',
@@ -28,7 +30,7 @@ export class CARDComponent implements OnInit{
               ) {
 
   }
-  @Input() 
+  @Input()
   item: any;
   prayerCount: number = 0;
   laughingCount: number = 0;
