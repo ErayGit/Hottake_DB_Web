@@ -61,8 +61,10 @@ export class FeedPageComponent implements OnInit {
       this.router.navigate(['login']);
     }
     this.fetchData();
-    this.socketSubscription = this.notificationService.onEvent('connection').subscribe((data) => {
-      console.log('Connected to WebSocket server:', data);
+    this.socketSubscription = this.notificationService.onEvent('notify').subscribe({
+      next: (data) => {
+        this.fetchData();
+      }
     });
   }
 

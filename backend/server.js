@@ -36,16 +36,23 @@ const ioSocket = new Server(server, {
   }});
 console.log("[Socket Initialized]")
 
+const userSocketMap = new Map();
+
 ioSocket.on('connection', (socket) => {
   console.log(`Neue Socket-Verbindung: ${socket.id}`);
-  // exportiert den socket um diesen in der router.js zu verwenden
-  module.exports.ioSocket = ioSocket;
 
+  const userId = socket.handshake.query.userId;
+  userSocketMap.set(userId, socket.id);
+  console.log(`User ${userId} is connected with socket id ${socket.id}`);
+
+  module.exports.ioSocket = ioSocket;
+  module.exports.userSocketMap = userSocketMap;
   // gibt aus wenn eine Socket Verbindung aufgehoben/getrennt wurde
   socket.on('disconnect', () => {
     console.log(`Socket-Verbindung getrennt: ${socket.id}`);
   });
 });
+
 
 initializeDbImp.initDb()
 

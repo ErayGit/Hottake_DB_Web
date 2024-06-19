@@ -10,9 +10,17 @@ module.exports = {
         if (err) {
           console.error('Database error:', err);
         } else {
-          console.log(results);
-          console.log(post);
-          server.ioSocket.sockets.emit('notify', {followers: results, post: post.post})
+          const intersection = [];
+          server.userSocketMap.forEach((value, key) => {
+            results.forEach((result) => {
+              if(result.follow.followerId === key) {
+                intersection.push(value);
+              }
+            })
+          });
+          intersection.forEach((socketId) => {
+            server.ioSocket.sockets.to(socketId).emit('notify', {post: post.post})
+          });
         }
       })
     }
