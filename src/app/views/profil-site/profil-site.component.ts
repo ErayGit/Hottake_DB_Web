@@ -20,8 +20,6 @@ import {TuiInputModule} from '@taiga-ui/kit';
 import {FormControl, FormGroup,Validators} from '@angular/forms';
 
 
-
-
 @Component({
     selector: 'app-profil-site',
     standalone: true,
@@ -40,6 +38,7 @@ import {FormControl, FormGroup,Validators} from '@angular/forms';
       RouterLink,
       RouterLinkActive,]
 })
+
 export class ProfilSiteComponent{
 
   constructor(
@@ -52,6 +51,7 @@ export class ProfilSiteComponent{
   userName: string = '';
   name: string = '';
   bio: string = '';
+  stadt: string = '';
   followedUsers: { user: User }[] = [];
   items: Post[] = [];
   fileId: string = '';
@@ -66,21 +66,6 @@ export class ProfilSiteComponent{
       });
   }  
   
-  
-  onClick(): void {
-    this.open = !this.open;
-  }
-
-  onObscured(obscured: boolean): void {
-    if (obscured) {
-        this.open = false;
-    }
-  }
-
-  onActiveZone(active: boolean): void {
-    this.open = active && this.open;
-  }
-
   getImageForCard() {
     this.fileService.getImageFile(this.authService.getLoggedInUser()?.fileId ?? '').subscribe((res) => {
       const reader = new FileReader();
@@ -91,24 +76,16 @@ export class ProfilSiteComponent{
     });
   }
 
-  updateUser() {
-    const updatedData = {
-    };
-    this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', updatedData).subscribe(() => {
 
-    });
-  }
-  updateBio() {
-    this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', { bio: this.bio }).subscribe(() => {
-    });
-  }
+
+
 
   ngOnInit(): void {
     this.getFollowedUsers();
-    this.updateBio();
     if (this.authService.isLoggedIn()) {
       let user = this.authService.getLoggedInUser();
       this.userName = user?.name ?? '';
+      this.stadt = user?.stadt ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
       this.bio = this.authService.getLoggedInUser()?.bio ?? '';
       this.postService.findAllFromUser(this.authService.getLoggedInUser()?.id ?? '').subscribe((posts) => {

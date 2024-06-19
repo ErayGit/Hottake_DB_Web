@@ -198,13 +198,11 @@ router.get("/user/:id", async (req, res) => {
 
 // update user
 router.put("/user/:id", async (req, res) => {
-  const {bio} = req.body;
+  console.log(req);
+  let query = "UPDATE user SET bio = ? WHERE id = ?";
+  const params = [req.body.bio, req.params.id]; // add bio to params
 
-  const query =
-    "UPDATE user SET bio = ? WHERE id = ?";
-  const values = [bio, req.params.id];
-
-  db.query(query, values, (err, result) => {
+  db.query(query, params, (err, result) => {
     if (err) {
       console.error("Database error:", err); // Fehler Protokoll
       return res.status(500).send({ message: "Server error." });
@@ -218,26 +216,28 @@ router.put("/user/:id", async (req, res) => {
 });
 
 
-// update user
-router.put("/user/:id", async (req, res) => {
-  const { name, bio, stadt, email, firstName, lastName } = req.body;
 
-  const query =
-    "UPDATE user SET name = ?, bio = ?, stadt = ?, email = ?, firstName = ?, lastName = ? WHERE id = ?";
-  const values = [name, bio, stadt, email, firstName, lastName, req.params.id];
 
-  db.query(query, values, (err, result) => {
-    if (err) {
-      console.error("Database error:", err); // Fehler Protokoll
-      return res.status(500).send({ message: "Server error." });
-    }
-    if (result.affectedRows > 0) {
-      res.status(200).send({ message: "User updated successfully." });
-    } else {
-      res.status(404).send({ message: "User not found." });
-    }
-  });
-});
+// // update user
+// router.put("/user/:id", async (req, res) => {
+//   const { name, bio, stadt, email, firstName, lastName } = req.body;
+
+//   const query =
+//     "UPDATE user SET name = ?, bio = ?, stadt = ?, email = ?, firstName = ?, lastName = ? WHERE id = ?";
+//   const values = [name, bio, stadt, email, firstName, lastName, req.params.id];
+
+//   db.query(query, values, (err, result) => {
+//     if (err) {
+//       console.error("Database error:", err); // Fehler Protokoll
+//       return res.status(500).send({ message: "Server error." });
+//     }
+//     if (result.affectedRows > 0) {
+//       res.status(200).send({ message: "User updated successfully." });
+//     } else {
+//       res.status(404).send({ message: "User not found." });
+//     }
+//   });
+// });
 
 
 // delete user

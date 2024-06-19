@@ -1,0 +1,39 @@
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
+    padding-top: 10vh;
+    gap: 1rem;
+}
+
+.edit{
+    width: 30%;
+    height: auto;
+    margin: auto;
+}
+
+.tui-island__paragraph{
+    margin-bottom: 1em;
+}
+
+.form-wrapper{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.input-group-text{
+    width: 8em;
+    justify-content: center;
+}
+
+.box-for-button{
+    margin-bottom: 1em;
+}
+
+.tui-island__paragraph{
+    color: black;
+}

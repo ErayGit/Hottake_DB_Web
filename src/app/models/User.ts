@@ -11,7 +11,7 @@ export class User extends BaseModel<User> {
   email!: string;
   password!: string;
   firstName!: string;
-  lastName!: boolean;
+  lastName!: string;
   fileId?: string;
   access_token?: string;
 

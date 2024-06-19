@@ -17,56 +17,11 @@
                 type="button" 
                 class="btn btn-secondary" 
                 data-bs-toggle="modal" 
-                data-bs-target="#createCard">
+                data-bs-target="#createCard"
+                routerLink="/editProfil"
+                routerLinkActive="active">
                 Profil bearbeiten
             </button>
-            
-            <!-- Update bio input field
-            <input [(ngModel)]="bio" type="text" placeholder="Update your bio">
-
-             Update bio button 
-           <button (click)="updateBio()">Update Bio</button>
-
-           
-           <button
-           iconRight="tuiIconChevronDown"
-           class="btn btn-secondary" 
-           tuiButton
-           type="button"
-           [tuiDropdown]="dropdownContent"
-           [tuiDropdownManual]="open"
-           (click)="onClick()"
-            >
-           Choose
-           <ng-template #dropdownContent>
-               <div class="dropdown"> <span class="inputfelder"><input [(ngModel)]="bio" type="text" placeholder="Update your bio"> </span></div>
-           </ng-template>
-            </button>-->
-
-            <button
-                iconRight="tuiIconChevronDown"
-                class="btn btn-secondary" 
-                tuiButton
-                type="button"
-                [tuiDropdown]="dropdownContent"
-                [tuiDropdownManual]="open"
-                (click)="onClick()"
-                    >
-                Choose
-                <ng-template #dropdownContent>
-                    <div class="dropdown"> 
-                        <span class="inputfelder"> <tui-input class="input" type="text" []>
-                            Bearbeite deine Bio!
-                            <input tuiTextfield />
-                            </tui-input></span>
-                    </div>
-                </ng-template>
-            </button>
-
-
-
-
-
         </div>
 
         <div class="flex-container">
@@ -84,13 +39,11 @@
             
             <div class="bio-container">
                 <p class="bio">About me:</p>
-                <p class="card-text">{{bio}}</p>
+                <p class="card-text"><strong> Stadt:</strong> {{stadt}}</p>
+                <p class="card-text"><strong> Bio:</strong> {{bio}}</p>
             </div>
         </div>
-
     </div>
-
-
 
     <div class="right">
         @if (items.length === 0) {
