@@ -10,17 +10,24 @@ module.exports = {
         if (err) {
           console.error('Database error:', err);
         } else {
-          const intersection = [];
-          server.userSocketMap.forEach((value, key) => {
-            results.forEach((result) => {
-              if(result.follow.followerId === key) {
-                intersection.push(value);
-              }
-            })
-          });
-          intersection.forEach((socketId) => {
-            server.ioSocket.sockets.to(socketId).emit('notify', {post: post.post})
-          });
+          userQuery = 'SELECT * FROM user WHERE id = ?';
+          db.query(userQuery, params, (err, user) => {
+            if (err) {
+              console.error('Database error:', err);
+            } else {
+              const intersection = [];
+              server.userSocketMap.forEach((value, key) => {
+                results.forEach((result) => {
+                  if(result.follow.followerId === key) {
+                    intersection.push(value);
+                  }
+                })
+              });
+              intersection.forEach((socketId) => {
+                server.ioSocket.sockets.to(socketId).emit('notify', {post: post.post, user: user[0].user})
+              });
+            }
+          })
         }
       })
     }

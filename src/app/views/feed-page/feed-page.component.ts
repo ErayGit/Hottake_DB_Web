@@ -51,15 +51,11 @@ export class FeedPageComponent implements OnInit {
     private authService: AuthService,
     private pushService: PushService,
     private notificationService: NotificationService,
-    private router: Router
   ) {}
 
   private socketSubscription: Subscription | undefined;
 
   ngOnInit(): void {
-    if(!this.authService.isLoggedIn()){
-      this.router.navigate(['login']);
-    }
     this.fetchData();
     this.socketSubscription = this.notificationService.onEvent('notify').subscribe({
       next: (data) => {
