@@ -21,8 +21,52 @@
                 Profil bearbeiten
             </button>
             
+            <!-- Update bio input field
             <input [(ngModel)]="bio" type="text" placeholder="Update your bio">
-            <button (click)="updateBio()">Update Bio</button>
+
+             Update bio button 
+           <button (click)="updateBio()">Update Bio</button>
+
+           
+           <button
+           iconRight="tuiIconChevronDown"
+           class="btn btn-secondary" 
+           tuiButton
+           type="button"
+           [tuiDropdown]="dropdownContent"
+           [tuiDropdownManual]="open"
+           (click)="onClick()"
+            >
+           Choose
+           <ng-template #dropdownContent>
+               <div class="dropdown"> <span class="inputfelder"><input [(ngModel)]="bio" type="text" placeholder="Update your bio"> </span></div>
+           </ng-template>
+            </button>-->
+
+            <button
+                iconRight="tuiIconChevronDown"
+                class="btn btn-secondary" 
+                tuiButton
+                type="button"
+                [tuiDropdown]="dropdownContent"
+                [tuiDropdownManual]="open"
+                (click)="onClick()"
+                    >
+                Choose
+                <ng-template #dropdownContent>
+                    <div class="dropdown"> 
+                        <span class="inputfelder"> <tui-input class="input" type="text" []>
+                            Bearbeite deine Bio!
+                            <input tuiTextfield />
+                            </tui-input></span>
+                    </div>
+                </ng-template>
+            </button>
+
+
+
+
+
         </div>
 
         <div class="flex-container">

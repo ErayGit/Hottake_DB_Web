@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, } from '@angular/core';
 import { FirendsBarComponent } from "../feed-page/firends-bar/firends-bar.component";
 import { CARDComponent } from "../feed-page/card/card.component";
 import {RouterLink, RouterLinkActive} from "@angular/router";
@@ -13,6 +13,13 @@ import { PostService } from '../../api/post.service';
 import { Post } from '../../models/Post';
 import { File } from '../../models/File';
 import { FormsModule } from '@angular/forms';
+import {ChangeDetectionStrategy} from '@angular/core';
+import {TuiDropdownModule} from '@taiga-ui/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {TuiInputModule} from '@taiga-ui/kit';
+import {FormControl, FormGroup,Validators} from '@angular/forms';
+
+
 
 
 @Component({
@@ -20,16 +27,21 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     templateUrl: './profil-site.component.html',
     styleUrl: './profil-site.component.css',
+
     imports: [
       FirendsBarComponent,
       CARDComponent,
+      TuiDropdownModule,
       TuiIconModule,
+      TuiInputModule,
+      ReactiveFormsModule,
       NgOptimizedImage,
       FormsModule,
       RouterLink,
       RouterLinkActive,]
 })
 export class ProfilSiteComponent{
+
   constructor(
     private fileService: FileService,
     private authService: AuthService,
@@ -44,6 +56,7 @@ export class ProfilSiteComponent{
   items: Post[] = [];
   fileId: string = '';
   postImage: any;
+  open = false;
 
   getFollowedUsers() {
     this.userService
@@ -52,6 +65,21 @@ export class ProfilSiteComponent{
         this.followedUsers = res;
       });
   }  
+  
+  
+  onClick(): void {
+    this.open = !this.open;
+  }
+
+  onObscured(obscured: boolean): void {
+    if (obscured) {
+        this.open = false;
+    }
+  }
+
+  onActiveZone(active: boolean): void {
+    this.open = active && this.open;
+  }
 
   getImageForCard() {
     this.fileService.getImageFile(this.authService.getLoggedInUser()?.fileId ?? '').subscribe((res) => {
@@ -65,23 +93,20 @@ export class ProfilSiteComponent{
 
   updateUser() {
     const updatedData = {
-      // Die Daten, die Sie aktualisieren möchten
     };
     this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', updatedData).subscribe(() => {
-      // Was Sie tun möchten, nachdem die Daten erfolgreich aktualisiert wurden
+
     });
   }
-
   updateBio() {
     this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', { bio: this.bio }).subscribe(() => {
-      // Was Sie tun möchten, nachdem die Biografie erfolgreich aktualisiert wurde
     });
   }
 
   ngOnInit(): void {
     this.getFollowedUsers();
+    this.updateBio();
     if (this.authService.isLoggedIn()) {
-      this.updateBio();
       let user = this.authService.getLoggedInUser();
       this.userName = user?.name ?? '';
       this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
@@ -94,7 +119,15 @@ export class ProfilSiteComponent{
       });
       this.getImageForCard();
 
+
   }
 }
+
 protected readonly tuiIconFile = tuiIconFile;
+
+testForm = new FormGroup({
+  testValue1: new FormControl('A field', Validators.required),
+  testValue2: new FormControl('This one can be expanded', Validators.required),
+});
+
 }
