@@ -67,6 +67,8 @@
         alt="post"
       />
       {{ item.user.name }}
+      <br>
+      am {{ item.createdAt | date: 'dd.MM.yyyy' }}
     </div>
     <div class="reaction">
         <button class="button-back"

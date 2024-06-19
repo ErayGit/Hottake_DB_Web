@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FileService} from "../../../api/file.service";
 import {Post} from "../../../models/Post";
-import {NgOptimizedImage} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {Comment, Emoji} from "../../../models/Comment";
 import {TuiButtonModule} from "@taiga-ui/core";
 import {CommentService} from "../../../api/comment.service";
@@ -15,7 +15,8 @@ import {RouterLink} from "@angular/router";
   imports: [
     NgOptimizedImage,
     TuiButtonModule,
-    RouterLink
+    RouterLink,
+    DatePipe
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css',
