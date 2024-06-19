@@ -5,7 +5,7 @@ const validation   = require('./../common/validation');
 const bcrypt = require('bcryptjs');
 const uuidGenerator = require("uuid");
 
-router.post('/comment',  async (req, res) => {
+router.post('/comment', validation.validatePostComment, async (req, res) => {
   const uuid = uuidGenerator.v4();
   const insertQuery = 'INSERT INTO comment (id, text, emoji, creatorId, postId) VALUES (?, ?, ?, ?, ?)';
   const insertParams = [uuid, req.body.text, req.body.emoji, req.body.creatorId, req.body.postId];

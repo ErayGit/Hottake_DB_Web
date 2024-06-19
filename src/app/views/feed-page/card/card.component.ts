@@ -93,12 +93,13 @@ export class CARDComponent implements OnInit{
       creatorId: this.authService.getLoggedInUser()?.id!,
       postId: this.item.id
     }).subscribe((res) => {
-      if(res.body?.comment) {
+      if(res) {
         this.pushService.sendPush(pushTypes.SUCCESS);
         this.getComments();
         return;
+      } else {
+        this.pushService.sendPush(pushTypes.ERROR);
       }
-      this.pushService.sendPush(pushTypes.ERROR);
     })
   }
 
