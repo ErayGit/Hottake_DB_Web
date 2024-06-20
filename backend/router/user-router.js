@@ -177,6 +177,7 @@ router.get("/user/:id/notfollowed", async (req, res) => {
   });
 });
 
+
 //finde einen bestimmten user
 router.get("/user/:id", async (req, res) => {
   const query = "SELECT * FROM user WHERE id = ?";
@@ -198,9 +199,12 @@ router.get("/user/:id", async (req, res) => {
 
 // update user
 router.put("/user/:id", async (req, res) => {
-  console.log(req);
-  let query = "UPDATE user SET bio = ? WHERE id = ?";
-  const params = [req.body.bio, req.params.id]; // add bio to params
+  //console.log(req);
+  //let query = "UPDATE user SET bio = ? WHERE id = ?";
+  let query = "UPDATE user SET name = ?, bio = ?, stadt = ?, firstName = ?, lastName = ? WHERE id = ?";
+
+  console.log(req.body);
+  const params = [req.body.name, req.body.bio, req.body.stadt, req.body.firstName, req.body.lastName, req.params.id]; // add bio to params
 
   db.query(query, params, (err, result) => {
     if (err) {

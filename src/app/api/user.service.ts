@@ -33,7 +33,7 @@ export class UserService {
     return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/notfollowed`, {params: params});
   }
 
-  updateUser(userId: string, bio: string): Observable<any> {
-    return this.http.put(this.baseUrl + `user/${userId}`, {bio: bio});
+  updateUser(userId: string, bio: string,name: string,firstName: string, lastName: string, stadt: string ): Observable<any> {
+    return this.http.put(this.baseUrl + `user/${userId}`, { name: name, bio: bio, stadt: stadt, firstName: firstName, lastName: lastName});
   }
 }

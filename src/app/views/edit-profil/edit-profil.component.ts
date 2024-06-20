@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, } from '@angular/core';
+import {Component, Injectable, Input, OnInit, inject, } from '@angular/core';
 import { FirendsBarComponent } from "../feed-page/firends-bar/firends-bar.component";
 import { CARDComponent } from "../feed-page/card/card.component";
 import {RouterLink, RouterLinkActive} from "@angular/router";
@@ -21,6 +21,7 @@ import {TuiInputFilesModule, TuiInputModule, TuiIslandModule, TuiMarkerIconModul
 import { valueOrDefault } from 'chart.js/dist/helpers/helpers.core';
 import {PushService, pushTypes} from "../../services/push.service";
 import {Router} from "@angular/router";
+import { ProfilSiteComponent } from '../profil-site/profil-site.component';
 
 @Component({
   selector: 'app-edit-profil',
@@ -43,7 +44,10 @@ import {Router} from "@angular/router";
     FormsModule,
     RouterLink,
     RouterLinkActive,]
+})
 
+@Injectable({
+  providedIn: "root",
 })
 
 export class EditProfilComponent {
@@ -52,16 +56,14 @@ export class EditProfilComponent {
     private authService: AuthService,
     private userService: UserService,
     private pushService: PushService,
+    private profilComponent: ProfilSiteComponent,
     private postService: PostService,
     private router: Router,
-
   ) {}
 
- 
-
-  userName: string = '';
-  vornamename: string = '';
-  nachname: string = '';
+  name: string = '';
+  firstName: string = '';
+  lastName: string = '';
   bio: string = '';
   followedUsers: { user: User }[] = [];
   items: Post[] = [];
@@ -69,6 +71,7 @@ export class EditProfilComponent {
   stadt: string = '';
   postImage: any;
   open = false;
+  data: any[] = [];
 
   getFollowedUsers() {
     this.userService
@@ -79,14 +82,18 @@ export class EditProfilComponent {
   }  
 
 readonly loginForm = new FormGroup({
-  bio: new FormControl('')
+  bio: new FormControl(''),
+  name: new FormControl(''),
+  firstName: new FormControl(''),
+  lastName: new FormControl(''),
+  stadt: new FormControl('')
 });
 
 loadUserData() {
   let user = this.authService.getLoggedInUser();
-  this.userName = user?.name ?? '';
-  this.vornamename = user?.firstName ?? '';
-  this.nachname =  user?.lastName ?? '';
+  this.name = user?.name ?? '';
+  this.firstName = user?.firstName ?? '';
+  this.lastName =  user?.lastName ?? '';
   this.stadt = user?.stadt ?? '';
   this.bio = user?.bio ?? '';
   this.postService.findAllFromUser(user?.id ?? '').subscribe((posts) => {
@@ -98,14 +105,14 @@ loadUserData() {
 }
 
   create() {
-  this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', this.loginForm.value.bio!)
+  this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', this.loginForm.value.bio!, this.loginForm.value.name!, this.loginForm.value.firstName!, this.loginForm.value.lastName!, this.loginForm.value.stadt!)
   .subscribe((value) => {
     if(!value){
       this.pushService.sendPush(pushTypes.ERROR);
       return;
     }
+    this.profilComponent.loadUserData();
     this.pushService.sendPush(pushTypes.SUCCESS);
-    this.loadUserData();
     this.router.navigate(['/profil']);
   })
   return;

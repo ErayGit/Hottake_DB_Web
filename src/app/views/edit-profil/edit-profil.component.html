@@ -61,27 +61,27 @@
                   <form [formGroup]="loginForm">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Nutzernamen</span>
-                        <input type="text" required name="name" class="form-control" value="{{userName}}"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" required name="name" formControlName="name" class="form-control" [ngModel]="name" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Vornamen</span>
-                        <input type="text" class="form-control" value="{{vornamename}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" class="form-control" formControlName="firstName" [ngModel]="firstName" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Nachnamen</span>
-                        <input type="text" class="form-control" value="{{nachname}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" class="form-control" formControlName="lastName" [ngModel]="lastName" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Biographie</span>
-                        <input type="text" class="form-control" formControlName="bio" value="{{bio}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" class="form-control" formControlName="bio" [ngModel]="bio" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Stadt</span>
-                        <input type="text" class="form-control" value="{{stadt}}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" class="form-control" [ngModel]="stadt" formControlName="stadt" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                     </form>
                     <div class="button-wrapper">

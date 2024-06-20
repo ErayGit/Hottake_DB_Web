@@ -109,4 +109,10 @@ export class AuthService {
     const parsedUser = JSON.parse(userJSON || "{}");
     return new User(parsedUser);
   }
+
+
+  getUserById(userId: string): Observable<User> {
+    return this.http.get<User>(this.baseUrl + `user/${userId}`);
+  }
+  
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, } from '@angular/core';
+import {Component, Injectable, Input, OnInit, } from '@angular/core';
 import { FirendsBarComponent } from "../feed-page/firends-bar/firends-bar.component";
 import { CARDComponent } from "../feed-page/card/card.component";
 import {RouterLink, RouterLinkActive} from "@angular/router";
@@ -18,6 +18,7 @@ import {TuiDropdownModule} from '@taiga-ui/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TuiInputModule} from '@taiga-ui/kit';
 import {FormControl, FormGroup,Validators} from '@angular/forms';
+import { inject } from '@angular/core/testing';
 
 
 @Component({
@@ -39,16 +40,23 @@ import {FormControl, FormGroup,Validators} from '@angular/forms';
       RouterLinkActive,]
 })
 
-export class ProfilSiteComponent{
+@Injectable({
+  providedIn: "root",
+})
 
+export class ProfilSiteComponent{
   constructor(
     private fileService: FileService,
     private authService: AuthService,
     private userService: UserService,
-    private postService: PostService
+    private postService: PostService,
   ) {}
 
-  userName: string = '';
+
+
+  
+  firstName: string = '';
+  lastName: string = '';
   name: string = '';
   bio: string = '';
   stadt: string = '';
@@ -75,18 +83,30 @@ export class ProfilSiteComponent{
       reader.readAsDataURL(res);
     });
   }
-
-
-
-
+  
+  loadUserData() {
+    let user = this.authService.getLoggedInUser();
+    this.name = user?.name ?? '';
+    this.firstName = user?.firstName ?? '';
+    this.lastName =  user?.lastName ?? '';
+    this.stadt = user?.stadt ?? '';
+    this.bio = user?.bio ?? '';
+    this.postService.findAllFromUser(user?.id ?? '').subscribe((posts) => {
+      this.items = posts;
+    }, error => {
+      console.error('Error:', error);
+      this.items = [];
+    });
+  }
 
   ngOnInit(): void {
     this.getFollowedUsers();
     if (this.authService.isLoggedIn()) {
       let user = this.authService.getLoggedInUser();
-      this.userName = user?.name ?? '';
+      this.name = user?.name ?? '';
       this.stadt = user?.stadt ?? '';
-      this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
+      this.firstName = user?.firstName ?? '';
+      this.lastName =  user?.lastName ?? '';
       this.bio = this.authService.getLoggedInUser()?.bio ?? '';
       this.postService.findAllFromUser(this.authService.getLoggedInUser()?.id ?? '').subscribe((posts) => {
         this.items = posts;
@@ -95,8 +115,6 @@ export class ProfilSiteComponent{
         this.items = [];
       });
       this.getImageForCard();
-
-
   }
 }
 
