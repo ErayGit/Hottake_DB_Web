@@ -13,7 +13,6 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {TuiValueChangesModule} from "@taiga-ui/cdk";
 import {HttpParams} from "@angular/common/http";
 
-
 @Component({
   selector: 'app-firends-bar',
   standalone: true,

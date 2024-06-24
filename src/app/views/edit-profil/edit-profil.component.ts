@@ -78,7 +78,7 @@ export class EditProfilComponent {
       .subscribe((res) => {
         this.followedUsers = res;
       });
-  }  
+  }
 
 readonly loginForm = new FormGroup({
   bio: new FormControl(''),
@@ -110,11 +110,10 @@ loadUserData() {
       this.pushService.sendPush(pushTypes.ERROR);
       return;
     }
-    console.log(value);
-    this.authService.setLoggedInUser(value);
+    this.authService.setLoggedInUser(value.user.user);
     this.profilComponent.loadUserData();
     this.pushService.sendPush(pushTypes.SUCCESS);
-    this.router.navigate(['/profil']);
+    this.router.navigate(['/profil', value.user.user.id]);
   })
   return;
 }

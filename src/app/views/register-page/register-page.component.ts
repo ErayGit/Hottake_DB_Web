@@ -120,7 +120,7 @@ export class RegisterPageComponent {
         this.pushService.sendPush(pushTypes.ERROR);
       }
       this.pushService.sendPush(pushTypes.SUCCESS);
-      this.router.navigate(['']);
+      this.router.navigate(['/login']);
     })
   }
 

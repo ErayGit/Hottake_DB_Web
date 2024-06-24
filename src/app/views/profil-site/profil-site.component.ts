@@ -39,6 +39,11 @@ import { inject } from '@angular/core/testing';
       RouterLink,
       RouterLinkActive,]
 })
+
+@Injectable({
+  providedIn: "root",
+})
+
 export class ProfilSiteComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
@@ -104,7 +109,7 @@ export class ProfilSiteComponent implements OnInit {
       this.userService.findOne(this.userId).subscribe((userObject) => {
         const user: User = userObject.user
         this.getFollowedUsers(user.id);
-        this.userName = user?.name ?? '';
+        this.firstName = user?.name ?? '';
         this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
         this.bio = user?.bio;
         this.postService.findAllFromUser(user.id).subscribe((posts) => {
