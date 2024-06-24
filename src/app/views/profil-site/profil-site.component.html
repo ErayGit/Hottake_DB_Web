@@ -12,16 +12,18 @@
                 routerLinkActive="active">
                 Zurück zur Startseite
             </button>
-
-            <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-toggle="modal"
-                data-bs-target="#createCard"
-                routerLink="/editProfil"
-                routerLinkActive="active">
-                Profil bearbeiten
-            </button>
+            
+            @if (userId === logginUserId){
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#createCard"
+                    routerLink="/editProfil"
+                    routerLinkActive="active">
+                    Profil bearbeiten
+                </button>
+            }
         </div>
 
         <div class="flex-container">

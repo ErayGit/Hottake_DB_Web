@@ -52,19 +52,22 @@
   </div>
   <div class="profil island">
     <div class="profil-card">
-      <img
+      <a class="profilBild">
+        <img
         class="cover"
         [ngSrc]="
           userProfileImage != null ? userProfileImage : 'assets/svg/placeholder.svg'
         "
+        [routerLink]="['/profil', userId]"
         alt="post"
         width="50"
         height="50"
-      />
+        />
+      </a>
+
       <div class="card-body">
         <h5 class="card-title">{{name}}</h5>
-        <a
-          [routerLink]="['/profil', userId]">
+        <a>
           &#64;{{userName}}
           </a>
       </div>

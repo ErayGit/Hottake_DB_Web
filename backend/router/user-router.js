@@ -177,6 +177,23 @@ router.get("/user/:id/notfollowed", async (req, res) => {
   });
 });
 
+router.get("/user/:id/notfollowed2", async (req, res) => {
+  let query = "SELECT id FROM user WHERE id NOT IN(SELECT followedId FROM follow WHERE followerId = ?)"
+  const params = [req.params.id]
+  if(req.query.search) {
+    search = '%' + req.query.search + '%'
+    query = query + ' AND name like ?'
+    params.push(search);
+  }
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).send({ message: "Server error." });
+    }
+    res.status(200).send(results);
+  });
+});
+
 
 //finde einen bestimmten user
 router.get("/user/:id", async (req, res) => {
