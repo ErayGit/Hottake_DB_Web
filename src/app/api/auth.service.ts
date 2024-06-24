@@ -4,7 +4,7 @@ import {User} from "../models/User";
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {LoginBody} from "../interfaces/login-body";
-import {catchError, map, Observable, of} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, of, Subject} from "rxjs";
 import {UserBody} from "../interfaces/user-body";
 
 @Injectable({
@@ -23,6 +23,12 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
   ) {
+  }
+
+  private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+
+  isLoggedInObservable() {
+    return this.loggedInSubject.asObservable();
   }
 
   /**
@@ -54,6 +60,7 @@ export class AuthService {
               response.body?.access_token!,
             );
             this.setLoggedInUser(response.body.user!);
+            this.loggedInSubject.next(true);
             return true;
           }
           return false;
@@ -84,6 +91,7 @@ export class AuthService {
     this.loggedInUser = null;
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
+    this.loggedInSubject.next(false);
     this.router.navigate(['/login']);
   }
 
@@ -114,5 +122,5 @@ export class AuthService {
   getUserById(userId: string): Observable<User> {
     return this.http.get<User>(this.baseUrl + `user/${userId}`);
   }
-  
+
 }
