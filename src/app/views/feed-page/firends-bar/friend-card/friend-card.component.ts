@@ -9,11 +9,12 @@ import {ShowFriendsType} from "../firends-bar.component";
 import {FollowService} from "../../../../api/follow.service";
 import {FollowStatus} from "../../../../interfaces/follow-body";
 import {PushService, pushTypes} from "../../../../services/push.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-friend-card',
   standalone: true,
-  imports: [NgOptimizedImage, TuiButtonModule],
+  imports: [NgOptimizedImage, TuiButtonModule, RouterLink],
   templateUrl: './friend-card.component.html',
   styleUrl: './friend-card.component.css',
 })

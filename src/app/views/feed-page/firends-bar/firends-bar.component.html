@@ -35,7 +35,7 @@
           }
         </div>
       </div>
-      @if (users?.length! === 0) {
+      @if (users.length! === 0) {
       <div class="nofriendcards">
         <h3 class="nofriends">Noch keine Freunde vorhanden</h3>
       </div>
@@ -63,7 +63,10 @@
       />
       <div class="card-body">
         <h5 class="card-title">{{name}}</h5>
-        <a href="/profil">&#64;{{userName}}</a>
+        <a
+          [routerLink]="['/profil', userId]">
+          &#64;{{userName}}
+          </a>
       </div>
     </div>
     <div class="logout">

@@ -21,6 +21,8 @@ import { TuiInputFilesModule } from '@taiga-ui/kit';
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {ImageCropperComponent} from "ngx-image-cropper";
 import {Router} from "@angular/router";
+import {NotificationService} from "../../api/notification.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-feed-page',
@@ -48,14 +50,18 @@ export class FeedPageComponent implements OnInit {
     private postService: PostService,
     private authService: AuthService,
     private pushService: PushService,
-    private router: Router
+    private notificationService: NotificationService,
   ) {}
 
+  private socketSubscription: Subscription | undefined;
+
   ngOnInit(): void {
-    if(!this.authService.isLoggedIn()){
-      this.router.navigate(['login']);
-    }
     this.fetchData();
+    this.socketSubscription = this.notificationService.onEvent('notify').subscribe({
+      next: (data) => {
+        this.fetchData();
+      }
+    });
   }
 
   title = 'Hottake_DB_Web';
@@ -115,7 +121,6 @@ export class FeedPageComponent implements OnInit {
         userId = loggedInUser.id;
       }
     }
-    console.log("here");
      return this.postService.findAllFromFollowed(userId).subscribe((posts) => {
        this.items = posts;
      });

@@ -46,14 +46,29 @@
           postImage != null ? postImage : 'assets/svg/placeholder.svg'
         "
           alt="post"
+        fill="true"
         />
       </div>
     </div>
   </div>
 
-  <div class="meta-wraper">
-    <div class="user">
+  <div
+    class="meta-wraper">
+    <div
+      [routerLink]="['/profil', item.user.id]"
+      class="user">
+      <img
+        height="40"
+        width="40"
+        class="cover-userimage"
+        [ngSrc]="
+          userImage != null ? userImage : 'assets/svg/placeholder.svg'
+        "
+        alt="post"
+      />
       {{ item.user.name }}
+      <br>
+      am {{ item.createdAt | date: 'dd.MM.yyyy' }}
     </div>
     <div class="reaction">
         <button class="button-back"

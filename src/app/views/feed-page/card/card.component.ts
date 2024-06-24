@@ -1,19 +1,22 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FileService} from "../../../api/file.service";
 import {Post} from "../../../models/Post";
-import {NgOptimizedImage} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {Comment, Emoji} from "../../../models/Comment";
 import {TuiButtonModule} from "@taiga-ui/core";
 import {CommentService} from "../../../api/comment.service";
 import {AuthService} from "../../../api/auth.service";
 import {PushService, pushTypes} from "../../../services/push.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-card',
   standalone: true,
   imports: [
     NgOptimizedImage,
-    TuiButtonModule
+    TuiButtonModule,
+    RouterLink,
+    DatePipe
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css',
@@ -28,18 +31,29 @@ export class CARDComponent implements OnInit{
               ) {
 
   }
-  @Input() 
+  @Input()
   item: any;
   prayerCount: number = 0;
   laughingCount: number = 0;
   cryingCount: number = 0;
   postImage: any;
+  userImage: any;
 
   getImageForCard() {
     this.fileService.getImageFile((this.item as Post).fileId!).subscribe((res) => {
       const reader = new FileReader();
             reader.onloadend = () => {
         this.postImage = reader.result as string;
+      };
+      reader.readAsDataURL(res);
+    });
+  }
+
+  getImageForUser() {
+    this.fileService.getImageFile((this.item as Post).user!.fileId!).subscribe((res) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.userImage = reader.result as string;
       };
       reader.readAsDataURL(res);
     });
@@ -79,12 +93,13 @@ export class CARDComponent implements OnInit{
       creatorId: this.authService.getLoggedInUser()?.id!,
       postId: this.item.id
     }).subscribe((res) => {
-      if(res.body?.comment) {
+      if(res) {
         this.pushService.sendPush(pushTypes.SUCCESS);
         this.getComments();
         return;
+      } else {
+        this.pushService.sendPush(pushTypes.ERROR);
       }
-      this.pushService.sendPush(pushTypes.ERROR);
     })
   }
 
@@ -113,6 +128,7 @@ export class CARDComponent implements OnInit{
 
   ngOnInit(): void {
     this.getImageForCard();
+    this.getImageForUser();
     this.countComments(this.item.comments);
   }
 

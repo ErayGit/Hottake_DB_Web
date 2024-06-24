@@ -3,7 +3,14 @@
     <a href="/"><h1>Hot Take</h1></a>
 
     <div>
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        class="hoverable"
+        [tuiDropdown]="dropdownContent"
+        [tuiDropdownManual]="open"
+        (click)="onClickNotification()"
+        (tuiActiveZoneChange)="onActiveZone($event)"
+        (tuiObscured)="onObscured($event)"
+        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
@@ -18,6 +25,11 @@
             d="M14.8297 20.01C14.4097 21.17 13.2997 22 11.9997 22C11.2097 22 10.4297 21.68 9.87969 21.11C9.55969 20.81 9.31969 20.41 9.17969 20C9.30969 20.02 9.43969 20.03 9.57969 20.05C9.80969 20.08 10.0497 20.11 10.2897 20.13C10.8597 20.18 11.4397 20.21 12.0197 20.21C12.5897 20.21 13.1597 20.18 13.7197 20.13C13.9297 20.11 14.1397 20.1 14.3397 20.07C14.4997 20.05 14.6597 20.03 14.8297 20.01Z"
           ></path>
         </g>
+        @if(notification) {
+        <foreignObject x="13" y="14" width="100%" height="100%">
+          <div class="svg-div"></div>
+        </foreignObject>
+        }
       </svg>
     </div>
   </header>
@@ -28,3 +40,20 @@
     </ng-container>
   </main>
 </tui-root>
+
+<ng-template #dropdownContent>
+  <div class="bk-dropdown">
+  <div class="dropdown">
+    @if (notificationList.length === 0) {
+      <div class="no-notifications">Keine Notifications</div>
+    }
+    @else if (notificationList.length > 0) {
+      @for (note of notificationList; track note) {
+        <div class="notificaton-card">
+          {{ note.name }} hat einen neuen Post hochgeladen.
+        </div>
+      }
+    }
+  </div>
+  </div>
+</ng-template>

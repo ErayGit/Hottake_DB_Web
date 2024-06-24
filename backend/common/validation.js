@@ -1,3 +1,4 @@
+const db = require('./../db-config');
 module.exports = {
 
     // Validierung vom Register Formular:
@@ -36,5 +37,20 @@ module.exports = {
 
         // Falls Validierung erfolgreich war, weiter fortfahren
         next();
+    },
+    validatePostComment: (req, res, next) => {
+      let query = 'SELECT * FROM comment WHERE postId = ? AND creatorId = ? AND emoji = ?';
+      let params = [req.body.postId, req.body.creatorId, req.body.emoji];
+      db.query(query, params, (err, results) => {
+        if(err) {
+          console.error(err)
+        } else {
+          console.log(results.length > 0);
+          if(results.length > 0) {
+            return res.status(400).send({message: "Server-Error: Post wurde schon mit dem Emoji kommentiert"});
+          }
+          next();
+        }
+      });
     }
 }
