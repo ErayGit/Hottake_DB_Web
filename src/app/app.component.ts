@@ -7,7 +7,7 @@ import {
   TuiButtonModule,
   TuiDropdownModule
 } from "@taiga-ui/core";
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import { CARDComponent } from './views/feed-page/card/card.component';
 import { FirendsBarComponent } from './views/feed-page/firends-bar/firends-bar.component';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
     private router: Router,
   ) {}
 
-  private socketSubscription: Subscription | undefined;
+  private loginSubscription: Subscription | undefined;
   protected open: boolean = false;
   protected notification: boolean = false;
   protected notificationList: {
@@ -85,12 +85,8 @@ export class AppComponent implements OnInit {
     this.open = active && this.open;
   }
 
-  ngOnInit(): void {
-    if(!this.authService.isLoggedIn()){
-      this.router.navigate(['login']);
-      return;
-    }
-    this.socketSubscription = this.notificationService.onEvent('notify').subscribe({
+  listen() {
+    this.notificationService.onEvent('notify').subscribe({
       next: (data) => {
         this.notification = true
         this.notificationList.push({
@@ -99,5 +95,29 @@ export class AppComponent implements OnInit {
         })
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.loginSubscription = this.authService.isLoggedInObservable().subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.notificationService.connect();
+        this.listen();
+      } else {
+        this.router.navigate(['login']);
+      }
+    });
+
+    if (this.authService.isLoggedIn()) {
+      this.notificationService.connect();
+      this.notificationService.onEvent('notify').subscribe({
+        next: (data) => {
+          this.notification = true
+          this.notificationList.push({
+            name: data.user.name,
+            createdAt: data.post.createdAt,
+          })
+        }
+      });
+    }
   }
 }

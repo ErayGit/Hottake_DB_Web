@@ -54,14 +54,30 @@ export class FeedPageComponent implements OnInit {
   ) {}
 
   private socketSubscription: Subscription | undefined;
-
-  ngOnInit(): void {
-    this.fetchData();
-    this.socketSubscription = this.notificationService.onEvent('notify').subscribe({
+  private loginSubscription: Subscription | undefined;
+  listen() {
+    this.notificationService.onEvent('notify').subscribe({
       next: (data) => {
         this.fetchData();
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.fetchData();
+    this.loginSubscription = this.authService.isLoggedInObservable().subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
+        this.listen();
+      }
+    });
+
+    if (this.authService.isLoggedIn()) {
+      this.notificationService.onEvent('notify').subscribe({
+        next: (data) => {
+          this.fetchData();
+        }
+      });
+    }
   }
 
   title = 'Hottake_DB_Web';

@@ -71,6 +71,7 @@ export class EditProfilComponent {
   postImage: any;
   open = false;
   data: any[] = [];
+  userId: string = "";
 
   getFollowedUsers() {
     this.userService
@@ -93,6 +94,7 @@ loadUserData() {
   this.name = user?.name ?? '';
   this.firstName = user?.firstName ?? '';
   this.lastName =  user?.lastName ?? '';
+  this.userId = user?.id ?? '';
   this.stadt = user?.stadt ?? '';
   this.bio = user?.bio ?? '';
   this.postService.findAllFromUser(user?.id ?? '').subscribe((posts) => {

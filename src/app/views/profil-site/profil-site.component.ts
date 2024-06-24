@@ -19,8 +19,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {TuiInputModule} from '@taiga-ui/kit';
 import {FormControl, FormGroup,Validators} from '@angular/forms';
 import { inject } from '@angular/core/testing';
-
-
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-profil-site',
@@ -53,9 +52,6 @@ export class ProfilSiteComponent implements OnInit {
     private postService: PostService,
   ) {}
 
-
-
-
   firstName: string = '';
   lastName: string = '';
   userId: string = '';
@@ -66,6 +62,7 @@ export class ProfilSiteComponent implements OnInit {
   items: Post[] = [];
   fileId: string = '';
   postImage: any;
+  logginUserId: string = '';
 
   getFollowedUsers(userId: string) {
     this.userService
@@ -90,6 +87,7 @@ export class ProfilSiteComponent implements OnInit {
     this.name = user?.name ?? '';
     this.firstName = user?.firstName ?? '';
     this.lastName =  user?.lastName ?? '';
+    this.logginUserId = user?.id ?? '';
     this.stadt = user?.stadt ?? '';
     this.bio = user?.bio ?? '';
     this.postService.findAllFromUser(user?.id ?? '').subscribe((posts) => {
@@ -101,6 +99,7 @@ export class ProfilSiteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.logginUserId = this.authService.getLoggedInUser()?.id ?? '';
     this.route.params.subscribe(params => {
       this.userId = params['id'];
       if (!this.userId) {
@@ -110,8 +109,11 @@ export class ProfilSiteComponent implements OnInit {
         const user: User = userObject.user
         this.getFollowedUsers(user.id);
         this.firstName = user?.name ?? '';
+        this.stadt = user?.stadt ?? '';
         this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
         this.bio = user?.bio;
+        console.log(this.userId);
+        console.log(this.logginUserId)
         this.postService.findAllFromUser(user.id).subscribe((posts) => {
           this.items = posts;
         }, error => {

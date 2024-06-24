@@ -93,7 +93,7 @@ export class FirendsBarComponent implements OnInit {
       });
     this.showFriends = ShowFriendsType.FREUNDE
   }
-
+  
   getNotFollowedUsers(searchString?: string) {
     if(searchString) {
       let params: HttpParams = new HttpParams();
@@ -116,7 +116,6 @@ export class FirendsBarComponent implements OnInit {
       this.userId = user?.id ?? '';
     }
   }
-
   protected readonly ShowFriendsType = ShowFriendsType;
 }
 

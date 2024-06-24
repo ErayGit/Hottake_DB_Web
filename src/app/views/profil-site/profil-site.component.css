@@ -11,8 +11,6 @@ main {
     gap: 1rem;
 }
 
-
-
 .left, .right {
     border-radius: 10px;
     color: var(--text-100);

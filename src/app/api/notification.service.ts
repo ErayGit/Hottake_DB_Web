@@ -25,6 +25,22 @@ export class NotificationService {
     }
   }
 
+  connect() {
+    const userJSON = localStorage.getItem("user");
+    if(userJSON) {
+      const parsedUser = JSON.parse(userJSON || "{}");
+      const user = new User(parsedUser);
+      const userId = user.id!;
+      this.socket = io('http://localhost:8020', {
+        query: {
+          userId: userId,
+        }
+      })
+    } else {
+      this.socket = io('http://localhost:8020', {})
+    }
+  }
+
   onEvent(eventName: string): Observable<any> {
     return new Observable<any>(observer => {
       this.socket.on(eventName, (data) => {

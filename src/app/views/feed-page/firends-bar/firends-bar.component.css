@@ -16,6 +16,11 @@
   }
 }
 
+.profilBild :hover{
+  cursor: pointer;
+
+}
+
 .profil-card {
   display: flex;
   align-items: center;
