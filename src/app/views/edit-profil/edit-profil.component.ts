@@ -18,7 +18,6 @@ import {TuiDropdownModule} from '@taiga-ui/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormControl, FormGroup,Validators} from '@angular/forms';
 import {TuiInputFilesModule, TuiInputModule, TuiIslandModule, TuiMarkerIconModule} from "@taiga-ui/kit";
-import { valueOrDefault } from 'chart.js/dist/helpers/helpers.core';
 import {PushService, pushTypes} from "../../services/push.service";
 import {Router} from "@angular/router";
 import { ProfilSiteComponent } from '../profil-site/profil-site.component';
@@ -111,6 +110,8 @@ loadUserData() {
       this.pushService.sendPush(pushTypes.ERROR);
       return;
     }
+    console.log(value);
+    this.authService.setLoggedInUser(value);
     this.profilComponent.loadUserData();
     this.pushService.sendPush(pushTypes.SUCCESS);
     this.router.navigate(['/profil']);

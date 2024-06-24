@@ -212,7 +212,11 @@ router.put("/user/:id", async (req, res) => {
       return res.status(500).send({ message: "Server error." });
     }
     if (result.affectedRows > 0) {
-      res.status(200).send({ message: "User updated successfully." });
+      const findQuery = "SELECT * FROM user WHERE id = ?";
+      const findParam = [req.params.id];
+      db.query(findQuery, findParam, async (err, findRes) => {
+        res.status(200).send({ message: "User updated successfully.", user: findRes[0] });
+      } );
     } else {
       res.status(404).send({ message: "User not found." });
     }
