@@ -60,7 +60,7 @@ h6 {
 
 body {
   color: var(--text);
-  background-color: var(--background)!important;
+  background-color: var(--background) !important;
   min-height: 100%;
 }
 
@@ -68,6 +68,10 @@ button svg {
   fill: var(--primary-950);
   height: 25px;
   margin-right: 7px;
+}
+
+.icon {
+  height: 25px;
 }
 
 a {
