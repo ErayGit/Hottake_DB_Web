@@ -20,6 +20,7 @@ import {TuiInputModule} from '@taiga-ui/kit';
 import {FormControl, FormGroup,Validators} from '@angular/forms';
 import { inject } from '@angular/core/testing';
 import { HttpParams } from '@angular/common/http';
+import {NgModule} from '@angular/core';
 
 @Component({
     selector: 'app-profil-site',

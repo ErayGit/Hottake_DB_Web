@@ -1,7 +1,5 @@
 <main>
-
     <div class="left">
-
         <div class="knopf">
             <button
                 type="button"
@@ -10,7 +8,7 @@
                 data-bs-target="#createCard"
                 routerLink="/"
                 routerLinkActive="active">
-                Zurück zur Startseite
+                <tui-icon class="icon" icon="tuiIconChevronLeft"></tui-icon>
             </button>
             
             @if (userId === logginUserId){
@@ -21,21 +19,24 @@
                     data-bs-target="#createCard"
                     routerLink="/editProfil"
                     routerLinkActive="active">
-                    Profil bearbeiten
+                    <tui-icon class="icon" icon="tuiIconEdit3"></tui-icon>
                 </button>
             }
         </div>
 
         <div class="flex-container">
-            <img
-        class="cover"
-          [ngSrc]="
-          postImage != null ? postImage : '../../../assets/svg/placeholder.svg'
-        "
-          alt="post"
-          height="40"
-          width="40"
-        />
+            <div class="cover">
+                <img
+        
+                [ngSrc]="
+                postImage != null ? postImage : '../../../assets/svg/placeholder.svg'
+              "
+                alt="post"
+                height="40"
+                            width="40"
+              />
+            </div>
+
             <h5 class="card-title">{{name}}</h5>
             <a >&#64;{{firstName}}</a>
 
@@ -43,6 +44,7 @@
                 <p class="bio">About me:</p>
                 <p class="card-text"><strong> Stadt:</strong> {{stadt}}</p>
                 <p class="card-text"><strong> Bio:</strong> {{bio}}</p>
+                
             </div>
         </div>
     </div>
