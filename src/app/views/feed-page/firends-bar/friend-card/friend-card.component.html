@@ -1,39 +1,29 @@
 <div class="friendcards-inside">
-  <div
-    [routerLink]="['/profil', user.user.id]"
-    class="name-and-img">
-  <img
-    [ngSrc]="
-          userImage != null ? userImage : 'assets/svg/placeholder.svg'
-        "
-    alt="post"
-    height="40"
-    width="40"
-  />
-  <h5
-    class="name">
-    {{ user.user.name }}
-  </h5>
+  <div [routerLink]="['/profil', user.user.id]" class="name-and-img">
+    <img
+      [ngSrc]="userImage != null ? userImage : 'assets/svg/placeholder.svg'"
+      alt="post"
+      height="40"
+      width="40"
+    />
+    <h5 class="name">
+      {{ user.user.name }}
+    </h5>
   </div>
   <div class="button-wrapper">
     @if (type === ShowFriendsType.VORSCHLAG) {
-    <button
-      size="s"
-      (click)="follow()"
-      tuiButton
-      type="submit"
-    >
+    <button size="s" (click)="follow()" type="submit" class="btn btn-secondary">
       Folgen
     </button>
     } @else {
-      <button
-        size="s"
-        (click)="unfollow()"
-        tuiButton
-        type="submit"
-      >
-        Entfolgen
-      </button>
+    <button
+      size="s"
+      (click)="unfollow()"
+      type="submit"
+      class="btn btn-secondary"
+    >
+      Entfolgen
+    </button>
     }
   </div>
 </div>

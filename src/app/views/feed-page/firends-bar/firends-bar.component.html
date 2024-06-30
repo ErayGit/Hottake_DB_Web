@@ -1,37 +1,57 @@
 <div class="sozial">
   <div class="friends island">
-    <tui-input class="seach-field"
-               [formControl]="searchFormControl"
-               (tuiValueChanges)="onSearchChange($event)"
-               tuiTextfieldSize="s"
-               >
+    <tui-input
+      class="seach-field"
+      [formControl]="searchFormControl"
+      (tuiValueChanges)="onSearchChange($event)"
+      tuiTextfieldSize="s"
+    >
       Suche
       <input tuiTextfield />
     </tui-input>
-    <div class="spacer">
-    </div>
+    <div class="spacer"></div>
     <div class="friendcards">
       <div class="devided-button-island">
         <div class="button-one">
           @if (showFriends === ShowFriendsType.VORSCHLAG) {
-            <button (click)="getNotFollowedUsers()" appearance="outline" tuiButton type="button">
-              Vorschläge
-            </button>
+          <button
+            (click)="getNotFollowedUsers()"
+            appearance="outline"
+            tuiButton
+            type="button"
+          >
+            Vorschläge
+          </button>
           } @else {
-            <button (click)="getNotFollowedUsers()" appearance="flat" tuiButton type="button">
-              Vorschläge
-            </button>
+          <button
+            (click)="getNotFollowedUsers()"
+            appearance="flat"
+            tuiButton
+            type="button"
+          >
+            Vorschläge
+          </button>
           }
         </div>
         <div class="button-two">
           @if (showFriends === ShowFriendsType.FREUNDE) {
-          <button (click)="getFollowedUsers()" appearance="outline" tuiButton type="button">
+          <button
+            (click)="getFollowedUsers()"
+            appearance="outline"
+            tuiButton
+            type="button"
+          >
             Freunde
           </button>
           } @else {
-            <button (click)="getFollowedUsers()" appearance="flat" tuiButton type="button">
-              Freunde
-            </button>
+          <button
+            (click)="getFollowedUsers()"
+            appearance="flat"
+            tuiButton
+            type="button"
+          >
+            Freunde
+          </button>
           }
         </div>
       </div>
@@ -39,37 +59,39 @@
       <div class="nofriendcards">
         <h3 class="nofriends">Noch keine Freunde vorhanden</h3>
       </div>
-      }
-      @else if (users.length > 0) {
-      @for (user of users; track user){
+      } @else if (users.length > 0) { @for (user of users; track user){
       <div class="arefriendcards">
-        <app-friend-card (getUsers)="getUsers()" (fetchPosts)="fetchPosts()" [user]="user" [type]="showFriends">
+        <app-friend-card
+          (getUsers)="getUsers()"
+          (fetchPosts)="fetchPosts()"
+          [user]="user"
+          [type]="showFriends"
+        >
         </app-friend-card>
       </div>
-      }
-      }
+      } }
     </div>
   </div>
   <div class="profil island">
     <div class="profil-card">
       <a class="profilBild">
         <img
-        class="cover"
-        [ngSrc]="
-          userProfileImage != null ? userProfileImage : 'assets/svg/placeholder.svg'
-        "
-        [routerLink]="['/profil', userId]"
-        alt="post"
-        width="50"
-        height="50"
+          class="cover"
+          [ngSrc]="
+            userProfileImage != null
+              ? userProfileImage
+              : 'assets/svg/placeholder.svg'
+          "
+          [routerLink]="['/profil', userId]"
+          alt="post"
+          width="50"
+          height="50"
         />
       </a>
 
       <div class="card-body">
-        <h5 class="card-title">{{name}}</h5>
-        <a>
-          &#64;{{userName}}
-          </a>
+        <h5 class="card-title">{{ name }}</h5>
+        <a> &#64;{{ userName }} </a>
       </div>
     </div>
     <div class="logout">
@@ -79,8 +101,7 @@
         tuiButton
         icon="tuiIconLogOut"
         (click)="logout()"
-      >
-      </button>
+      ></button>
     </div>
   </div>
 </div>

@@ -33,3 +33,7 @@ h5 {
 img {
   border-radius: 50%;
 }
+
+.tui-remove div {
+  background: green !important;
+}

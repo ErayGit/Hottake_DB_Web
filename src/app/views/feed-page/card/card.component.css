@@ -110,12 +110,10 @@
 .meta-wraper {
   display: flex;
   justify-content: space-between;
-  color: var(--text);
-  padding: 0 2.4em;
+  color: var(--text) !important;
 
   > div {
     padding: 0.2em;
-    border: 1px solid var(--text);
     border-top: none;
     border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius);
     display: flex;

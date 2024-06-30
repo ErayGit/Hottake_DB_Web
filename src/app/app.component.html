@@ -1,6 +1,9 @@
 <tui-root>
   <header>
-    <a href="/"><h1>Hot Take</h1></a>
+    <div class="logo-holder">
+      <img src="../assets/logo.png" alt="" />
+      <a href="/"><h1>Hot Take</h1></a>
+    </div>
 
     <div>
       <svg
@@ -10,7 +13,10 @@
         (click)="onClickNotification()"
         (tuiActiveZoneChange)="onActiveZone($event)"
         (tuiObscured)="onObscured($event)"
-        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
         <g
           id="SVGRepo_tracerCarrier"
@@ -43,17 +49,15 @@
 
 <ng-template #dropdownContent>
   <div class="bk-dropdown">
-  <div class="dropdown">
-    @if (notificationList.length === 0) {
+    <div class="dropdown">
+      @if (notificationList.length === 0) {
       <div class="no-notifications">Keine Notifications</div>
-    }
-    @else if (notificationList.length > 0) {
-      @for (note of notificationList; track note) {
-        <div class="notificaton-card">
-          {{ note.name }} hat einen neuen Post hochgeladen.
-        </div>
-      }
-    }
-  </div>
+      } @else if (notificationList.length > 0) { @for (note of notificationList;
+      track note) {
+      <div class="notificaton-card">
+        {{ note.name }} hat einen neuen Post hochgeladen.
+      </div>
+      } }
+    </div>
   </div>
 </ng-template>

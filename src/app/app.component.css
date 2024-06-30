@@ -73,6 +73,16 @@ header {
     text-decoration: none;
   }
 
+  .logo-holder {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    img {
+      height: 50px;
+    }
+  }
+
   div {
     height: 40%;
   }
