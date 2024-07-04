@@ -267,6 +267,35 @@ router.delete("/user/:id", async (req, res) => {
   let query = "DELETE FROM user WHERE id = ?";
   const params = [req.params.id];
 
+  let query2 = 'DELETE FROM post WHERE creatorId = ?';
+
+  db.query(query2, params, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).send({ message: "Server error." });
+    }
+  });
+
+  let query3 = 'DELETE FROM follow WHERE followerId = ?';
+
+  db.query(query3, params, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).send({ message: "Server error." });
+    }
+  });
+
+
+  let query4 = 'DELETE FROM comment WHERE creatorId = ?';
+
+  db.query(query4, params, (err, result) => {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).send({ message: "Server error." });
+    }
+  });
+
+
   db.query(query, params, (err, result) => {
     if (err) {
       console.error("Database error:", err);
