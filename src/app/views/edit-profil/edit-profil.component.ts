@@ -121,7 +121,6 @@ loadUserData() {
 }
 
 delete(){
-  console.log(this.authService.getLoggedInUser()?.id ?? '');
   this.userService.deleteUser(this.authService.getLoggedInUser()?.id ?? '').subscribe((value) => {
     if(!value){
       this.pushService.sendPush(pushTypes.ERROR);

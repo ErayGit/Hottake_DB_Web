@@ -262,18 +262,15 @@ router.put("/user/:id", async (req, res) => {
   });
 });
 
-
 // delete user
 router.delete("/user/:id", async (req, res) => {
-  
   let query = "DELETE FROM user WHERE id = ?";
   const params = [req.params.id];
 
   db.query(query, params, (err, result) => {
     if (err) {
-      console.log(params);
       console.error("Database error:", err);
-      return res.status(500).send({ message: "Server error.  Löschen geht nicht" });
+      return res.status(500).send({ message: "Server error." });
     }
     if (result.affectedRows > 0) {
       res.status(200).send({ message: "User deleted successfully." });
@@ -281,43 +278,6 @@ router.delete("/user/:id", async (req, res) => {
       res.status(404).send({ message: "User not found." });
     }
   });
-
 });
-
-
-// ALTER TABLE hottake DROP CONSTRAINT user;
-// ALTER TABLE hottake ADD CONSTRAINT FK_Dept_hottake_Cascade_Delete FOREIGN KEY ("e2d9d27e-2e76-11ef-8ca2-02420a000103") REFERENCES hottake("e2d9d27e-2e76-11ef-8ca2-02420a000103") on DELETE CASCADE;
-// const query2 = 'DELETE FROM comment WHERE creatorId = ?';
-
-// db.query(query2, params, (err, result) => {
-//   if (err) {
-//     console.error("Database error:", err);
-//     return res.status(500).send({ message: "Server error. Löschen geht nicht" });
-//   }
-// });
-
-// const query3 = 'DELETE FROM post WHERE creatorId = ?';
-
-// db.query(query3, params, (err, result) => {
-//   if (err) {
-//     console.error("Database error:", err);
-//     return res.status(500).send({ message: "Server error. Löschen geht nicht" });
-//   }
-// });
-
-
-// const query4 = 'DELETE FROM follow WHERE followerId = ? OR followedId = ?';
-// db.query(query4, params, (err, result) => {
-//   if (err) {
-//     console.error("Database error:", err);
-//     return res.status(500).send({ message: "Server error. Löschen geht nicht" });
-//   }
-// });
-
-
-
-
-
-
 
 module.exports = router;
