@@ -120,6 +120,19 @@ loadUserData() {
   return;
 }
 
+delete(){
+  this.userService.deleteUser(this.authService.getLoggedInUser()?.id ?? '').subscribe((value) => {
+    if(!value){
+      this.pushService.sendPush(pushTypes.ERROR);
+      return;
+    }
+    this.authService.logout();
+    this.pushService.sendPush(pushTypes.SUCCESS);
+    this.router.navigate(['/login']);
+  })
+  return;
+}
+
 ngOnInit(): void {
   this.getFollowedUsers();
   if (this.authService.isLoggedIn()) {
