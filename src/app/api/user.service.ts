@@ -46,15 +46,10 @@ export class UserService {
 
 
   updateUser(userId: string, bio: string,name: string,firstName: string, lastName: string, stadt: string ): Observable<any> {
-    return this.http.put(this.baseUrl + `user/${userId}`, {name: name, bio: bio, stadt: stadt, firstName: firstName, lastName: lastName});
+    return this.http.put(this.baseUrl + `user/${userId}`, { name: name, bio: bio, stadt: stadt, firstName: firstName, lastName: lastName});
   }
 
   findOne(userId: string) {
     return this.http.get<{user: User}>(this.baseUrl + `user/${userId}`,)
   }
-
-  deleteUser(userId: string): Observable<any> {
-    return this.http.delete(this.baseUrl + `user/${userId}`);
-  }
-
 }
