@@ -201,12 +201,12 @@ router.get("/user/:id", async (req, res) => {
 
   db.query(query, params, (err, results) => {
     if (err) {
-      console.error("Database error:", err); // Fehler Protokoll
+      console.error("Database error:", err);
       return res.status(500).send({ message: "Server error." });
     }
     if (results.length > 0) {
-      const { password, ...userData } = results[0]; // userData anstatt result sicherer
-      res.status(200).send(userData); // vllt keine eckige
+      const { password, ...userData } = results[0]; 
+      res.status(200).send(userData);
     } else {
       res.status(404).send({ message: "User not found." });
     }
@@ -216,15 +216,14 @@ router.get("/user/:id", async (req, res) => {
 // update user
 router.put("/user/:id", async (req, res) => {
   //console.log(req);
-  //let query = "UPDATE user SET bio = ? WHERE id = ?";
   let query = "UPDATE user SET name = ?, bio = ?, stadt = ?, firstName = ?, lastName = ? WHERE id = ?";
 
   console.log(req.body);
-  const params = [req.body.name, req.body.bio, req.body.stadt, req.body.firstName, req.body.lastName, req.params.id]; // add bio to params
+  const params = [req.body.name, req.body.bio, req.body.stadt, req.body.firstName, req.body.lastName, req.params.id];
 
   db.query(query, params, (err, result) => {
     if (err) {
-      console.error("Database error:", err); // Fehler Protokoll
+      console.error("Database error:", err); 
       return res.status(500).send({ message: "Server error." });
     }
     if (result.affectedRows > 0) {
@@ -238,31 +237,6 @@ router.put("/user/:id", async (req, res) => {
     }
   });
 });
-
-
-
-
-// // update user
-// router.put("/user/:id", async (req, res) => {
-//   const { name, bio, stadt, email, firstName, lastName } = req.body;
-
-//   const query =
-//     "UPDATE user SET name = ?, bio = ?, stadt = ?, email = ?, firstName = ?, lastName = ? WHERE id = ?";
-//   const values = [name, bio, stadt, email, firstName, lastName, req.params.id];
-
-//   db.query(query, values, (err, result) => {
-//     if (err) {
-//       console.error("Database error:", err); // Fehler Protokoll
-//       return res.status(500).send({ message: "Server error." });
-//     }
-//     if (result.affectedRows > 0) {
-//       res.status(200).send({ message: "User updated successfully." });
-//     } else {
-//       res.status(404).send({ message: "User not found." });
-//     }
-//   });
-// });
-
 
 // delete user
 router.delete("/user/:id", async (req, res) => {
