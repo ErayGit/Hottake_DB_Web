@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import { environment } from '../../environment';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -20,11 +20,29 @@ export class PostService {
     });
   }
 
-  findAllFromFollowed(userId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(this.baseUrl + `post/${userId}/feed`);
+  countAllFromFollowed(userId: string): Observable<{count: number}> {
+   return this.http.get<{count: number}>(this.baseUrl + `post/${userId}/countfeed`);
   }
 
-  findAllFromUser(userId: string) {
-    return this.http.get<Post[]>(this.baseUrl + `post/${userId}/user`);
+  countAllFromUser(userId: string): Observable<{count: number}> {
+    return this.http.get<{count: number}>(this.baseUrl + `post/${userId}/countuser`);
+  }
+
+  findAllFromFollowed(userId: string, page: number): Observable<Post[]> {
+    const limit = 10;
+    const skip = 10 * page;
+    let params: HttpParams = new HttpParams();
+    params = params.set('skip', skip);
+    params = params.set('limit', limit);
+    return this.http.get<Post[]>(this.baseUrl + `post/${userId}/feed`, {params: params});
+  }
+
+  findAllFromUser(userId: string, page: number) {
+    const limit = 10;
+    const skip = 10 * page;
+    let params: HttpParams = new HttpParams();
+    params = params.set('skip', skip);
+    params = params.set('limit', limit);
+    return this.http.get<Post[]>(this.baseUrl + `post/${userId}/user`, {params: params});
   }
 }

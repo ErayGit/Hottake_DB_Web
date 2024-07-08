@@ -55,6 +55,9 @@ export class FeedPageComponent implements OnInit {
 
   private socketSubscription: Subscription | undefined;
   private loginSubscription: Subscription | undefined;
+  page: number = 0;
+  postCount: number = 0;
+
   listen() {
     this.notificationService.onEvent('notify').subscribe({
       next: (data) => {
@@ -129,7 +132,7 @@ export class FeedPageComponent implements OnInit {
     });
   }
 
-  fetchData() {
+  fetchPostCount() {
     let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
     if (this.authService.isLoggedIn()) {
       const loggedInUser = this.authService.getLoggedInUser();
@@ -137,9 +140,38 @@ export class FeedPageComponent implements OnInit {
         userId = loggedInUser.id;
       }
     }
-     return this.postService.findAllFromFollowed(userId).subscribe((posts) => {
+    return this.postService.countAllFromFollowed(userId).subscribe((countObj) => {
+      this.postCount = countObj.count;
+    });
+  }
+
+  fetchData() {
+    let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
+    this.page = 0;
+    if (this.authService.isLoggedIn()) {
+      const loggedInUser = this.authService.getLoggedInUser();
+      if (loggedInUser) {
+        userId = loggedInUser.id;
+      }
+    }
+    this.fetchPostCount();
+     return this.postService.findAllFromFollowed(userId, this.page).subscribe((posts) => {
        this.items = posts;
      });
+  }
+
+  addData() {
+    let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
+    this.page = this.page + 1;
+    if (this.authService.isLoggedIn()) {
+      const loggedInUser = this.authService.getLoggedInUser();
+      if (loggedInUser) {
+        userId = loggedInUser.id;
+      }
+    }
+    return this.postService.findAllFromFollowed(userId, this.page).subscribe((posts) => {
+      this.items = this.items.concat(posts);
+    });
   }
 
   removeFile() {

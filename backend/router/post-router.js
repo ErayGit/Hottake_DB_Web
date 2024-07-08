@@ -36,15 +36,17 @@ router.get('/post', async (req, res) => {
 });
 
 router.get('/post/:id/feed', async (req, res) => {
-  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id LEFT JOIN comment ON post.id = comment.postId WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ANY(SELECT followedId FROM follow WHERE followerId = ?) ORDER BY createdAt DESC LIMIT ? OFFSET ?) poster) ORDER BY post.createdAt DESC';
+  //Don't join OneToMany because of strange behavior concerning joins and limit -Maxim :)
+  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ANY(SELECT followedId FROM follow WHERE followerId = ?) ORDER BY createdAt DESC) poster) ORDER BY post.createdAt DESC LIMIT ? OFFSET ?';
   const params = [req.params.id, 100, 0];
   if(req.query.limit) {
     try {
       if(isNaN(req.query.limit)) {
         params[1] = parseInt(req.query.limit);
       }
+      params[1] = parseInt(req.query.limit);
     } catch(err) {
-      console.log("wrong value for limit")
+      params[1] = req.query.limit;
     }
   }
   if(req.query.skip) {
@@ -52,8 +54,9 @@ router.get('/post/:id/feed', async (req, res) => {
       if(isNaN(req.query.skip)) {
         params[2] = parseInt(req.query.skip);
       }
+        params[2] = parseInt(req.query.skip);
     } catch(err) {
-      console.log("wrong value for skip")
+        params[2] = req.query.skip;
     }
   }
   db.query(findQuery, params, (err, results) => {
@@ -87,16 +90,33 @@ router.get('/post/:id/feed', async (req, res) => {
   });
 })
 
+router.get('/post/:id/countfeed', async (req, res) => {
+  //Don't join OneToMany because of strange behavior concerning joins and limit -Maxim :)
+  let findQuery = 'SELECT COUNT(post.id) as count FROM post WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ANY(SELECT followedId FROM follow WHERE followerId = ?) ORDER BY createdAt DESC) poster)';
+  const params = [req.params.id];
+  db.query(findQuery, params, (err, results) => {
+    if(err) {
+      console.error('Database error:', err);
+      return res.status(500).send({message: "Server error."});
+    }
+    console.log(results[0].count);
+    res.status(200).send(results[0]['']);
+  });
+})
+
+
 router.get('/post/:id/user', async (req, res) => {
-  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id LEFT JOIN comment ON post.id = comment.postId WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ?) poster) ORDER BY post.createdAt DESC LIMIT ? OFFSET ?';
+  //Don't join OneToMany because of strange behavior concerning joins and limit -Maxim :)
+  let findQuery = 'SELECT * FROM post LEFT JOIN user ON post.creatorId = user.id WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ?) poster) ORDER BY post.createdAt DESC LIMIT ? OFFSET ?';
   const params = [req.params.id, 100, 0];
   if(req.query.limit) {
     try {
       if(isNaN(req.query.limit)) {
         params[1] = parseInt(req.query.limit);
       }
+      params[1] = parseInt(req.query.limit);
     } catch(err) {
-      console.log("wrong value for limit")
+      params[1] = req.query.limit;
     }
   }
   if(req.query.skip) {
@@ -104,8 +124,9 @@ router.get('/post/:id/user', async (req, res) => {
       if(isNaN(req.query.skip)) {
         params[2] = parseInt(req.query.skip);
       }
+      params[2] = parseInt(req.query.skip);
     } catch(err) {
-      console.log("wrong value for skip")
+      params[2] = req.query.skip;
     }
   }
   db.query(findQuery, params, (err, results) => {
@@ -136,6 +157,20 @@ router.get('/post/:id/user', async (req, res) => {
       returnArray.push(postsMap[key]);
     })
     res.status(200).send(returnArray);
+  });
+})
+
+router.get('/post/:id/countuser', async (req, res) => {
+  //Don't join OneToMany because of strange behavior concerning joins and limit -Maxim :)
+  let findQuery = 'SELECT COUNT(post.id) as count FROM post WHERE post.id = ANY(SELECT poster.id FROM(SELECT post.id FROM post WHERE creatorId = ?) poster)';
+  const params = [req.params.id];
+  db.query(findQuery, params, (err, results) => {
+    if(err) {
+      console.error('Database error:', err);
+      return res.status(500).send({message: "Server error."});
+    }
+    console.log(results[0].count);
+    res.status(200).send(results[0]['']);
   });
 })
 

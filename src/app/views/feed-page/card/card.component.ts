@@ -103,6 +103,7 @@ export class CARDComponent implements OnInit{
     })
   }
 
+  /* Use this if comments are joined, else use the other one
   countComments(comments: Comment[]) {
     this.laughingCount = 0;
     this.cryingCount = 0;
@@ -125,11 +126,12 @@ export class CARDComponent implements OnInit{
       }
     );
   }
+   */
 
   ngOnInit(): void {
     this.getImageForCard();
     this.getImageForUser();
-    this.countComments(this.item.comments);
+    this.getComments();
   }
 
   protected readonly Emoji = Emoji;

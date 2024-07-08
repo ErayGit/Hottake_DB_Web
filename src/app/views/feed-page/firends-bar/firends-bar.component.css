@@ -93,6 +93,7 @@
 
 .nofriendcards {
   display: flex;
+  margin-top: 8em;
   flex-direction: column;
   justify-content: center;
   align-items: center;

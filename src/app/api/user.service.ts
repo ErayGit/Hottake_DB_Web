@@ -33,18 +33,6 @@ export class UserService {
     return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/notfollowed`, {params: params});
   }
 
-  
-  findAllNotFollowed2(userId: string, searchString?: string){
-    let params: HttpParams = new HttpParams();
-    if(searchString) {
-      params = params.set('search', searchString);
-    }
-    return this.http.get<{user: User}[]>(this.baseUrl + `user/${userId}/notfollowed2`, {params: params});
-  }
-
-
-
-
   updateUser(userId: string, bio: string,name: string,firstName: string, lastName: string, stadt: string ): Observable<any> {
     return this.http.put(this.baseUrl + `user/${userId}`, { name: name, bio: bio, stadt: stadt, firstName: firstName, lastName: lastName});
   }

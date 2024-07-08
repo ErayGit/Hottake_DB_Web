@@ -10,7 +10,7 @@
                 routerLinkActive="active">
                 <tui-icon class="icon" icon="tuiIconChevronLeft"></tui-icon>
             </button>
-            
+
             @if (userId === logginUserId){
                 <button
                     type="button"
@@ -27,7 +27,7 @@
         <div class="flex-container">
             <div class="cover">
                 <img
-        
+
                 [ngSrc]="
                 postImage != null ? postImage : '../../../assets/svg/placeholder.svg'
               "
@@ -44,7 +44,7 @@
                 <p class="bio">About me:</p>
                 <p class="card-text"><strong> Stadt:</strong> {{stadt}}</p>
                 <p class="card-text"><strong> Bio:</strong> {{bio}}</p>
-                
+
             </div>
         </div>
     </div>
@@ -55,9 +55,18 @@
                 <h3>Keine Posts vorhanden</h3>
             </div>
         }
-        @else if (items.length > 0) { @for (item of items; track item){ <app-card [item]="item"></app-card>
-            }
-            }
+        @else if (items.length > 0) {
+          @for (item of items; track item){
+          <app-card [item]="item"></app-card>
+          }
+          @if(postCount > (page + 1) * 10) {
+            <div class="load-more-button">
+              <button size="m" (click)="addData()" type="submit" class="btn btn-secondary">
+                Mehr Laden
+              </button>
+            </div>
+          }
+        }
 
     </div>
 </main>

@@ -59,19 +59,12 @@ export class ProfilSiteComponent implements OnInit {
   name: string = '';
   bio: string = '';
   stadt: string = '';
-  followedUsers: { user: User }[] = [];
   items: Post[] = [];
   fileId: string = '';
   postImage: any;
   logginUserId: string = '';
-
-  getFollowedUsers(userId: string) {
-    this.userService
-      .findAllNotFollowed(userId)
-      .subscribe((res) => {
-        this.followedUsers = res;
-      });
-  }
+  postCount: number = 0;
+  page: number = 0;
 
   getImageForCard(userId: string) {
     this.fileService.getImageFile(userId).subscribe((res) => {
@@ -83,6 +76,33 @@ export class ProfilSiteComponent implements OnInit {
     });
   }
 
+  addData() {
+    let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
+    this.page = this.page + 1;
+    if (this.authService.isLoggedIn()) {
+      const loggedInUser = this.authService.getLoggedInUser();
+      if (loggedInUser) {
+        userId = loggedInUser.id;
+      }
+    }
+    return this.postService.findAllFromUser(userId, this.page).subscribe((posts) => {
+      this.items = this.items.concat(posts);
+    });
+  }
+
+  fetchPostCount() {
+    let userId = '54d2abbd-2376-11ef-a4b9-02420a000403';
+    if (this.authService.isLoggedIn()) {
+      const loggedInUser = this.authService.getLoggedInUser();
+      if (loggedInUser) {
+        userId = loggedInUser.id;
+      }
+    }
+    return this.postService.countAllFromUser(userId).subscribe((countObj) => {
+      this.postCount = countObj.count;
+    });
+  }
+
   loadUserData() {
     let user = this.authService.getLoggedInUser();
     this.name = user?.name ?? '';
@@ -91,7 +111,9 @@ export class ProfilSiteComponent implements OnInit {
     this.logginUserId = user?.id ?? '';
     this.stadt = user?.stadt ?? '';
     this.bio = user?.bio ?? '';
-    this.postService.findAllFromUser(user?.id ?? '').subscribe((posts) => {
+    this.page = 0;
+    this.fetchPostCount();
+    this.postService.findAllFromUser(user?.id ?? '', this.page).subscribe((posts) => {
       this.items = posts;
     }, error => {
       console.error('Error:', error);
@@ -108,14 +130,13 @@ export class ProfilSiteComponent implements OnInit {
       }
       this.userService.findOne(this.userId).subscribe((userObject) => {
         const user: User = userObject.user
-        this.getFollowedUsers(user.id);
         this.firstName = user?.name ?? '';
         this.stadt = user?.stadt ?? '';
         this.name = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`;
         this.bio = user?.bio;
-        console.log(this.userId);
-        console.log(this.logginUserId)
-        this.postService.findAllFromUser(user.id).subscribe((posts) => {
+        this.page = 0;
+        this.fetchPostCount();
+        this.postService.findAllFromUser(user.id, this.page).subscribe((posts) => {
           this.items = posts;
         }, error => {
           console.error('Error:', error);
@@ -125,12 +146,4 @@ export class ProfilSiteComponent implements OnInit {
       });
     });
 }
-
-protected readonly tuiIconFile = tuiIconFile;
-
-testForm = new FormGroup({
-  testValue1: new FormControl('A field', Validators.required),
-  testValue2: new FormControl('This one can be expanded', Validators.required),
-});
-
 }
