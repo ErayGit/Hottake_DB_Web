@@ -49,7 +49,7 @@ router.get('/comment/:id', async (req, res) => {
         if (results.length > 0) {
             res.status(200).send(results[0]);   // vllt keine eckige
         } else {
-            res.status(404).send({message: "comment not found."});
+            res.status(200).send([]);
         }
     });
 });
@@ -67,7 +67,7 @@ router.get('/comment/:id/post', async (req, res) => {
     if (results.length > 0) {
       res.status(200).send(results);   // vllt keine eckige
     } else {
-      res.status(404).send({message: "comment not found."});
+      res.status(200).send([]);
     }
   });
 });
