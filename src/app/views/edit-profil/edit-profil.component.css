@@ -37,3 +37,21 @@ main{
 .tui-island__paragraph{
     color: black;
 }
+
+.button-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#delte{
+    background-color: white!important;
+    border: none;
+    border-bottom: 1px solid red!important;
+    border-top: 1px solid red!important;
+    border-right: 1px solid red!important;
+    border-left: 1px solid red!important;
+    color: red!important;
+    font-weight: 500!important;
+}

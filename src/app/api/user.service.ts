@@ -52,4 +52,8 @@ export class UserService {
   findOne(userId: string) {
     return this.http.get<{user: User}>(this.baseUrl + `user/${userId}`,)
   }
+
+  deleteUser(userId: string): Observable<any> {
+    return this.http.delete(this.baseUrl + `user/${userId}`);
+  }
 }
