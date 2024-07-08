@@ -194,7 +194,6 @@ router.get("/user/:id/notfollowed2", async (req, res) => {
   });
 });
 
-
 //finde einen bestimmten user
 router.get("/user/:id", async (req, res) => {
   const query = "SELECT * FROM user WHERE id = ?";

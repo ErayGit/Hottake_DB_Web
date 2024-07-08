@@ -45,37 +45,37 @@ module.exports.initDb = function () {
     }
   });
 
-  db.query("ALTER TABLE `user` ADD CONSTRAINT `FK_c28e52f758e7bbc53828db92194` FOREIGN KEY (`fileId`) REFERENCES `file`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
+  db.query("ALTER TABLE `user` ADD CONSTRAINT `FK_c28e52f758e7bbc53828db92194` FOREIGN KEY (`fileId`) REFERENCES `file`(`id`) ON DELETE CASCADE ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 1 or already exists]')
     }
   });
-  db.query("ALTER TABLE `follow` ADD CONSTRAINT `FK_c28e523138e7bbc53828d339194` FOREIGN KEY (`followerId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
+  db.query("ALTER TABLE `follow` ADD CONSTRAINT `FK_c28e523138e7bbc53828d339194` FOREIGN KEY (`followerId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 2 or already exists]')
     }
   });
-  db.query("ALTER TABLE `follow` ADD CONSTRAINT `FK_c28e523138e7abc53828d339194` FOREIGN KEY (`followedId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
+  db.query("ALTER TABLE `follow` ADD CONSTRAINT `FK_c28e523138e7abc53828d339194` FOREIGN KEY (`followedId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 3 or already exists]')
     }
   });
-  db.query("ALTER TABLE `post` ADD CONSTRAINT `FK_c28e523138e7ab777828d339194` FOREIGN KEY (`creatorId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
+  db.query("ALTER TABLE `post` ADD CONSTRAINT `FK_c28e523138e7ab777828d339194` FOREIGN KEY (`creatorId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 4 or already exists]')
     }
   });
-  db.query("ALTER TABLE `post` ADD CONSTRAINT `FK_c28e52asd8e7ab777828d339194` FOREIGN KEY (`fileId`) REFERENCES `file`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
+  db.query("ALTER TABLE `post` ADD CONSTRAINT `FK_c28e52asd8e7ab777828d339194` FOREIGN KEY (`fileId`) REFERENCES `file`(`id`) ON DELETE CASCADE ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 5 or already exists]')
     }
   });
-  db.query("ALTER TABLE `comment` ADD CONSTRAINT `FK_75343523138e7ab777828d339194` FOREIGN KEY (`postId`) REFERENCES `post`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
+  db.query("ALTER TABLE `comment` ADD CONSTRAINT `FK_75343523138e7ab777828d339194` FOREIGN KEY (`postId`) REFERENCES `post`(`id`) ON DELETE CASCADE ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 6 or already exists]')
     }
   });
-  db.query("ALTER TABLE `comment` ADD CONSTRAINT `FK_75343asd3138e7ab777828d339194` FOREIGN KEY (`creatorId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE", (err, results) => {
+  db.query("ALTER TABLE `comment` ADD CONSTRAINT `FK_75343asd3138e7ab777828d339194` FOREIGN KEY (`creatorId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE", (err, results) => {
     if (err) {
       console.error('[Could not create foreign constraint 7 or already exists]')
     }
