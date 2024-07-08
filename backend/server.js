@@ -53,8 +53,15 @@ ioSocket.on("connection", (socket) => {
   });
 });
 
-initializeDbImp.initDb();
-seedDatabase();
+initializeDbImp.timeout().then(() => {
+  console.log("[Database Initialized]____________________________________________________");
+  initializeDbImp.initDb().then(() => {
+    seedDatabase();
+  });
+});
+
+
+
 
 app.use(userRouter);
 app.use(postRouter);
