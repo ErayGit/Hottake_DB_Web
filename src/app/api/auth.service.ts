@@ -60,7 +60,6 @@ export class AuthService {
               response.body?.access_token!,
             );
             this.setLoggedInUser(response.body.user!);
-            this.loggedInSubject.next(true);
             return true;
           }
           return false;
@@ -106,6 +105,7 @@ export class AuthService {
   setLoggedInUser(user: User) {
     this.loggedInUser = user;
     localStorage.setItem("user", JSON.stringify(user));
+    this.loggedInSubject.next(true);
   }
 
   getLoggedInUser(): User | null {
