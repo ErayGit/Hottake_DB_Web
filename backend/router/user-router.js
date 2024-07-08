@@ -194,7 +194,6 @@ router.get("/user/:id/notfollowed2", async (req, res) => {
   });
 });
 
-
 //finde einen bestimmten user
 router.get("/user/:id", async (req, res) => {
   const query = "SELECT * FROM user WHERE id = ?";
@@ -213,30 +212,6 @@ router.get("/user/:id", async (req, res) => {
     }
   });
 });
-
-// //delete user
-// router.delete("deleteUser/:id", async (req, res) => {
-//   const query = "DELETE FROM user WHERE id = ?";
-//   const params = [req.params.id];
-//   console.log(params + "params");
-
-//   db.query(query, params, (err, result) => {
-//     if (err) {
-//       console.error("Database error:", err); // Fehler Protokoll
-//       return res.status(500).send({ message: "Server error." });
-//     }
-//     if (result.affectedRows > 0) {
-//       const findQuery = "SELECT * FROM user WHERE id = ?";
-//       const findParam = [req.params.id];
-//       db.query(findQuery, findParam, async (err, findRes) => {
-//         res.status(200).send({ message: "User updated successfully.", user: findRes[0] });
-//       } );
-//     } else {
-//       res.status(404).send({ message: "User not found." });
-//     }
-//   });
-
-// });
 
 // update user
 router.put("/user/:id", async (req, res) => {
@@ -266,36 +241,7 @@ router.put("/user/:id", async (req, res) => {
 router.delete("/user/:id", async (req, res) => {
   let query = "DELETE FROM user WHERE id = ?";
   const params = [req.params.id];
-
-  let query2 = 'DELETE FROM post WHERE creatorId = ?';
-
-  db.query(query2, params, (err, result) => {
-    if (err) {
-      console.error("Database error:", err);
-      return res.status(500).send({ message: "Server error." });
-    }
-  });
-
-  let query3 = 'DELETE FROM follow WHERE followerId = ?';
-
-  db.query(query3, params, (err, result) => {
-    if (err) {
-      console.error("Database error:", err);
-      return res.status(500).send({ message: "Server error." });
-    }
-  });
-
-
-  let query4 = 'DELETE FROM comment WHERE creatorId = ?';
-
-  db.query(query4, params, (err, result) => {
-    if (err) {
-      console.error("Database error:", err);
-      return res.status(500).send({ message: "Server error." });
-    }
-  });
-
-
+  
   db.query(query, params, (err, result) => {
     if (err) {
       console.error("Database error:", err);
