@@ -43,6 +43,7 @@ main{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 2em;
 }
 
 #delte{
@@ -55,3 +56,4 @@ main{
     color: red!important;
     font-weight: 500!important;
 }
+

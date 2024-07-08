@@ -216,10 +216,11 @@ router.get("/user/:id", async (req, res) => {
 // update user
 router.put("/user/:id", async (req, res) => {
   //console.log(req);
-  let query = "UPDATE user SET name = ?, bio = ?, stadt = ?, firstName = ?, lastName = ? WHERE id = ?";
+  let query = "UPDATE user SET name = ?, bio = ?, stadt = ?, firstName = ?, lastName = ?, fileId = ? WHERE id = ?";
 
-  console.log(req.body);
-  const params = [req.body.name, req.body.bio, req.body.stadt, req.body.firstName, req.body.lastName, req.params.id];
+  console.log(req.body.name, req.body.bio, req.body.stadt, req.body.firstName, req.body.lastName, req.body.fileId);
+  
+  const params = [req.body.name, req.body.bio, req.body.stadt, req.body.firstName, req.body.lastName,req.body.fileId, req.params.id];
 
   db.query(query, params, (err, result) => {
     if (err) {

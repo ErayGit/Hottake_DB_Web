@@ -5,7 +5,7 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {TuiIconModule} from '@taiga-ui/experimental';
 import { AuthService } from '../../api/auth.service';
 import { UserService } from '../../api/user.service';
-import {NgOptimizedImage} from "@angular/common";
+import {NgOptimizedImage, NgIf} from "@angular/common";
 import { FileService } from '../../api/file.service';
 import { PostService } from '../../api/post.service';
 import { Post } from '../../models/Post';
@@ -16,6 +16,11 @@ import {PushService, pushTypes} from "../../services/push.service";
 import {Router} from "@angular/router";
 import { ProfilSiteComponent } from '../profil-site/profil-site.component';
 import * as console from "node:console";
+import {tuiIconFile} from "@taiga-ui/icons";
+import {File} from "../../models/File";
+import { TuiSvgModule } from '@taiga-ui/core';
+import {TuiValueChangesModule} from "@taiga-ui/cdk";
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-profil',
@@ -30,14 +35,18 @@ import * as console from "node:console";
     TuiDropdownModule,
     TuiInputFilesModule,
     TuiIconModule,
+    TuiSvgModule,
+    AsyncPipe,
     TuiIslandModule,
+    NgIf,
     TuiMarkerIconModule,
     TuiInputModule,
     ReactiveFormsModule,
     NgOptimizedImage,
     FormsModule,
     RouterLink,
-    RouterLinkActive,]
+    RouterLinkActive,
+    TuiValueChangesModule,]
 })
 
 @Injectable({
@@ -65,6 +74,7 @@ export class EditProfilComponent implements OnInit {
   data: any[] = [];
   userId: string = "";
   private page: number = 0;
+ 
 
 readonly loginForm = new FormGroup({
   bio: new FormControl(''),
@@ -73,6 +83,9 @@ readonly loginForm = new FormGroup({
   lastName: new FormControl(''),
   stadt: new FormControl('')
 });
+
+fileControl = new FormControl();
+
 
 loadUserData() {
   let user = this.authService.getLoggedInUser();
@@ -90,20 +103,53 @@ loadUserData() {
   });
 }
 
-  create() {
-  this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', this.loginForm.value.bio!, this.loginForm.value.name!, this.loginForm.value.firstName!, this.loginForm.value.lastName!, this.loginForm.value.stadt!)
-  .subscribe((value) => {
-    if(!value){
-      this.pushService.sendPush(pushTypes.ERROR);
-      return;
-    }
-    this.authService.setLoggedInUser(value.user.user);
-    this.profilComponent.loadUserData();
-    this.pushService.sendPush(pushTypes.SUCCESS);
-    this.router.navigate(['/profil', value.user.user.id]);
-  })
-  return;
+removeFile() {
+  this.fileControl.setValue(null);
 }
+
+  create() {
+    let fileId: string | null;
+    if(this.fileControl.value || this.fileControl.value?.length === 0){
+      const formData = new FormData();
+      formData.append(
+        "file",
+        this.fileControl.value,
+        this.fileControl.value.name,
+      );
+      this.fileService.addImage(formData).subscribe((response) => {
+        if (response.ok){
+          fileId = (response.body?.file! as File).id
+          this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', this.loginForm.value.bio!, this.loginForm.value.name!, this.loginForm.value.firstName!, this.loginForm.value.lastName!, this.loginForm.value.stadt!,fileId ?? '')
+          .subscribe((value) => {
+            if(!value){
+              this.pushService.sendPush(pushTypes.ERROR);
+              return;
+            }
+            this.authService.setLoggedInUser(value.user.user);
+            this.profilComponent.loadUserData();
+            this.pushService.sendPush(pushTypes.SUCCESS);
+            this.router.navigate(['/profil', value.user.user.id]);
+          })
+          return;
+        }
+      })
+      return;
+    }else{
+      this.userService.updateUser(this.authService.getLoggedInUser()?.id ?? '', this.loginForm.value.bio!, this.loginForm.value.name!, this.loginForm.value.firstName!, this.loginForm.value.lastName!, this.loginForm.value.stadt!,this.authService.getLoggedInUser()?.fileId!)
+      .subscribe((value) => {
+        if(!value){
+          this.pushService.sendPush(pushTypes.ERROR);
+          return;
+        }
+        this.authService.setLoggedInUser(value.user.user);
+        this.profilComponent.loadUserData();
+        this.pushService.sendPush(pushTypes.SUCCESS);
+        this.router.navigate(['/profil', value.user.user.id]);
+      })
+    }
+}
+
+
 
 delete(){
   this.userService.deleteUser(this.authService.getLoggedInUser()?.id ?? '').subscribe((value) => {
@@ -123,4 +169,6 @@ delete(){
       this.loadUserData();
     }
   }
+
+  protected readonly tuiIconFile = tuiIconFile;
 }

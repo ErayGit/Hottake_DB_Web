@@ -40,6 +40,40 @@
                         <input type="text" class="form-control" [ngModel]="stadt" formControlName="stadt" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
                     </form>
+                    
+                    <tui-input-files
+                    *ngIf="!fileControl.value"
+                    [formControl]="fileControl"
+                    accept="image/*"
+                  >
+                    <ng-template>
+                      <div class="content">
+                        <tui-marker-icon
+                          mode="link"
+                          src="tuiIconUploadCloudLarge"
+                        ></tui-marker-icon>
+                        <div>
+                          Profilbild
+                        </div>
+                      </div>
+                    </ng-template>
+                  </tui-input-files>
+
+                  <tui-files>
+                    <tui-file
+                      (removed)="removeFile()"
+                      *ngIf="fileControl.valueChanges | async as file"
+                      [file]="file"
+                      [leftContent]="content"
+                      [showDelete]="fileControl.enabled"
+                    >
+                    </tui-file>
+                  </tui-files>
+
+                  <ng-template #content>
+                    <tui-svg [src]="tuiIconFile"></tui-svg>
+                  </ng-template>
+
                     <div class="button-wrapper">
                       <button
                         class="btn btn-secondary" 
