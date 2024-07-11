@@ -570,12 +570,17 @@ async function seedDatabase() {
       await addUser(user);
     }
 
-    for (const post of testData.posts) {
-      const randomUserIndex = Math.floor(Math.random() * testData.users.length);
-      const randomUser = testData.users[randomUserIndex];
-      post.creatorId = randomUser.id;
-      await addPost(post);
-    }
+    setTimeout(() => {
+      for (const post of testData.posts) {
+        const randomUserIndex = Math.floor(Math.random() * testData.users.length);
+        console.log(randomUserIndex);
+        const randomUser = testData.users[randomUserIndex];
+        post.creatorId = randomUser.id;
+        addPost(post);
+      }
+    }, 4000);
+
+
 
     console.log("Database seeding completed.");
   } catch (error) {
