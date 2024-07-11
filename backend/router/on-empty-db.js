@@ -4,7 +4,6 @@ const db = require('../db-config.js');
 
   const initDb = function () {
   console.log('[Database initialized]');
-  return new Promise((resolve) => {
     
     db.query("CREATE TABLE \`user\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`name\` varchar(255) NOT NULL, \`bio\` varchar(255) NULL, \`stadt\` varchar(255) NULL, \`email\` varchar(255) NOT NULL, \`password\` varchar(255) NULL, \`firstName\` varchar(255) NOT NULL DEFAULT '', \`lastName\` varchar(255) NOT NULL DEFAULT '', \`fileId\` varchar(255) NULL, INDEX \`IDX_32013feb275f7a0f41c451cd0d\` (\`createdAt\`), INDEX \`IDX_f2facb95edfc89041b6ed1fdbf\` (\`updatedAt\`), UNIQUE INDEX \`IDX_56211336b5ff35fd944f225917\` (\`name\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB", (err, results) => {
       if (err) {
@@ -14,7 +13,7 @@ const db = require('../db-config.js');
       }
     });
 
-    db.query("CREATE TABLE \`post\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`text\` varchar(255) NOT NULL, \`musicUrl\` varchar(255) NOT NULL, \`color\` varchar(255) NOT NULL, \`emoji\` varchar(255) NOT NULL DEFAULT '👍', \`fileId\` varchar(255) NULL, \`creatorId\` varchar(255) NULL, INDEX \`IDX_32013feb275f7a0f41c451cd0d\` (\`createdAt\`), INDEX \`IDX_f2facbawefgh89041b6ed1fadf\` (\`updatedAt\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB", (err, results) => {
+    db.query("CREATE TABLE `post` (`id` varchar(36) NOT NULL, `createdAt` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `updatedAt` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), `text` varchar(255) NOT NULL, `musicUrl` varchar(255) NOT NULL, `color` varchar(255) NOT NULL, `emoji` varchar(255) NOT NULL DEFAULT '👍', `fileId` varchar(255) NULL, `creatorId` varchar(255) NULL, `musicArtist` varchar(255) NOT NULL, `musicTitle` varchar(255) NOT NULL, INDEX `IDX_32013feb275f7a0f41c451cd0d` (`createdAt`), INDEX `IDX_f2facbawefgh89041b6ed1fadf` (`updatedAt`), PRIMARY KEY (`id`)) ENGINE=InnoDB", (err, results) => {
       if (err) {
         console.error('[Post-Table already created]')
       } else {
@@ -81,26 +80,20 @@ const db = require('../db-config.js');
         console.error('[Could not create foreign constraint 7 or already exists]')
       }
     });
-    db.query("ALTER TABLE `post` ADD COLUMN `musicArtist` varchar(255) NOT NULL", (err, results) => {
-      if (err) {
-        console.error('[Could not create Column musicArtist, already exists]')
-      }
-    });
-    db.query("ALTER TABLE `post` ADD COLUMN `musicTitle` varchar(255) NOT NULL", (err, results) => {
-      if (err) {
-        console.error('[Could not create Column musicTitle, already exists]')
-      }
-    });
-    resolve();
-
-});
+    // db.query("ALTER TABLE `post` ADD COLUMN `musicArtist` varchar(255) NOT NULL", (err, results) => {
+    //   if (err) {
+    //     console.error('[Could not create Column musicArtist, already exists]')
+    //   }
+    // });
+    // db.query("ALTER TABLE `post` ADD COLUMN `musicTitle` varchar(255) NOT NULL", (err, results) => {
+    //   if (err) {
+    //     console.error('[Could not create Column musicTitle, already exists]')
+    //   }
+    // });
 };
 
-const timeout = function (){
-  return new Promise(resolve => {
-    initDb();
-    resolve();
-  });
+async function timeout(){
+  await initDb();
 }
 
 module.exports = {timeout,initDb};

@@ -519,7 +519,6 @@ async function addUser(user) {
                 });
               }
             });
-
             return {
               message: "Die Registrierung war erfolgreich.",
               ...findRes[0],
