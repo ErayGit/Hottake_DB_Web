@@ -564,28 +564,35 @@ async function getImageBuffer(imagePath) {
 }
 
 async function seedDatabase() {
-  console.log(testData.posts.length);
-  try {
-    for (const user of testData.users) {
-      await addUser(user);
+  const insertQuery = "SELECT * FROM user";
+  db.query(insertQuery, async (err, result) => {
+    if (result.length > 0) {
+      console.log("Database already seeded.");
+      return;
     }
 
-    setTimeout(() => {
-      for (const post of testData.posts) {
-        const randomUserIndex = Math.floor(Math.random() * testData.users.length);
-        console.log(randomUserIndex);
-        const randomUser = testData.users[randomUserIndex];
-        post.creatorId = randomUser.id;
-        addPost(post);
+    try {
+      for (const user of testData.users) {
+        await addUser(user);
       }
-    }, 4000);
 
+      setTimeout(() => {
+        for (const post of testData.posts) {
+          const randomUserIndex = Math.floor(
+            Math.random() * testData.users.length
+          );
+          console.log(randomUserIndex);
+          const randomUser = testData.users[randomUserIndex];
+          post.creatorId = randomUser.id;
+          addPost(post);
+        }
+      }, 4000);
 
-
-    console.log("Database seeding completed.");
-  } catch (error) {
-    console.error("Database seeding error:", error);
-  }
+      console.log("Database seeding completed.");
+    } catch (error) {
+      console.error("Database seeding error:", error);
+    }
+  });
 }
 
 module.exports = { seedDatabase };
